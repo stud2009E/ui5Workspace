@@ -18,7 +18,8 @@ module.exports = function (grunt) {
                         middlewares.unshift(require("grunt-connect-proxy/lib/utils").proxyRequest);
                         return middlewares;
                     }
-                }
+                },
+                proxies: []
             }
         },
 
@@ -33,8 +34,25 @@ module.exports = function (grunt) {
         }
     });
 
+    grunt.registerTask("setProxies", function () {
+        let proxies = [];
+        Config.libs.forEach(function (oLib) {
+            let proxy = {
+                context: "/sap/bc/ui5_ui5/sap/" + oLib.bspContainer,
+                host: "localhost",
+                port: Config.server.port,
+                https: false,
+                rewrite: {}
+            };
+            proxy.rewrite["^/sap/bc/ui5_ui5/sap/" + oLib.bspContainer + "/"] = "/ui/libs/" + oLib.bspContainer + "/src/" + oLib.name.replace(/[.]/g, "/") + "/";
+            proxies.push(proxy);
+        });
+        grunt.config.set("connect.server.proxies", proxies);
+    });
+
     grunt.registerTask("serve", function () {
         grunt.task.run([
+            "setProxies",
             "configureProxies:server",
             "openui5_connect:server"
         ]);
