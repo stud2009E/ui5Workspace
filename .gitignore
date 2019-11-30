@@ -4,3 +4,5 @@ package-lock.json
 .DS_Store
 debug.log
 Config.js
+src/ui/apps/*
+src/libs/*
