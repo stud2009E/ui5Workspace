@@ -5,4 +5,4 @@ package-lock.json
 debug.log
 Config.js
 src/ui/apps/*
-src/libs/*
+src/ui/libs/*
