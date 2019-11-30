@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0"
+           xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx"
+           xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata"
+           xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="ZFPI_ODATA_SRV" xml:lang="ru" sap:schema-version="1"
+                xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <EntityType Name="zsfpi_status" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="FPI_NUM" />
+                    <PropertyRef Name="FPI_POS" />
+                    <PropertyRef Name="STATPOS" />
+                </Key>
+                <Property Name="FPI_NUM" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="FPI_POS" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="STATPOS" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="COUNT" Type="Edm.Int32" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="TEXT" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+            </EntityType>
+            <EntityType Name="zsfpi_rd_pos" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="FPI_NUM" />
+                    <PropertyRef Name="FPI_POS" />
+                    <PropertyRef Name="REGION" />
+                </Key>
+                <Property Name="FPI_NUM" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="FPI_POS" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="REGION" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="TEXT" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="IND" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+            </EntityType>
+            <EntityType Name="zsfpi_rd_head" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="FPI_NUM" />
+                    <PropertyRef Name="REGION" />
+                </Key>
+                <Property Name="FPI_NUM" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="REGION" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="TEXT" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="IND" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+            </EntityType>
+            <EntityType Name="zfpi_status_summ" sap:label="Позиции каталога" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="FPI_NUM" />
+                    <PropertyRef Name="DIMENSION" />
+                </Key>
+                <Property Name="FPI_NUM" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="DIMENSION" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="DESCRIPTION" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="MEASURE" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+            </EntityType>
+            <EntityType Name="zsfpi_position" sap:member-title="Позиции каталога" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="FPI_NUM" />
+                    <PropertyRef Name="FPI_POS" />
+                </Key>
+                <Property Name="FPI_NUM" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="FPI_POS" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="ARTKL" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="CATNM" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="MODEL" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="TRMARK" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="PRODCR" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="MEINS" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="QRCODE" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="WAERS" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="PRICE" Type="Edm.Decimal" Nullable="false" Precision="31" Scale="0" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="GRNTPRD" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="LENGTH" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="WIDTH" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="HEIGHT" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="KURVL" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="WEIGHTBRT" Type="Edm.Decimal" Nullable="false" Precision="31" Scale="0" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="PACKTYPE" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="PACKQNTN" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="PACKQNTV" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="PACKLENGTH" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="PACKWIDTH" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="PACKHEIGHT" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="PACKQRCODE" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="PLLTQNT" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="PLLTPACKQNT" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="EUROPLLTHEIGHT" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="EUROPLLTQNT" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="MINORDQUANT" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="DLVRTIME" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="USEFULLIFE" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="MATTX_L_255" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="MATTX_L_255_TECH" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="SKUCODE" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="PLUCODE" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="TMCCODE" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="OKPD2" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="OKVED" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="INFNR" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="PLUCODEMAKTX" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="SKUCODEMAKTX" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="STATPOS" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="STATPOSD" Type="Edm.DateTime" Nullable="false" Precision="0" sap:unicode="false" sap:label="Метка времени" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="NSIEXECUTOR" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="EBELN" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="EBELP" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="PLUCODE_LTEXT_S" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="SKUCODE_LTEXT_S" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="COMMENT_BNK_S" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="COMMENT_POS_S" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="MATDESCR" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="IND_DEL" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="IND_DELD" Type="Edm.DateTime" Nullable="false" Precision="0" sap:unicode="false" sap:label="Метка времени" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="STAT_TEXT" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="ACTION" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="POS_CHANGE" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="NEW_CHANGE" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="MESSAGE" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="DUPLICATE" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <NavigationProperty Name="Regions" Relationship="ZFPI_ODATA_SRV.FK_Position_PositionRegions" FromRole="Position" ToRole="Regions"/>
+                <NavigationProperty Name="Messages" Relationship="ZFPI_ODATA_SRV.FK_Position_PositionMessages" FromRole="Header" ToRole="Messages"/>
+            </EntityType>
+            <EntityType Name="zsfpi_message" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="fpi_num" />
+                    <PropertyRef Name="fpi_pos" />
+                    <PropertyRef Name="field" />
+                </Key>
+                <Property Name="fpi_num" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="fpi_pos" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="field" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="message" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+            </EntityType>
+            <EntityType Name="zsfpi_lock" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="FPI_POS" />
+                    <PropertyRef Name="FPI_NUM" />
+                </Key>
+                <Property Name="LOCK" Type="Edm.Boolean" Nullable="false" sap:unicode="false" sap:label="Флаг" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="FPI_POS" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="FPI_NUM" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+            </EntityType>
+            <EntityType Name="zsfpi_message" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="FPI_NUM" />
+                    <PropertyRef Name="FPI_POS" />
+                    <PropertyRef Name="MESSAGE_NUM" />
+                </Key>
+                <Property Name="FPI_NUM" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="FPI_POS" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="MESSAGE_NUM" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="MESSAGE" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="USNAM" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="AEDAT" Type="Edm.DateTime" Nullable="false" Precision="0" sap:unicode="false" sap:label="Метка времени" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="FIRST_NAME" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="LAST_NAME" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+            </EntityType>
+            <EntityType Name="zsfpi_meins" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="CODE" />
+                </Key>
+                <Property Name="CODE" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="TEXT" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+            </EntityType>
+            <EntityType Name="zsfpi_func" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="NUM_FUNC" />
+                    <PropertyRef Name="STATUS_S4" />
+                    <PropertyRef Name="STATUS_FIORI" />
+                </Key>
+                <Property Name="NUM_FUNC" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="STATUS_S4" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="STATUS_FIORI" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="NAME_FUNC" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="STATUS_S4_NAME" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="STATUS_FIORI_NAME" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="LINE_INDEX" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+            </EntityType>
+            <EntityType Name="zsfpi_excel" m:HasStream="true" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="FPI_NUM" />
+                    <PropertyRef Name="IS_TEMPLATE" />
+                </Key>
+                <Property Name="FPI_NUM" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="FILE_CONTENT" Type="Edm.Binary" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="IS_TEMPLATE" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="TEXT_CONTENT" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="MESSAGE" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="DUPLICATE" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+            </EntityType>
+            <EntityType Name="zsfpi_head" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="FPI_NUM" />
+                </Key>
+                <Property Name="FPI_NUM" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Номер ФПИ" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="VERSION" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Версия ФПИ" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="FPI_TYPE" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Тип ФПИ" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="STATHEAD" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="Статус заголовка ФПИ" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="STATHEADD" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="Дата установки статуса заголовка" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="LIFNR" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Номер счета поставщика или кредитора" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="DOCNR" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Договор" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="DOCNR_DESC" Type="Edm.String" Nullable="false" MaxLength="500" sap:unicode="false" sap:label="Предмет договора" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="DOCNR_DATA" Type="Edm.DateTime" Nullable="false" Precision="0" sap:unicode="false" sap:display-format="Date" sap:label="Дата заключения" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="DOCNR_BGN" Type="Edm.DateTime" Nullable="false" Precision="0" sap:unicode="false" sap:display-format="Date" sap:label="Дата начала" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="DOCNR_END" Type="Edm.DateTime" Nullable="false" Precision="0" sap:unicode="false" sap:display-format="Date" sap:label="Дата окончания" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="PODR" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Подразделение Инициатора" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="USNAM_INI" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Инициатор" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="PHONE_INI" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="Телефон инициатора" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="EMAIL_INI" Type="Edm.String" Nullable="false" MaxLength="241" sap:unicode="false" sap:label="E-mail инициатора" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="IND_DEL" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Индикатор удаления" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="CPUDT" Type="Edm.DateTime" Nullable="false" Precision="0" sap:unicode="false" sap:label="Дата" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="CPUTM" Type="Edm.Time" Nullable="false" Precision="0" sap:unicode="false" sap:label="Время ввода" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="USNAM" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Имя пользователя" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="AEDAT" Type="Edm.DateTime" Nullable="false" Precision="0" sap:unicode="false" sap:label="Дата последнего изменения" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="AEZET" Type="Edm.Time" Nullable="false" Precision="0" sap:unicode="false" sap:label="Время последнего изменения" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="AENAM" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Имя пользователя, изменившего объект" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="EFZ_TIME" Type="Edm.Time" Nullable="false" Precision="0" sap:unicode="false" sap:label="Время выгрузки ЕФЗ" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="EFZ_USER" Type="Edm.String" Nullable="false" sap:unicode="false" sap:label="Выгрузил ЕФЗ" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="NSI_MANUAL" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Признак: обработка ФПИ вручную (без выгрузки ЕФЗ)" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="NSIDATE" Type="Edm.DateTime" Nullable="false" Precision="0" sap:unicode="false" sap:label="Дата поступления в НСИ" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="NSITIME" Type="Edm.Time" Nullable="false" Precision="0" sap:unicode="false" sap:label="Время поступления в НСИ" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="HASPOS" Type="Edm.Boolean" Nullable="false" Precision="0" sap:unicode="false" sap:label="Наличие позиций" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="STATUSTEXT" Type="Edm.String" Nullable="false" Precision="0" sap:unicode="false" sap:label="Статус ФПИ" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+
+                <NavigationProperty Name="StatusSummary" Relationship="ZFPI_ODATA_SRV.FK_PositionHeader_StatusSummary" FromRole="Header" ToRole="StatusSummary"/>
+                <NavigationProperty Name="Positions" Relationship="ZFPI_ODATA_SRV.FK_PositionHeader_Positions" FromRole="Header" ToRole="Positions"/>
+                <NavigationProperty Name="Regions" Relationship="ZFPI_ODATA_SRV.FK_PositionHeader_Regions" FromRole="Header" ToRole="Regions"/>
+            </EntityType>
+
+            <Association Name="FK_PositionHeader_StatusSummary">
+                <End Role="Header" Type="ZFPI_ODATA_SRV.zsfpi_head" Multiplicity="0..1"/>
+                <End Role="StatusSummary" Type="ZFPI_ODATA_SRV.zfpi_status_summ" Multiplicity="*"/>
+                <ReferentialConstraint>
+                    <Principal Role="Header">
+                        <PropertyRef Name="FPI_NUM"/>
+                    </Principal>
+                    <Dependent Role="StatusSummary">
+                        <PropertyRef Name="FPI_NUM"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+
+            <Association Name="FK_PositionHeader_Positions">
+                <End Role="Header" Type="ZFPI_ODATA_SRV.zsfpi_head" Multiplicity="0..1"/>
+                <End Role="Positions" Type="ZFPI_ODATA_SRV.zsfpi_position" Multiplicity="*"/>
+                <ReferentialConstraint>
+                    <Principal Role="Header">
+                        <PropertyRef Name="FPI_NUM"/>
+                    </Principal>
+                    <Dependent Role="Positions">
+                        <PropertyRef Name="FPI_NUM"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+
+            <Association Name="FK_PositionHeader_Regions">
+                <End Role="Header" Type="ZFPI_ODATA_SRV.zsfpi_head" Multiplicity="0..1"/>
+                <End Role="Regions" Type="ZFPI_ODATA_SRV.zsfpi_rd_head" Multiplicity="*"/>
+                <ReferentialConstraint>
+                    <Principal Role="Header">
+                        <PropertyRef Name="FPI_NUM"/>
+                    </Principal>
+                    <Dependent Role="Regions">
+                        <PropertyRef Name="FPI_NUM"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+
+            <Association Name="FK_Position_PositionRegions">
+                <End Role="Position" Type="ZFPI_ODATA_SRV.zsfpi_position" Multiplicity="0..1"/>
+                <End Role="Regions" Type="ZFPI_ODATA_SRV.zsfpi_rd_pos" Multiplicity="*"/>
+                <ReferentialConstraint>
+                    <Principal Role="Position">
+                        <PropertyRef Name="FPI_NUM"/>
+                        <PropertyRef Name="FPI_POS"/>
+                    </Principal>
+                    <Dependent Role="Regions">
+                        <PropertyRef Name="FPI_NUM"/>
+                        <PropertyRef Name="FPI_POS"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+
+            <Association Name="FK_Position_PositionMessages">
+                <End Role="Position" Type="ZFPI_ODATA_SRV.zsfpi_position" Multiplicity="0..1"/>
+                <End Role="Messages" Type="ZFPI_ODATA_SRV.zsfpi_message" Multiplicity="*"/>
+                <ReferentialConstraint>
+                    <Principal Role="Position">
+                        <PropertyRef Name="FPI_NUM"/>
+                        <PropertyRef Name="FPI_POS"/>
+                    </Principal>
+                    <Dependent Role="Messages">
+                        <PropertyRef Name="FPI_NUM"/>
+                        <PropertyRef Name="FPI_POS"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+
+            <EntityContainer Name="ZFPI_ODATA_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="zsfpi_headSet" EntityType="ZFPI_ODATA_SRV.zsfpi_head" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1" />
+                <EntitySet Name="zsfpi_excelSet" EntityType="ZFPI_ODATA_SRV.zsfpi_excel" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1" />
+                <EntitySet Name="zfpi_status_summSet" EntityType="ZFPI_ODATA_SRV.zfpi_status_summ" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1" />
+                <EntitySet Name="zsfpi_funcSet" EntityType="ZFPI_ODATA_SRV.zsfpi_func" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1" />
+                <EntitySet Name="zsfpi_meinsSet" EntityType="ZFPI_ODATA_SRV.zsfpi_meins" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1" />
+                <EntitySet Name="zsfpi_messageSet" EntityType="ZFPI_ODATA_SRV.zsfpi_message" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1" />
+                <EntitySet Name="zsfpi_positionSet" EntityType="ZFPI_ODATA_SRV.zsfpi_position" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1" />
+                <EntitySet Name="zsfpi_lockSet" EntityType="ZFPI_ODATA_SRV.zsfpi_lock" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1" />
+                <EntitySet Name="zsfpi_rd_headSet" EntityType="ZFPI_ODATA_SRV.zsfpi_rd_head" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1" />
+                <EntitySet Name="zsfpi_rd_posSet" EntityType="ZFPI_ODATA_SRV.zsfpi_rd_pos" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1" />
+                <EntitySet Name="zsfpi_statusSet" EntityType="ZFPI_ODATA_SRV.zsfpi_status" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1" />
+                <AssociationSet Name="FK_PositionHeader_StatusSummary" Association="ZFPI_ODATA_SRV.FK_PositionHeader_StatusSummary">
+                    <End Role="Header" EntitySet="zsfpi_headSet"/>
+                    <End Role="StatusSummary" EntitySet="zfpi_status_summSet"/>
+                </AssociationSet>
+                <AssociationSet Name="FK_PositionHeader_Positions" Association="ZFPI_ODATA_SRV.FK_PositionHeader_Positions">
+                    <End Role="Header" EntitySet="zsfpi_headSet"/>
+                    <End Role="Positions" EntitySet="zsfpi_positionSet"/>
+                </AssociationSet>
+                <AssociationSet Name="FK_PositionHeader_Regions" Association="ZFPI_ODATA_SRV.FK_PositionHeader_Regions">
+                    <End Role="Header" EntitySet="zsfpi_headSet"/>
+                    <End Role="Regions" EntitySet="zsfpi_rd_headSet"/>
+                </AssociationSet>
+                <AssociationSet Name="FK_Position_PositionRegions" Association="ZFPI_ODATA_SRV.FK_Position_PositionRegions">
+                    <End Role="Position" EntitySet="zsfpi_positionSet"/>
+                    <End Role="Regions" EntitySet="zsfpi_rd_posSet"/>
+                </AssociationSet>
+                <AssociationSet Name="FK_Position_PositionMessages" Association="ZFPI_ODATA_SRV.FK_Position_PositionMessages">
+                    <End Role="Position" EntitySet="zsfpi_positionSet"/>
+                    <End Role="Messages" EntitySet="zsfpi_messageSet"/>
+                </AssociationSet>
+            </EntityContainer>
+
+            <atom:link rel="self" href="https://sap-sdd001.sigma.sbrf.ru:8001/sap/opu/odata/SAP/ZFPI_ODATA_SRV/$metadata"
+                       xmlns:atom="http://www.w3.org/2005/Atom" />
+            <atom:link rel="latest-version" href="https://sap-sdd001.sigma.sbrf.ru:8001/sap/opu/odata/SAP/ZFPI_ODATA_SRV/$metadata"
+                       xmlns:atom="http://www.w3.org/2005/Atom" />
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>
