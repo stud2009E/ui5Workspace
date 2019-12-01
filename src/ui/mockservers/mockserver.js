@@ -8,7 +8,7 @@ sap.ui.define([
 
         getAllServices: function () {
             return [
-                "ZFPI_ODATA_SRV"
+                "ZSPL_FPI_ODATA_SRV"
             ];
         },
 
