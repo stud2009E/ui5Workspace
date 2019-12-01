@@ -14,7 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "grunt": "^1.0.4",
-    "grunt-connect-proxy": "^0.2.0",
+    "grunt-connect-proxy": "git+https://github.com/drewzboto/grunt-connect-proxy.git",
     "grunt-contrib-clean": "^2.0.0",
     "grunt-contrib-connect": "^2.1.0",
     "grunt-contrib-copy": "^1.0.0",
