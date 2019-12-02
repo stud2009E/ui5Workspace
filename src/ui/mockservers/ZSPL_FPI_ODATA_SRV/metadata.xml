@@ -133,7 +133,7 @@
                 <Property Name="Text" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
                 <Property Name="Ind" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" />
             </EntityType>
-            <EntityType Name="CatalogRegion" sap:content-version="1">
+            <EntityType Name="CatalogRegion" sap:label="Регионы действия" sap:content-version="1">
                 <Key>
                     <PropertyRef Name="FpiNum" />
                     <PropertyRef Name="Region" />
