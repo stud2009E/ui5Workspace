@@ -6,3 +6,4 @@ debug.log
 Config.js
 src/ui/apps/*
 src/ui/libs/*
+src/dist/*

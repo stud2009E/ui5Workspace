@@ -18,6 +18,7 @@
     "grunt-contrib-clean": "^2.0.0",
     "grunt-contrib-connect": "^2.1.0",
     "grunt-contrib-copy": "^1.0.0",
+    "grunt-nwabap-ui5uploader": "git+https://github.com/pfefferf/grunt-nwabap-ui5uploader.git",
     "grunt-openui5": "^0.15.0"
   }
 }
