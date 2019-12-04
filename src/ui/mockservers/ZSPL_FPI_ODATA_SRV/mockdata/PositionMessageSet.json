@@ -1,0 +1,28 @@
+[{
+	"MessageNum": "001",
+	"FpiNum": "100000000249",
+	"FpiPos": "0001",
+	"Message":"Создал позицию по фломастерам",
+	"LastName":"",
+	"FirstName":"",
+	"UserName": "user1",
+	"UpdateDate": "\/Date(1550553474000)\/"
+},{
+	"MessageNum": "002",
+	"FpiNum": "100000000249",
+	"FpiPos": "0001",
+	"Message":"Нам нужны карандаши!Замените",
+	"LastName":"",
+	"FirstName":"",
+	"UserName": "user2",
+	"UpdateDate": "\/Date(1550663474000)\/"
+},{
+	"MessageNum": "003",
+	"FpiNum": "100000000249",
+	"FpiPos": "0001",
+	"Message":"Отправил в работу",
+	"LastName":"",
+	"FirstName":"",
+	"UserName": "user1",
+	"UpdateDate": "\/Date(1550783474000)\/"
+}]

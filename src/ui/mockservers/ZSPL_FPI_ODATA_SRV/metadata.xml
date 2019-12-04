@@ -44,13 +44,13 @@
                 <Property Name="DocnrDesc" Type="Edm.String" Nullable="false" MaxLength="500" sap:unicode="false"
                           sap:label="Предмет договора" sap:creatable="false" sap:updatable="false" sap:sortable="false"
                           sap:filterable="false"/>
-                <Property Name="DocnrData" Type="Edm.DateTime" Nullable="false" Precision="0" sap:unicode="false"
+                <Property Name="DocnrData" Type="Edm.DateTime" MaxLength="8" Nullable="false" sap:display-format="Date" Precision="0" sap:unicode="false"
                           sap:label="Дата заключения договора" sap:creatable="false" sap:updatable="false"
                           sap:sortable="false" sap:filterable="false"/>
-                <Property Name="DocnrBegin" Type="Edm.DateTime" Nullable="false" Precision="0" sap:unicode="false"
+                <Property Name="DocnrBegin" Type="Edm.DateTime" MaxLength="8" Nullable="false" sap:display-format="Date" Precision="0" sap:unicode="false"
                           sap:label="Дата начала действия договора" sap:creatable="false" sap:updatable="false"
                           sap:sortable="false" sap:filterable="false"/>
-                <Property Name="DocnrEnd" Type="Edm.DateTime" Nullable="false" Precision="0" sap:unicode="false"
+                <Property Name="DocnrEnd" Type="Edm.DateTime" MaxLength="8" Nullable="false" sap:display-format="Date" Precision="0" sap:unicode="false"
                           sap:label="Дата окончания действия договора" sap:creatable="false" sap:updatable="false"
                           sap:sortable="false" sap:filterable="false"/>
                 <Property Name="Podr" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false"
@@ -141,93 +141,93 @@
                 <Property Name="FpiPos" Type="Edm.String" Nullable="false" sap:unicode="false" sap:label="Позиция ФПИ"
                           sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
                 <Property Name="Artkl" Type="Edm.String" Nullable="false" sap:unicode="false"
-                          sap:label="Артикул поставщика" sap:creatable="false" sap:updatable="false"
+                    	sap:label="Артикул поставщика" sap:creatable="true" sap:updatable="true"
+                        sap:sortable="false" sap:filterable="false" sap:field-control="IsChangeable_fc"/>
+                <Property Name="Catnm" Type="Edm.String" Nullable="true" sap:unicode="false"
+						sap:label="Каталожный № Производителя" sap:creatable="true" sap:updatable="true"
+                        sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Model" Type="Edm.String" Nullable="true" sap:unicode="false" sap:label="Модель"
+                          sap:creatable="true" sap:updatable="true" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TrMark" Type="Edm.String" Nullable="true" sap:unicode="false"
+                          sap:label="Бренд/Торговая марка" sap:creatable="true" sap:updatable="true"
                           sap:sortable="false" sap:filterable="false"/>
-                <Property Name="Catnm" Type="Edm.String" Nullable="false" sap:unicode="false"
-                          sap:label="Каталожный № Производителя" sap:creatable="false" sap:updatable="false"
-                          sap:sortable="false" sap:filterable="false"/>
-                <Property Name="Model" Type="Edm.String" Nullable="false" sap:unicode="false" sap:label="Модель"
-                          sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="TrMark" Type="Edm.String" Nullable="false" sap:unicode="false"
-                          sap:label="Бренд/Торговая марка" sap:creatable="false" sap:updatable="false"
-                          sap:sortable="false" sap:filterable="false"/>
-                <Property Name="ProdCr" Type="Edm.String" Nullable="false" sap:unicode="false" sap:label="Производитель"
-                          sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ProdCr" Type="Edm.String" Nullable="true" sap:unicode="false" sap:label="Производитель"
+                          sap:creatable="true" sap:updatable="true" sap:sortable="false" sap:filterable="false"/>
                 <Property Name="Meins" Type="Edm.String" Nullable="false" sap:unicode="false"
                           sap:label="Единица измерения" sap:creatable="false" sap:updatable="false" sap:sortable="false"
                           sap:filterable="false"/>
-                <Property Name="QrCode" Type="Edm.String" Nullable="false" sap:unicode="false"
-                          sap:label="Штрих-код единицы товара" sap:creatable="false" sap:updatable="false"
+                <Property Name="QrCode" Type="Edm.String" Nullable="true" sap:unicode="false"
+                          sap:label="Штрих-код единицы товара" sap:creatable="true" sap:updatable="true"
                           sap:sortable="false" sap:filterable="false"/>
-                <Property Name="GrntPrd" Type="Edm.String" Nullable="false" sap:unicode="false"
-                          sap:label="Срок гарантии (календ. дн.) поставщика" sap:creatable="false" sap:updatable="false"
+                <Property Name="GrntPrd" Type="Edm.String" Nullable="true" sap:unicode="false"
+                          sap:label="Срок гарантии (календ. дн.) поставщика" sap:creatable="true" sap:updatable="true"
                           sap:sortable="false" sap:filterable="false"/>
-                <Property Name="Length" Type="Edm.String" Nullable="false" sap:unicode="false"
-                          sap:label="Длина единицы товара, мм" sap:creatable="false" sap:updatable="false"
+                <Property Name="Length" Type="Edm.String" Nullable="true" sap:unicode="false"
+                          sap:label="Длина единицы товара, мм" sap:creatable="true" sap:updatable="true"
                           sap:sortable="false" sap:filterable="false"/>
-                <Property Name="Width" Type="Edm.String" Nullable="false" sap:unicode="false"
-                          sap:label="Ширина единицы товара, мм" sap:creatable="false" sap:updatable="false"
+                <Property Name="Width" Type="Edm.String" Nullable="true" sap:unicode="false"
+                          sap:label="Ширина единицы товара, мм" sap:creatable="true" sap:updatable="true"
                           sap:sortable="false" sap:filterable="false"/>
-                <Property Name="Height" Type="Edm.String" Nullable="false" sap:unicode="false"
-                          sap:label="Высота единицы товара, мм" sap:creatable="false" sap:updatable="false"
+                <Property Name="Height" Type="Edm.String" Nullable="true" sap:unicode="false"
+                          sap:label="Высота единицы товара, мм" sap:creatable="true" sap:updatable="true"
                           sap:sortable="false" sap:filterable="false"/>
-                <Property Name="Kurvl" Type="Edm.String" Nullable="false" sap:unicode="false"
-                          sap:label="Количество уровней вложения" sap:creatable="false" sap:updatable="false"
+                <Property Name="Kurvl" Type="Edm.String" Nullable="true" sap:unicode="false"
+                          sap:label="Количество уровней вложения" sap:creatable="true" sap:updatable="true"
                           sap:sortable="false" sap:filterable="false"/>
-                <Property Name="WeightBrt" Type="Edm.Decimal" Nullable="false" Precision="31" Scale="0"
-                          sap:unicode="false" sap:label="Вес БРУТТО единицы товара, кг" sap:creatable="false"
-                          sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="PackType" Type="Edm.String" Nullable="false" sap:unicode="false"
-                          sap:label="Тип транспортной упаковки" sap:creatable="false" sap:updatable="false"
+                <Property Name="WeightBrt" Type="Edm.Decimal" Nullable="true" Precision="31" Scale="0"
+                          sap:unicode="false" sap:label="Вес БРУТТО единицы товара, кг" sap:creatable="true"
+                          sap:updatable="true" sap:sortable="true" sap:filterable="true"/>
+                <Property Name="PackType" Type="Edm.String" Nullable="true" sap:unicode="false"
+                          sap:label="Тип транспортной упаковки" sap:creatable="true" sap:updatable="true"
                           sap:sortable="false" sap:filterable="false"/>
-                <Property Name="PackQntn" Type="Edm.String" Nullable="false" sap:unicode="false"
-                          sap:label="Количество единиц (шт) в упаковке нижнего уровня" sap:creatable="false"
-                          sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="PackQntv" Type="Edm.String" Nullable="false" sap:unicode="false"
-                          sap:label="Количество единиц (шт) в упаковке верхнего уровня" sap:creatable="false"
-                          sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="PackLength" Type="Edm.String" Nullable="false" sap:unicode="false"
-                          sap:label="Длина упаковки верхнего уровня" sap:creatable="false" sap:updatable="false"
+                <Property Name="PackQntn" Type="Edm.String" Nullable="true" sap:unicode="false"
+                          sap:label="Количество единиц (шт) в упаковке нижнего уровня" sap:creatable="true"
+                          sap:updatable="true" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PackQntv" Type="Edm.String" Nullable="true" sap:unicode="false"
+                          sap:label="Количество единиц (шт) в упаковке верхнего уровня" sap:creatable="true"
+                          sap:updatable="true" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PackLength" Type="Edm.String" Nullable="true" sap:unicode="false"
+                          sap:label="Длина упаковки верхнего уровня" sap:creatable="true" sap:updatable="true"
                           sap:sortable="false" sap:filterable="false"/>
-                <Property Name="PackWidth" Type="Edm.String" Nullable="false" sap:unicode="false"
-                          sap:label="Ширина упаковки верхнего уровня" sap:creatable="false" sap:updatable="false"
+                <Property Name="PackWidth" Type="Edm.String" Nullable="true" sap:unicode="false"
+                          sap:label="Ширина упаковки верхнего уровня" sap:creatable="true" sap:updatable="true"
                           sap:sortable="false" sap:filterable="false"/>
-                <Property Name="PackHeight" Type="Edm.String" Nullable="false" sap:unicode="false"
-                          sap:label="Высота упаковки верхнего уровня" sap:creatable="false" sap:updatable="false"
+                <Property Name="PackHeight" Type="Edm.String" Nullable="true" sap:unicode="false"
+                          sap:label="Высота упаковки верхнего уровня" sap:creatable="true" sap:updatable="true"
                           sap:sortable="false" sap:filterable="false"/>
-                <Property Name="PackQrCode" Type="Edm.String" Nullable="false" sap:unicode="false"
-                          sap:label="Штрих-код упаковки верхнего уровня" sap:creatable="false" sap:updatable="false"
+                <Property Name="PackQrCode" Type="Edm.String" Nullable="true" sap:unicode="false"
+                          sap:label="Штрих-код упаковки верхнего уровня" sap:creatable="true" sap:updatable="true"
                           sap:sortable="false" sap:filterable="false"/>
-                <Property Name="PlltQnt" Type="Edm.String" Nullable="false" sap:unicode="false"
-                          sap:label="Количество ед. (шт) на паллете" sap:creatable="false" sap:updatable="false"
+                <Property Name="PlltQnt" Type="Edm.String" Nullable="true" sap:unicode="false"
+                          sap:label="Количество ед. (шт) на паллете" sap:creatable="true" sap:updatable="true"
                           sap:sortable="false" sap:filterable="false"/>
-                <Property Name="PlltPackQnt" Type="Edm.String" Nullable="false" sap:unicode="false"
-                          sap:label="Количество упаковок верхнего уровня на паллете" sap:creatable="false"
-                          sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="EuroPlltHeight" Type="Edm.String" Nullable="false" sap:unicode="false"
-                          sap:label="Высота слоя на EURO-паллете, мм" sap:creatable="false" sap:updatable="false"
+                <Property Name="PlltPackQnt" Type="Edm.String" Nullable="true" sap:unicode="false"
+                          sap:label="Количество упаковок верхнего уровня на паллете" sap:creatable="true"
+                          sap:updatable="true" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="EuroPlltHeight" Type="Edm.String" Nullable="true" sap:unicode="false"
+                          sap:label="Высота слоя на EURO-паллете, мм" sap:creatable="true" sap:updatable="true"
                           sap:sortable="false" sap:filterable="false"/>
-                <Property Name="EuroPlltQnt" Type="Edm.String" Nullable="false" sap:unicode="false"
-                          sap:label="Количество ед. в слое на EURO-паллете" sap:creatable="false" sap:updatable="false"
+                <Property Name="EuroPlltQnt" Type="Edm.String" Nullable="true" sap:unicode="false"
+                          sap:label="Количество ед. в слое на EURO-паллете" sap:creatable="true" sap:updatable="true"
                           sap:sortable="false" sap:filterable="false"/>
-                <Property Name="MinOrdQuant" Type="Edm.String" Nullable="false" sap:unicode="false"
-                          sap:label="Минимальный квант заказа на поставку в ед. товара" sap:creatable="false"
-                          sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="MattxL255" Type="Edm.String" Nullable="false" sap:unicode="false"
-                          sap:label="Полное наименование товара по ТОРГ-12 - 255 знаков" sap:creatable="false"
-                          sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="MinOrdQuant" Type="Edm.String" Nullable="true" sap:unicode="false"
+                          sap:label="Минимальный квант заказа на поставку в ед. товара" sap:creatable="true"
+                          sap:updatable="true" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="MattxL255" Type="Edm.String" Nullable="true" sap:unicode="false"
+                          sap:label="Полное наименование товара по ТОРГ-12 - 255 знаков" sap:creatable="true"
+                          sap:updatable="true" sap:sortable="false" sap:filterable="false"/>
                 <Property Name="StatPos" Type="Edm.String" Nullable="false" sap:unicode="false"
                           sap:label="Статус позиции ФПИ" sap:creatable="false" sap:updatable="false"
                           sap:sortable="false" sap:filterable="false"/>
-                <Property Name="MatDescr" Type="Edm.String" Nullable="false" sap:unicode="false"
-                          sap:label="Описание товара (характеристики и доп. параметры)" sap:creatable="false"
-                          sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="PosChange" Type="Edm.String" Nullable="false" sap:unicode="false" sap:label="Замена"
+                <Property Name="MatDescr" Type="Edm.String" Nullable="true" sap:unicode="false"
+                          sap:label="Описание товара (характеристики и доп. параметры)" sap:creatable="true"
+                          sap:updatable="true" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PosChange" Type="Edm.String" Nullable="true" sap:unicode="false" sap:label="Замена"
                           sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="ChangeBegin" Type="Edm.String" Nullable="false" sap:unicode="false"
+                <Property Name="ChangeBegin" Type="Edm.String" Nullable="true" sap:unicode="false"
                           sap:label="Дата начала действия позиции" sap:creatable="false" sap:updatable="false"
                           sap:sortable="false" sap:filterable="false"/>
-                <Property Name="ChangeEnd" Type="Edm.String" Nullable="false" sap:unicode="false"
+                <Property Name="ChangeEnd" Type="Edm.String" Nullable="true" sap:unicode="false"
                           sap:label="Дата окончания действия позиции" sap:creatable="false" sap:updatable="false"
                           sap:sortable="false" sap:filterable="false"/>
                 <Property Name="StatPosD" Type="Edm.DateTime" Nullable="false" Precision="0" sap:unicode="false"
@@ -290,6 +290,9 @@
                           sap:updatable="false" sap:filterable="false"/>
                 <Property Name="IsSelectable" Type="Edm.Boolean" Nullable="false" sap:unicode="false" sap:label="Флаг"
                           sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+			  	<Property Name="IsEditable" Type="Edm.Boolean" Nullable="false" sap:unicode="false" sap:label="Флаг"
+                    	sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+
                 <NavigationProperty Name="ToRegion" Relationship="ZSPL_FPI_ODATA_SRV.PositionToRegion"
                                     FromRole="FromRole_PositionToRegion" ToRole="ToRole_PositionToRegion"/>
                 <NavigationProperty Name="ToMessages" Relationship="ZSPL_FPI_ODATA_SRV.PositionToMessages"
@@ -315,7 +318,7 @@
                 <Property Name="Ind" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false"
                           sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
             </EntityType>
-            <EntityType Name="CatalogRegion" sap:content-version="1">
+            <EntityType Name="CatalogRegion" sap:label="Регионы действия" sap:content-version="1">
                 <Key>
                     <PropertyRef Name="FpiNum"/>
                     <PropertyRef Name="Region"/>
@@ -342,7 +345,7 @@
                 <Property Name="LongText" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false"
                           sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
             </EntityType>
-            <EntityType Name="PositionMessage" sap:content-version="1">
+            <EntityType Name="PositionMessage" sap:label="Комментарии" sap:content-version="1">
                 <Key>
                     <PropertyRef Name="FpiNum"/>
                     <PropertyRef Name="FpiPos"/>
@@ -386,11 +389,11 @@
                           sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
                 <Property Name="FpiPos" Type="Edm.String" Nullable="false" sap:unicode="false" sap:label="Позиция ФПИ"
                           sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="Closable" Type="Edm.Boolean" Nullable="false" sap:unicode="false" sap:label="Флаг"
+                <Property Name="Closeable" Type="Edm.Boolean" Nullable="false" sap:unicode="false" sap:label="Флаг"
                           sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="Savable" Type="Edm.Boolean" Nullable="false" sap:unicode="false" sap:label="Флаг"
+                <Property Name="Saveable" Type="Edm.Boolean" Nullable="false" sap:unicode="false" sap:label="Флаг"
                           sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="Changeble" Type="Edm.Boolean" Nullable="false" sap:unicode="false" sap:label="Флаг"
+                <Property Name="Changeable" Type="Edm.Boolean" Nullable="false" sap:unicode="false" sap:label="Флаг"
                           sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
                 <Property Name="Cancelable" Type="Edm.Boolean" Nullable="false" sap:unicode="false" sap:label="Флаг"
                           sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
@@ -504,19 +507,20 @@
                 <EntitySet Name="PositionSummarySet" EntityType="ZSPL_FPI_ODATA_SRV.PositionSummary"
                            sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false"
                            sap:addressable="false" sap:content-version="1"/>
-                <EntitySet Name="PositionSet" EntityType="ZSPL_FPI_ODATA_SRV.Position" sap:creatable="false"
-                           sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false"
+                <EntitySet Name="PositionSet" EntityType="ZSPL_FPI_ODATA_SRV.Position" sap:creatable="true"
+                           sap:updatable="true" sap:deletable="false" sap:pageable="false" sap:addressable="false"
                            sap:content-version="1"/>
                 <EntitySet Name="PositionRegionSet" EntityType="ZSPL_FPI_ODATA_SRV.PositionRegion" sap:creatable="false"
                            sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false"
                            sap:content-version="1"/>
-                <EntitySet Name="CatalogRegionSet" EntityType="ZSPL_FPI_ODATA_SRV.CatalogRegion" sap:creatable="false"
+                <EntitySet Name="CatalogRegionSet" EntityType="ZSPL_FPI_ODATA_SRV.CatalogRegion" sap:label="Регионы действия" sap:creatable="false"
                            sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false"
                            sap:content-version="1"/>
                 <EntitySet Name="PositionStatusSHSet" EntityType="ZSPL_FPI_ODATA_SRV.PositionStatusSH"
                            sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false"
                            sap:addressable="false" sap:content-version="1"/>
                 <EntitySet Name="PositionMessageSet" EntityType="ZSPL_FPI_ODATA_SRV.PositionMessage"
+							sap:label="Комментарии"
                            sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false"
                            sap:addressable="false" sap:content-version="1"/>
                 <EntitySet Name="UnitSHSet" EntityType="ZSPL_FPI_ODATA_SRV.UnitSH" sap:creatable="false"
