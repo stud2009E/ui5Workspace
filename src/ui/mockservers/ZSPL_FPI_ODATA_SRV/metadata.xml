@@ -154,7 +154,7 @@
                 <Property Name="ProdCr" Type="Edm.String" Nullable="true" sap:unicode="false" sap:label="Производитель"
                           sap:creatable="true" sap:updatable="true" sap:sortable="false" sap:filterable="false"/>
                 <Property Name="Meins" Type="Edm.String" Nullable="false" sap:unicode="false"
-                          sap:label="Единица измерения" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+                          sap:label="Единица измерения" sap:creatable="false" sap:updatable="true" sap:sortable="false"
                           sap:filterable="false"/>
                 <Property Name="QrCode" Type="Edm.String" Nullable="true" sap:unicode="false"
                           sap:label="Штрих-код единицы товара" sap:creatable="true" sap:updatable="true"
@@ -311,12 +311,12 @@
                           sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
                 <Property Name="FpiPos" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false"
                           sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="Region" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false"
-                          sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="Text" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false"
-                          sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Region" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="true"
+                          sap:updatable="true"  sap:text="Text" sap:sortable="true" sap:filterable="true"/>
+                <Property Name="Text" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="true"
+                          sap:updatable="true" sap:sortable="false" sap:filterable="false"/>
                 <Property Name="Ind" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false"
-                          sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                          sap:updatable="true" sap:sortable="false" sap:filterable="false"/>
             </EntityType>
             <EntityType Name="CatalogRegion" sap:label="Регионы действия" sap:content-version="1">
                 <Key>
@@ -374,7 +374,7 @@
                     <PropertyRef Name="Id"/>
                 </Key>
                 <Property Name="Id" Type="Edm.Guid" Nullable="false" sap:unicode="false" sap:label="UUID"
-                          sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                          sap:creatable="false" sap:updatable="false" sap:text="Text" sap:sortable="false" sap:filterable="false"/>
                 <Property Name="Text" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false"
                           sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
                 <Property Name="LongText" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false"
@@ -511,7 +511,7 @@
                            sap:updatable="true" sap:deletable="false" sap:pageable="false" sap:addressable="false"
                            sap:content-version="1"/>
                 <EntitySet Name="PositionRegionSet" EntityType="ZSPL_FPI_ODATA_SRV.PositionRegion" sap:creatable="false"
-                           sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false"
+                           sap:updatable="true" sap:deletable="false" sap:pageable="false" sap:addressable="false"
                            sap:content-version="1"/>
                 <EntitySet Name="CatalogRegionSet" EntityType="ZSPL_FPI_ODATA_SRV.CatalogRegion" sap:label="Регионы действия" sap:creatable="false"
                            sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false"
