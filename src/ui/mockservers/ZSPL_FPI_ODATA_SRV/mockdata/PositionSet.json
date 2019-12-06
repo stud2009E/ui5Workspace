@@ -2,7 +2,7 @@
 	{
 		"FpiNum":"100000000249",
 		"FpiPos": "0001",
-		"Artkl":"2343878549",
+		"Artkl":2343878549,
 		"Catnm":"32847839894",
 		"PosChange":"0002",
 		"ChangeBegin":"",
@@ -15,7 +15,7 @@
 		"IndDelD":"",
 		"Model":"",
 		"Message":"",
-		"StatText":"",
+		"StatText":"В работе",
 		"Duplicate":"",
 		"MattxL255Tech":"",
 		"SkuCode":"",
@@ -61,7 +61,12 @@
 		"EuroPlltHeight":"",
 		"EuroPlltQnt":"",
 		"MinOrdQuant":"",
-		"IsEditable": true,
-		"IsSelectable":true
+		"IsEditable": false,
+		"IsSelectable":true,
+		"InChangeState":true,
+		"ChangeArtklOld": "12335463",
+		"ChangeMattxL255Old":"Комплект коммутатора для нового разъема",
+		"ChangeBegin": null,
+		"ChangeEnd": null
 	}
 ]

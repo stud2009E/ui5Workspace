@@ -44,7 +44,7 @@
                 <Property Name="DocnrDesc" Type="Edm.String" Nullable="false" MaxLength="500" sap:unicode="false"
                           sap:label="Предмет договора" sap:creatable="false" sap:updatable="false" sap:sortable="false"
                           sap:filterable="false"/>
-                <Property Name="DocnrData" Type="Edm.DateTime" MaxLength="8" Nullable="false" sap:display-format="Date" Precision="0" sap:unicode="false"
+                <Property Name="DocnrDate" Type="Edm.DateTime" MaxLength="8" Nullable="false" sap:display-format="Date" Precision="0" sap:unicode="false"
                           sap:label="Дата заключения договора" sap:creatable="false" sap:updatable="false"
                           sap:sortable="false" sap:filterable="false"/>
                 <Property Name="DocnrBegin" Type="Edm.DateTime" MaxLength="8" Nullable="false" sap:display-format="Date" Precision="0" sap:unicode="false"
@@ -140,7 +140,7 @@
                           sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
                 <Property Name="FpiPos" Type="Edm.String" Nullable="false" sap:unicode="false" sap:label="Позиция ФПИ"
                           sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="Artkl" Type="Edm.String" Nullable="false" sap:unicode="false"
+                <Property Name="Artkl" Type="Edm.Int32" Nullable="false" sap:unicode="false"
                     	sap:label="Артикул поставщика" sap:creatable="true" sap:updatable="true"
                         sap:sortable="false" sap:filterable="false" sap:field-control="IsChangeable_fc"/>
                 <Property Name="Catnm" Type="Edm.String" Nullable="true" sap:unicode="false"
@@ -217,19 +217,25 @@
                           sap:label="Полное наименование товара по ТОРГ-12 - 255 знаков" sap:creatable="true"
                           sap:updatable="true" sap:sortable="false" sap:filterable="false"/>
                 <Property Name="StatPos" Type="Edm.String" Nullable="false" sap:unicode="false"
-                          sap:label="Статус позиции ФПИ" sap:creatable="false" sap:updatable="false"
+                          sap:label="Код статуса" sap:text="StatText" sap:creatable="false" sap:updatable="false"
                           sap:sortable="false" sap:filterable="false"/>
                 <Property Name="MatDescr" Type="Edm.String" Nullable="true" sap:unicode="false"
                           sap:label="Описание товара (характеристики и доп. параметры)" sap:creatable="true"
                           sap:updatable="true" sap:sortable="false" sap:filterable="false"/>
                 <Property Name="PosChange" Type="Edm.String" Nullable="true" sap:unicode="false" sap:label="Замена"
                           sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="ChangeBegin" Type="Edm.String" Nullable="true" sap:unicode="false"
-                          sap:label="Дата начала действия позиции" sap:creatable="false" sap:updatable="false"
+                <Property Name="ChangeBegin" Type="Edm.DateTime" Nullable="true" sap:unicode="false" sap:display-format="Date"
+                          sap:label="Дата начала действия позиции" sap:creatable="false" sap:updatable="true"
                           sap:sortable="false" sap:filterable="false"/>
-                <Property Name="ChangeEnd" Type="Edm.String" Nullable="true" sap:unicode="false"
-                          sap:label="Дата окончания действия позиции" sap:creatable="false" sap:updatable="false"
+                <Property Name="ChangeEnd" Type="Edm.DateTime" Nullable="true" sap:unicode="false" sap:display-format="Date"
+                          sap:label="Дата окончания действия позиции" sap:creatable="false" sap:updatable="true"
                           sap:sortable="false" sap:filterable="false"/>
+				<Property Name="ChangeArtklOld" Type="Edm.String" Nullable="true" sap:unicode="false"
+							sap:label="Артикул поставщика" sap:creatable="false" sap:updatable="true"
+							sap:sortable="false" sap:filterable="false"/>
+				<Property Name="ChangeMattxL255Old" Type="Edm.String" Nullable="true" sap:unicode="false"
+							sap:label="Описание товара (характеристики и доп. параметры)" sap:creatable="true"
+							sap:updatable="true" sap:sortable="false" sap:filterable="false"/>
                 <Property Name="StatPosD" Type="Edm.DateTime" Nullable="false" Precision="0" sap:unicode="false"
                           sap:label="Метка времени" sap:creatable="false" sap:updatable="false" sap:sortable="false"
                           sap:filterable="false"/>
@@ -239,6 +245,7 @@
                           sap:label="Метка времени" sap:creatable="false" sap:updatable="false" sap:sortable="false"
                           sap:filterable="false"/>
                 <Property Name="StatText" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false"
+						  sap:label="Статус позиции ФПИ"
                           sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
                 <Property Name="Message" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false"
                           sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
