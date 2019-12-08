@@ -1,5 +1,3 @@
-This XML file does not appear to have any style information associated with it. The document tree is shown below.
-
 <edmx:Edmx
     xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx"
     xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata"
@@ -401,10 +399,8 @@ This XML file does not appear to have any style information associated with it. 
                     <Parameter Name="FpiNum" Type="Edm.String" Mode="In" MaxLength="12"/>
                 </FunctionImport>
             </EntityContainer>
-            <atom:link
-                xmlns:atom="http://www.w3.org/2005/Atom" rel="self" href="https://sap-sdd001.sigma.sbrf.ru/sap/opu/odata/SAP/ZSPL_FPI_ODATA_SRV/$metadata"/>
-                <atom:link
-                    xmlns:atom="http://www.w3.org/2005/Atom" rel="latest-version" href="https://sap-sdd001.sigma.sbrf.ru/sap/opu/odata/SAP/ZSPL_FPI_ODATA_SRV/$metadata"/>
-                </Schema>
-            </edmx:DataServices>
-        </edmx:Edmx>
+            <atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="self" href="https://sap-sdd001.sigma.sbrf.ru/sap/opu/odata/SAP/ZSPL_FPI_ODATA_SRV/$metadata"/>
+            <atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="latest-version" href="https://sap-sdd001.sigma.sbrf.ru/sap/opu/odata/SAP/ZSPL_FPI_ODATA_SRV/$metadata"/>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>
