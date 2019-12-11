@@ -95,7 +95,7 @@ module.exports = function (grunt) {
                 options: {
                     ui5: {
                         package: "ZSPL",
-                        transportno: "SDDK901769",
+                        transportno: "SDDK902373",
                         bspcontainer: sApp,
                         bspcontainer_text: "Grunt deploy"
                     },
@@ -110,7 +110,7 @@ module.exports = function (grunt) {
                 options: {
                     ui5: {
                         package: "ZSPL",
-                        transportno: "SDDK901769",
+                        transportno: "SDDK902373",
                         bspcontainer: sLib,
                         bspcontainer_text: "Grunt deploy"
                     },
