@@ -1,0 +1,113 @@
+<edmx:Edmx xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" Version="1.0">
+	<edmx:DataServices xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" m:DataServiceVersion="2.0">
+		<Schema xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices"
+			xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns="http://schemas.microsoft.com/ado/2008/09/edm"
+			xmlns:sap="http://www.sap.com/Protocols/SAPData"
+			Namespace="NorthWind">
+			<EntityType Name="Category" sap:content-version="1">
+				<Key>
+					<PropertyRef Name="CategoryID"/>
+				</Key>
+				<Property  Name="CategoryID" sap:label="CategoryID" Type="Edm.Int32" Nullable="false" sap:creatable="false"	sap:updatable="false"/>
+				<Property Name="CategoryName" sap:label="CategoryName" Type="Edm.String" Nullable="false" MaxLength="15" Unicode="true" FixedLength="false"/>
+				<Property Name="Description" sap:label="Description" Type="Edm.String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false"/>
+				<NavigationProperty Name="Products" Relationship="NorthWind.FK_Products_Categories" FromRole="Categories" ToRole="Products"/>
+			</EntityType>
+			<EntityType Name="Product" sap:content-version="1">
+				<Key>
+					<PropertyRef Name="ProductID"/>
+				</Key>
+				<Property Name="ProductID" sap:label="ProductID" Type="Edm.Int32" Nullable="false" sap:creatable="false" sap:updatable="false"/>
+				<Property Name="ProductName" sap:label="ProductName" Type="Edm.String" Nullable="false" MaxLength="40" Unicode="true" FixedLength="false"/>
+				<Property Name="SupplierID" sap:label="SupplierID" Type="Edm.Int32" Nullable="true"/>
+				<Property Name="CategoryID" sap:label="CategoryID" Type="Edm.Int32" Nullable="true"/>
+				<Property Name="QuantityPerUnit" sap:label="QuantityPerUnit" Type="Edm.String" Nullable="true" MaxLength="20" Unicode="true" FixedLength="false"/>
+				<Property Name="UnitPrice" sap:label="UnitPrice" Type="Edm.Decimal" Nullable="true" Precision="19" Scale="4"/>
+				<Property Name="UnitsInStock" sap:label="UnitsInStock" Type="Edm.Int16" Nullable="true"/>
+				<Property Name="DateBegin" sap:label="Begin date" Type="Edm.DateTime" Nullable="true"/>
+				<Property Name="UnitsOnOrder" sap:label="UnitsOnOrder" Type="Edm.Int16" Nullable="true"/>
+				<Property Name="ReorderLevel" sap:label="ReorderLevel" Type="Edm.Int16" Nullable="true"/>
+				<Property Name="Discontinued" sap:label="Discontinued" Type="Edm.Boolean" Nullable="false"/>
+				<NavigationProperty Name="Category" Relationship="NorthWind.FK_Products_Categories" FromRole="Products" ToRole="Categories"/>
+			</EntityType>
+			<EntityType Name="Supplier" sap:content-version="1">
+				<Key>
+					<PropertyRef Name="SupplierID"/>
+				</Key>
+				<Property Name="SupplierID" sap:label="SupplierID" Type="Edm.Int32" Nullable="false" sap:creatable="false"	sap:updatable="false"/>
+				<Property Name="CompanyName" sap:label="CompanyName" Type="Edm.String" Nullable="false" MaxLength="40" Unicode="true" FixedLength="false"/>
+				<Property Name="ContactName" sap:label="ContactName" Type="Edm.String" Nullable="true" MaxLength="30" Unicode="true" FixedLength="false"/>
+				<Property Name="ContactTitle" sap:label="ContactTitle" Type="Edm.String" Nullable="true" MaxLength="30" Unicode="true" FixedLength="false"/>
+				<Property Name="Address" sap:label="Address" Type="Edm.String" Nullable="true" MaxLength="60" Unicode="true" FixedLength="false"/>
+				<Property Name="CityID" sap:label="CityID" Type="Edm.String" Nullable="true" MaxLength="15" Unicode="true" FixedLength="false"/>
+				<Property Name="City" sap:label="City" Type="Edm.String" Nullable="false" MaxLength="60" Unicode="true" FixedLength="false"/>
+				<Property Name="Region" sap:label="Region" Type="Edm.String" Nullable="true" MaxLength="15" Unicode="true" FixedLength="false"/>
+				<Property Name="PostalCode" sap:label="PostalCode" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="true" FixedLength="false"/>
+				<Property Name="Country" sap:label="Country" Type="Edm.String" Nullable="true" MaxLength="15" Unicode="true" FixedLength="false"/>
+				<Property Name="DateStart" sap:label="Date" Type="Edm.DateTime" sap:display-format="Date" Nullable="true" sap:filter-restriction="interval"/>
+				<Property Name="Phone" sap:label="Phone" Type="Edm.String" Nullable="true" MaxLength="24" Unicode="true" FixedLength="false"/>
+				<Property Name="Fax" sap:label="Fax" Type="Edm.String" Nullable="true" MaxLength="24" Unicode="true" FixedLength="false"/>
+				<Property Name="HomePage" sap:label="HomePage" Type="Edm.String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false"/>
+				<NavigationProperty Name="Products" Relationship="NorthWind.FK_Products_Suppliers" FromRole="Suppliers" ToRole="Products"/>
+			</EntityType>
+			<EntityType Name="CategorySumary" sap:content-version="1">
+				<Key>
+					<PropertyRef Name="SummID"/>
+				</Key>
+				<Property Name="SummID" sap:label="SummID" Type="Edm.String" MaxLength="5" Nullable="false" sap:creatable="false" sap:updatable="false"/>
+				<Property Name="Descr" sap:label="Description" sap:aggregation-role="dimension" Type="Edm.String" Nullable="true" sap:creatable="false" sap:updatable="false"/>
+				<Property Name="Count" sap:label="Сount" sap:aggregation-role="measure" Type="Edm.Int32" Nullable="true" sap:creatable="false" sap:updatable="false"/>
+			</EntityType>
+			<EntityType Name="VH_City" sap:content-version="1">
+				<Key>
+					<PropertyRef Name="CityID" />
+				</Key>
+				<Property Name="CityID" sap:label="CityID" Type="Edm.String" MaxLength="15" Nullable="false" sap:creatable="false"	sap:updatable="false"/>
+				<Property Name="City" sap:label="City" Type="Edm.String" MaxLength="60" Nullable="false"/>
+			</EntityType>
+			<Association Name="FK_Products_Categories">
+				<End Role="Categories" Type="NorthWind.Category" Multiplicity="0..1"/>
+				<End Role="Products" Type="NorthWind.Product" Multiplicity="*"/>
+				<ReferentialConstraint>
+					<Principal Role="Categories">
+						<PropertyRef Name="CategoryID"/>
+					</Principal>
+					<Dependent Role="Products">
+						<PropertyRef Name="CategoryID"/>
+					</Dependent>
+				</ReferentialConstraint>
+			</Association>
+			<Association Name="FK_Products_Suppliers">
+				<End Role="Suppliers" Type="NorthWind.Supplier" Multiplicity="0..1"/>
+				<End Role="Products" Type="NorthWind.Product" Multiplicity="*"/>
+				<ReferentialConstraint>
+					<Principal Role="Suppliers">
+						<PropertyRef Name="SupplierID"/>
+					</Principal>
+					<Dependent Role="Products">
+						<PropertyRef Name="SupplierID"/>
+					</Dependent>
+				</ReferentialConstraint>
+			</Association>
+		</Schema>
+		<Schema xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices"
+			xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns="http://schemas.microsoft.com/ado/2008/09/edm"
+			Namespace="Northwind">
+			<EntityContainer Name="NorthwindEntities" m:IsDefaultEntityContainer="true">
+				<EntitySet Name="CategorySumarySet" EntityType="NorthWind.CategorySumary"/>
+				<EntitySet Name="VH_CitySet" EntityType="NorthWind.VH_City"/>
+				<EntitySet Name="Categories" EntityType="NorthWind.Category"/>
+				<EntitySet Name="Products" EntityType="NorthWind.Product"/>
+				<EntitySet Name="Suppliers" EntityType="NorthWind.Supplier"/>
+				<AssociationSet Name="FK_Products_Categories" Association="NorthWind.FK_Products_Categories">
+					<End Role="Categories" EntitySet="Categories"/>
+					<End Role="Products" EntitySet="Products"/>
+				</AssociationSet>
+				<AssociationSet Name="FK_Products_Suppliers" Association="NorthWind.FK_Products_Suppliers">
+					<End Role="Suppliers" EntitySet="Suppliers"/>
+					<End Role="Products" EntitySet="Products"/>
+				</AssociationSet>
+			</EntityContainer>
+		</Schema>
+	</edmx:DataServices>
+</edmx:Edmx>

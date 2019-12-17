@@ -1,0 +1,25 @@
+[{
+	"SummID":"01",
+	"Descr": "Product01",
+	"Count": 5
+},{
+	"SummID":"02",
+	"Descr": "Product02",
+	"Count": 4
+},{
+	"SummID":"03",
+	"Descr": "Product03",
+	"Count": 2
+},{
+	"SummID":"04",
+	"Descr": "Product04",
+	"Count": 1
+},{
+	"SummID":"05",
+	"Descr": "Product05",
+	"Count": 7
+},{
+	"SummID":"06",
+	"Descr": "Product06",
+	"Count": 0
+}]

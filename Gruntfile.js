@@ -4,6 +4,7 @@
     2) grunt build
     3) grunt deploy --user=preobrazhens --pwd=sv4gl6NM --app=ZSPL_FPI
     4) grunt deploy_lib --user=preobrazhens --pwd=sv4gl6NM --lib=ZSPL_LIB
+	5) grunt deploy --user=preobrazhens --pwd=sv4gl6NM --app=ZSPL_OVP
 */
 
 let Config = require('./Config');
@@ -23,10 +24,17 @@ module.exports = function (grunt) {
     let sLib = grunt.option("lib");
     let sSystem = grunt.option("system");
 
+	let mRequest = {
+		ZSPL_FPI: "SDDK902581",
+		ZSPL_OVP: "SDDK902601",
+		ZSPL_LIB: "SDDK902581"
+	};
+
     grunt.initConfig({
 
         clean: [
             "src/dist/ui/apps/ZSPL_FPI",
+			"src/dist/ui/apps/ZSPL_OVP",
             "src/dist/ui/libs/ZSPL_LIB"
         ],
 
@@ -67,6 +75,17 @@ module.exports = function (grunt) {
                 components: true
             },
 
+			ZSPL_OVP: {
+                options: {
+                    resources: {
+                        cwd: "src/ui/apps/ZSPL_OVP/webapp",
+                        prefix: "sb/fiori/app/spl/ovp"
+                    },
+                    dest: "src/dist/ui/apps/ZSPL_OVP/webapp"
+                },
+                components: true
+            },
+
             ZSPL_LIB: {
                 options: {
                     resources: {
@@ -95,7 +114,7 @@ module.exports = function (grunt) {
                 options: {
                     ui5: {
                         package: "ZSPL",
-                        transportno: "SDDK902373",
+                        transportno: mRequest[sApp],
                         bspcontainer: sApp,
                         bspcontainer_text: "Grunt deploy"
                     },
@@ -110,7 +129,7 @@ module.exports = function (grunt) {
                 options: {
                     ui5: {
                         package: "ZSPL",
-                        transportno: "SDDK902373",
+                        transportno:  mRequest[sLib],
                         bspcontainer: sLib,
                         bspcontainer_text: "Grunt deploy"
                     },
@@ -125,6 +144,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask("copy", function (target) {
         grunt.file.copy(`src/ui/apps/ZSPL_FPI/webapp/`, `src/dist/ui/apps/ZSPL_FPI/webapp`);
+		grunt.file.copy(`src/ui/apps/ZSPL_OVP/webapp/`, `src/dist/ui/apps/ZSPL_OVP/webapp`);
         grunt.file.copy(`src/ui/libs/ZSPL_LIB//src/sb/fiori/lib/spl`, `src/dist/ui/libs/ZSPL_LIB/src/sb/fiori/lib/spl`);
     });
 
@@ -164,6 +184,7 @@ module.exports = function (grunt) {
     grunt.registerTask("build", [
         "clean",
         "openui5_preload:ZSPL_FPI",
+		"openui5_preload:ZSPL_OVP",
         "openui5_preload:ZSPL_LIB",
         "copy"
     ]);
