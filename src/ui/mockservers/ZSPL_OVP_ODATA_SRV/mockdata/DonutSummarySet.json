@@ -1,0 +1,71 @@
+[{
+	"DonutID":"01",
+	"RegionID":"01",
+	"ContractID":"01",
+	"Description": "Мои заявки",
+	"Count": 5,
+	"Type": "own"
+},{
+	"DonutID":"02",
+	"RegionID":"01",
+	"ContractID":"02",
+	"Description": "Новые заявки",
+	"Count": 4,
+	"Type": "new"
+},{
+	"DonutID":"03",
+	"RegionID":"01",
+	"ContractID":"03",
+	"Description": "Приоритетные заявки",
+	"Count": 2,
+	"Type": "prior"
+},{
+	"DonutID":"04",
+	"RegionID":"01",
+	"ContractID":"03",
+	"Description": "Заявки в работе",
+	"Count": 1,
+	"Type": "work"
+},{
+	"DonutID":"05",
+	"RegionID":"01",
+	"ContractID":"05",
+	"Description": "Назначеные повторно",
+	"Count": 7,
+	"Type": "repeat"
+},{
+	"DonutID":"01",
+	"RegionID":"02",
+	"ContractID":"01",
+	"Description": "Мои заявки",
+	"Count": 6,
+	"Type": "own"
+},{
+	"DonutID":"02",
+	"RegionID":"02",
+	"ContractID":"02",
+	"Description": "Новые заявки",
+	"Count": 2,
+	"Type": "new"
+},{
+	"DonutID":"03",
+	"RegionID":"02",
+	"ContractID":"03",
+	"Description": "Приоритетные заявки",
+	"Count": 1,
+	"Type": "prior"
+},{
+	"DonutID":"04",
+	"RegionID":"02",
+	"ContractID":"03",
+	"Description": "Заявки в работе",
+	"Count": 12,
+	"Type": "work"
+},{
+	"DonutID":"05",
+	"RegionID":"02",
+	"ContractID":"05",
+	"Description": "Назначеные повторно",
+	"Count": 10,
+	"Type": "repeat"
+}]

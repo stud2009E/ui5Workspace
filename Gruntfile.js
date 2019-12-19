@@ -25,9 +25,9 @@ module.exports = function (grunt) {
     let sSystem = grunt.option("system");
 
 	let mRequest = {
-		ZSPL_FPI: "SDDK902581",
+		ZSPL_FPI: "SDDK902731",
 		ZSPL_OVP: "SDDK902601",
-		ZSPL_LIB: "SDDK902581"
+		ZSPL_LIB: "SDDK902731"
 	};
 
     grunt.initConfig({
