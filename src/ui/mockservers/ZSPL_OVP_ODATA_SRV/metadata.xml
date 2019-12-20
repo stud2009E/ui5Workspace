@@ -13,7 +13,7 @@
 				<Property Name="ContractID" sap:label="№ контракта" Type="Edm.String" Nullable="true"/>
 			</EntityType>
 
-			<EntityType Name="DonutSummary" sap:content-version="1">
+			<EntityType Name="RequestsDonut" sap:content-version="1">
 				<Key>
 					<PropertyRef Name="DonutID"/>
 				</Key>
@@ -53,7 +53,7 @@
 			</EntityType>
 
 			<EntityContainer Name="SplOvpEntities" m:IsDefaultEntityContainer="true">
-				<EntitySet Name="DonutSummarySet" EntityType="SplOvp.DonutSummary"/>
+				<EntitySet Name="RequestsDonutSet" EntityType="SplOvp.RequestsDonut"/>
 				<EntitySet Name="RequestSet" EntityType="SplOvp.Request"/>
 				<EntitySet Name="RegionVHSet" EntityType="SplOvp.RegionVH"/>
 				<EntitySet Name="ContractVHSet" EntityType="SplOvp.ContractVH"/>
