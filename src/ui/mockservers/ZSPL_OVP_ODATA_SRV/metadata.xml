@@ -17,12 +17,12 @@
 				<Key>
 					<PropertyRef Name="DonutID"/>
 				</Key>
-				<Property Name="DonutID" sap:label="FilterID" Type="Edm.String" Nullable="false" sap:creatable="false"	sap:updatable="false"/>
+				<Property Name="DonutID" sap:label="Заявка" Type="Edm.String" Nullable="false" sap:creatable="false"	sap:updatable="false"/>
 				<Property Name="RegionID" sap:label="Регион" Type="Edm.String" Nullable="false" sap:creatable="false" sap:updatable="false"/>
 				<Property Name="ContractID" sap:label="№ контракта" Type="Edm.String" Nullable="true" sap:creatable="false" sap:updatable="false"/>
 				<Property Name="Type" sap:label="Тип заявки" Type="Edm.String" Nullable="true" MaxLength="6"/>
-				<Property Name="Description" sap:label="Описание" Type="Edm.String" Nullable="true" MaxLength="20"/>
-				<Property Name="Count" sap:label="Количество" Type="Edm.Int16" Nullable="true"/>
+				<Property Name="Description" sap:label="Описание" sap:aggregation-role="dimension" Type="Edm.String" Nullable="true" MaxLength="20"/>
+				<Property Name="Count" sap:label="Количество" sap:aggregation-role="measure" Type="Edm.Int16" Nullable="true"/>
 			</EntityType>
 
 			<EntityType Name="Request" sap:content-version="1">
