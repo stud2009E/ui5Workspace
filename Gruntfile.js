@@ -25,9 +25,10 @@ module.exports = function (grunt) {
     let sSystem = grunt.option("system");
 
 	let mRequest = {
-		ZSPL_FPI: "SDDK902731",
+		ZSPL_FPI: "SDDK902757",
 		ZSPL_OVP: "SDDK902601",
-		ZSPL_LIB: "SDDK902731"
+		ZSPL_LIB: "SDDK902786",
+		ZSPL_TOOL_PAGE: "SDDK902786"
 	};
 
     grunt.initConfig({
@@ -35,6 +36,7 @@ module.exports = function (grunt) {
         clean: [
             "src/dist/ui/apps/ZSPL_FPI",
 			"src/dist/ui/apps/ZSPL_OVP",
+			"src/dist/ui/apps/ZSPL_TOOL_PAGE",
             "src/dist/ui/libs/ZSPL_LIB"
         ],
 
@@ -82,6 +84,17 @@ module.exports = function (grunt) {
                         prefix: "sb/fiori/app/spl/ovp"
                     },
                     dest: "src/dist/ui/apps/ZSPL_OVP/webapp"
+                },
+                components: true
+            },
+
+			ZSPL_TOOL_PAGE: {
+                options: {
+                    resources: {
+                        cwd: "src/ui/apps/ZSPL_TOOL_PAGE",
+                        prefix: "sb/fiori/app/spl/launchpad/viewPortContainer"
+                    },
+                    dest: "src/dist/ui/apps/ZSPL_TOOL_PAGE/webapp"
                 },
                 components: true
             },
@@ -145,7 +158,8 @@ module.exports = function (grunt) {
     grunt.registerTask("copy", function (target) {
         grunt.file.copy(`src/ui/apps/ZSPL_FPI/webapp/`, `src/dist/ui/apps/ZSPL_FPI/webapp`);
 		grunt.file.copy(`src/ui/apps/ZSPL_OVP/webapp/`, `src/dist/ui/apps/ZSPL_OVP/webapp`);
-        grunt.file.copy(`src/ui/libs/ZSPL_LIB//src/sb/fiori/lib/spl`, `src/dist/ui/libs/ZSPL_LIB/src/sb/fiori/lib/spl`);
+		grunt.file.copy(`src/ui/apps/ZSPL_TOOL_PAGE/`, `src/dist/ui/apps/ZSPL_TOOL_PAGE/webapp`);
+        grunt.file.copy(`src/ui/libs/ZSPL_LIB/src/sb/fiori/lib/spl`, `src/dist/ui/libs/ZSPL_LIB/src/sb/fiori/lib/spl`);
     });
 
     grunt.registerTask("setProxies", function () {
@@ -186,6 +200,7 @@ module.exports = function (grunt) {
         "openui5_preload:ZSPL_FPI",
 		"openui5_preload:ZSPL_OVP",
         "openui5_preload:ZSPL_LIB",
+		"openui5_preload:ZSPL_TOOL_PAGE",
         "copy"
     ]);
 
