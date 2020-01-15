@@ -5,6 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Manage Products</title>
+	<script type="text/jscript" src="../../polyfill/a.js"></script>
     <script type="text/javascript">
         window["sap-ushell-config"] = {
             defaultRenderer: "fiori2",
@@ -25,19 +26,19 @@
                     description: "Описание плитки",
                     title: "FPI"
                 },
-                "ZSPL_TEST-display": {
-                    additionalInformation: "SAPUI5.Component=sb.fiori.app.spl.test",
-                    applicationType: "URL",
-                    url: "/ui/apps/ZSPL_TEST/webapp/",
-                    description: "Описание плитки",
-                    title: "TEST"
-                },
                 "ZSPL_OVP-display": {
                     additionalInformation: "SAPUI5.Component=sb.fiori.app.spl.ovp",
                     applicationType: "URL",
                     url: "/ui/apps/ZSPL_OVP/webapp/",
                     description: "ovp page",
                     title: "OVP"
+                },
+				"ZSPL_CONTRACTS-display": {
+                    additionalInformation: "SAPUI5.Component=sb.fiori.app.spl.contract",
+                    applicationType: "URL",
+                    url: "/ui/apps/ZSPL_CONTRACTS/webapp/",
+                    description: "contract app",
+                    title: "Contract"
                 }
             }
         };
@@ -49,9 +50,9 @@
             data-sap-ui-theme="sap_belize"
             data-sap-ui-compatVersion="edge"
             data-sap-ui-resourceroots='{
-            	"sb.fiori.app.spl.fpi":"../apps/ZSPL_FPI/webapp",
+            	"sb.fiori.app.spl.contract":"../apps/ZSPL_CONTRACTS/webapp",
+				"sb.fiori.app.spl.fpi":"../apps/ZSPL_FPI/webapp",
 				"sb.fiori.app.spl.ovp":"../apps/ZSPL_OVP/webapp",
-            	"sb.fiori.app.spl.test":"../apps/ZSPL_TEST/webapp",
             	"sb.fiori.mockserver.spl": "/ui/mockservers"}'
             data-sap-ui-frameOptions="allow"
             data-sap-ui-language="ru">

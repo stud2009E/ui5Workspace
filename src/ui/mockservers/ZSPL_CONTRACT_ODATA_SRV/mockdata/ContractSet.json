@@ -1,0 +1,61 @@
+[{
+	"ContractID":"12304930",
+	"SupplierNum":"5487348747",
+	"Subject":"Уборка офисов",
+	"PercentCompletion":"35",
+	"CompletionNum":"350",
+	"TotalNum":"1000",
+	"Status":"01",
+	"Level":"Северо-западный регион",
+	"ContractDate":"",
+	"Begda":"\/Date(1550783474000)\/",
+	"Endda":"\/Date(1582405874000)\/"
+},{
+	"ContractID":"12304932",
+	"SupplierNum":"54873487364",
+	"Subject":"Плановый ремонт",
+	"PercentCompletion":"90",
+	"CompletionNum":"3060",
+	"TotalNum":"3400",
+	"Status":"01",
+	"Level":"г.Санкт-Петербург",
+	"ContractDate":"",
+	"Begda":"\/Date(1492405874000)\/",
+	"Endda":"\/Date(1550783474000)\/"
+},{
+	"ContractID":"12304933",
+	"SupplierNum":"54873480988",
+	"Subject":"Покраска стен",
+	"PercentCompletion":"0",
+	"CompletionNum":"0",
+	"TotalNum":"1000",
+	"Status":"01",
+	"Level":"г.Казань",
+	"ContractDate":"",
+	"Begda":"\/Date(1493605874000)\/",
+	"Endda":"\/Date(1551083474000)\/"
+},{
+	"ContractID":"12304934",
+	"SupplierNum":"54873483454",
+	"Subject":"Переустановка мебели",
+	"PercentCompletion":"66.6",
+	"CompletionNum":"2000",
+	"TotalNum":"3000",
+	"Status":"01",
+	"Level":"г.Саратов",
+	"ContractDate":"",
+	"Begda":"\/Date(1494205874000)\/",
+	"Endda":"\/Date(1552283474000)\/"
+},{
+	"ContractID":"12304954",
+	"SupplierNum":"54873482211",
+	"Subject":"Замена полового покрытия",
+	"PercentCompletion":"5",
+	"CompletionNum":"100",
+	"TotalNum":"2000",
+	"Status":"00",
+	"Level":"г.Москва",
+	"ContractDate":"",
+	"Begda":"\/Date(1494555874000)\/",
+	"Endda":"\/Date(1552283474000)\/"
+}]

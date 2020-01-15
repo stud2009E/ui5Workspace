@@ -28,6 +28,11 @@
                     }
                 }
             },
+			// bootstrapPlugins: {
+			// 	"ZSPL_TOOL_PAGE" : {
+			// 		component: "sb.fiori.app.spl.launchpad.viewPortContainer"
+			// 	}
+			// },
             applications: {
                 "ZSPL_FPI-display": {
                     additionalInformation: "SAPUI5.Component=sb.fiori.app.spl.fpi",
@@ -42,6 +47,13 @@
                     url: "/ui/apps/ZSPL_OVP/webapp/",
                     description: "Описание плитки",
                     title: "OVP"
+                },
+				"ZSPL_CONTRACTS-display": {
+                    additionalInformation: "SAPUI5.Component=sb.fiori.app.spl.contract",
+                    applicationType: "URL",
+                    url: "/ui/apps/ZSPL_CONTRACTS/webapp/",
+                    description: "ui contract app",
+                    title: "contract"
                 }
             }
         };
@@ -56,7 +68,9 @@
 			data-sap-ui-bindingsyntax="complex"
             data-sap-ui-resourceroots='{
 				"sb.fiori.app.spl.ovp":"../apps/ZSPL_OVP/webapp",
+				"sb.fiori.app.spl.launchpad.viewPortContainer":"../apps/ZSPL_TOOL_PAGE",
 	            "sb.fiori.app.spl.fpi":"../apps/ZSPL_FPI/webapp",
+				"sb.fiori.app.spl.contract":"../apps/ZSPL_CONTRACTS/webapp",
 	            "sb.fiori.mockserver.spl": "/ui/mockservers"
             }'
 
