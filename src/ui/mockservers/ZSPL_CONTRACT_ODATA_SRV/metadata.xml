@@ -12,8 +12,8 @@
                 <Property Name="ContractID" Type="Edm.String" Nullable="false" sap:unicode="false" sap:label="ID договора" sap:creatable="false" sap:updatable="false"/>
                 <Property Name="SupplierNum" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="№ договора поставщика" sap:creatable="false" sap:updatable="true"/>
 				<Property Name="Subject" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Предмет договора" sap:creatable="false" sap:updatable="false"/>
-				<Property Name="RespUser" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Ответственный за договор от банка" sap:creatable="false" sap:updatable="false"/>
-				<Property Name="RespUserEmail" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Предмет договора" sap:creatable="false" sap:updatable="false"/>
+				<Property Name="RespPerson" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Ответственный за договор от банка" sap:creatable="false" sap:updatable="false"/>
+				<Property Name="RespPersonEmail" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Предмет договора" sap:creatable="false" sap:updatable="false"/>
 				<Property Name="PercentCompletion" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Исполнение по договору" sap:creatable="false" sap:updatable="false"/>
 				<Property Name="CompletionNum" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Выполнено" sap:creatable="false" sap:updatable="false"/>
 				<Property Name="TotalNum" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Требуется к выполнению" sap:creatable="false" sap:updatable="false"/>
@@ -24,6 +24,34 @@
 				<Property Name="Endda" Type="Edm.DateTime" Nullable="false" Precision="0" sap:display-format="Date" sap:unicode="false" sap:label="Дата окончания" sap:creatable="false" sap:updatable="false"/>
 				<Property Name="SummaryItemsCount" Type="Edm.Int32" Nullable="false" sap:unicode="false" sap:label="Количество" sap:creatable="false" sap:updatable="false"/>
 				<NavigationProperty Name="ToContractSummary" Relationship="ZSPL_CONTRACT_ODATA_SRV.ContractToContractSummary" FromRole="FromRole_ContractToContractSummary" ToRole="ToRole_ContractToContractSummary"/>
+				<NavigationProperty Name="ToRealEstateObj" Relationship="ZSPL_CONTRACT_ODATA_SRV.ContractToRealEstateObj" FromRole="FromRole_ContractToRealEstateObj" ToRole="ToRole_ContractToRealEstateObj"/>
+			</EntityType>
+			<EntityType Name="RealEstateObj" sap:label="Объекты недвижимости" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="ContractID"/>
+					<PropertyRef Name="ObjID"/>
+                </Key>
+                <Property Name="ContractID" Type="Edm.String" Nullable="false" sap:unicode="false" sap:label="ID договора" sap:creatable="false" sap:updatable="false"/>
+                <Property Name="ObjID" Type="Edm.String" Nullable="false" sap:unicode="false" sap:label="ID объекта" sap:creatable="false" sap:updatable="false"/>
+                <Property Name="SubdivNum" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="№ подразделения" sap:creatable="false" sap:updatable="true"/>
+                <Property Name="SubdivName" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="Наименование подразделения" sap:creatable="false" sap:updatable="true"/>
+                <Property Name="Address" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="Адрес" sap:creatable="false" sap:updatable="true"/>
+                <Property Name="ServedFrom" Type="Edm.DateTime" Nullable="false" Precision="0" sap:display-format="Date" sap:unicode="false" sap:label="Обслуживается с" sap:creatable="false" sap:updatable="false"/>
+				<Property Name="ServedBy" Type="Edm.DateTime" Nullable="false" Precision="0" sap:display-format="Date" sap:unicode="false" sap:label="Обслуживается по" sap:creatable="false" sap:updatable="false"/>
+				<Property Name="ObjCategory" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="Категория объекта A,B,C,D" sap:creatable="false" sap:updatable="true"/>
+				<Property Name="CleaningCategory" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="Категория уборки A,B,C,D" sap:creatable="false" sap:updatable="true"/>
+				<Property Name="ObjGroup" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Группа объекта" sap:creatable="false" sap:updatable="true"/>
+				<Property Name="IndoorArea" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Площадь внутренних помещений, м2" sap:creatable="false" sap:updatable="true"/>
+				<Property Name="ZSOArea" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Площадь ЗСО 24, м2" sap:creatable="false" sap:updatable="true"/>
+				<Property Name="AdjArea" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Площадь прилегающей территории, м2" sap:creatable="false" sap:updatable="true"/>
+				<Property Name="RespPers" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Ответственные лица" sap:creatable="false" sap:updatable="true"/>
+			</EntityType>
+			<EntityType Name="RespPersonSH" sap:label="Объекты недвижимости" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="PersonID"/>
+                </Key>
+                <Property Name="PersonID" Type="Edm.String" Nullable="false" sap:unicode="false" sap:label="ID лица" sap:creatable="false" sap:updatable="false"/>
+                <Property Name="PersonName" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="ФИО" sap:creatable="false" sap:updatable="true"/>
 			</EntityType>
 			<EntityType Name="ContractSummary" sap:label="Сводная информация по договору" sap:content-version="1">
 				<Key>
@@ -35,6 +63,18 @@
 				<Property Name="Count" Type="Edm.Int32" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
 				<Property Name="Text" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
 			</EntityType>
+			<Association Name="ContractToRealEstateObj" sap:content-version="1">
+				<End Type="ZSPL_CONTRACT_ODATA_SRV.Contract" Multiplicity="1" Role="FromRole_ContractToRealEstateObj"/>
+				<End Type="ZSPL_CONTRACT_ODATA_SRV.RealEstateObj" Multiplicity="*" Role="ToRole_ContractToRealEstateObj"/>
+				<ReferentialConstraint>
+					<Principal Role="FromRole_ContractToRealEstateObj">
+						<PropertyRef Name="ContractID"/>
+					</Principal>
+					<Dependent Role="ToRole_ContractToRealEstateObj">
+						<PropertyRef Name="ContractID"/>
+					</Dependent>
+				</ReferentialConstraint>
+			</Association>
 			<Association Name="ContractToContractSummary" sap:content-version="1">
 				<End Type="ZSPL_CONTRACT_ODATA_SRV.Contract" Multiplicity="1" Role="FromRole_ContractToContractSummary"/>
 				<End Type="ZSPL_CONTRACT_ODATA_SRV.ContractSummary" Multiplicity="*" Role="ToRole_ContractToContractSummary"/>
@@ -49,8 +89,14 @@
 			</Association>
             <EntityContainer Name="ZSPL_CONTRACT_ODATA_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
                 <EntitySet Name="ContractSet" EntityType="ZSPL_CONTRACT_ODATA_SRV.Contract" sap:creatable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="RespPersonSHSet" EntityType="ZSPL_CONTRACT_ODATA_SRV.RespPersonSH" sap:creatable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
 				<EntitySet Name="ContractSummarySet" EntityType="ZSPL_CONTRACT_ODATA_SRV.ContractSummary" sap:creatable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+				<EntitySet Name="RealEstateObjSet" EntityType="ZSPL_CONTRACT_ODATA_SRV.RealEstateObj" sap:creatable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
 			</EntityContainer>
+			<AssociationSet Name="ContractToRealEstateObjSet" Association="ZSPL_CONTRACT_ODATA_SRV.ContractToRealEstateObj" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+				<End EntitySet="ContractSet" Role="FromRole_ContractToRealEstateObj"/>
+				<End EntitySet="RealEstateObjSet" Role="ToRole_ContractToRealEstateObj"/>
+			</AssociationSet>
 			<AssociationSet Name="ContractToContractSummarySet" Association="ZSPL_CONTRACT_ODATA_SRV.ContractToContractSummary" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
 				<End EntitySet="ContractSet" Role="FromRole_ContractToContractSummary"/>
 				<End EntitySet="ContractSummarySet" Role="ToRole_ContractToContractSummary"/>
