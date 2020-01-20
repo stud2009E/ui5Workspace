@@ -1,37 +1,37 @@
 [{
 	"RequestID":"30243450",
 	"Description":"Устранение последствий протечек",
-	"Type": "3",
+	"Type": "REPE",
 	"BeginDate": "/Date(1616515568000)/",
-	"Status": "3"
+	"Status": 3
 },{
 	"RequestID":"30243345",
 	"Description":"Уборка помещений",
-	"Type": "1",
+	"Type": "PRIO",
 	"BeginDate": "/Date(1616515568000)/",
-	"Status": "1"
+	"Status": 1
 },{
 	"RequestID":"30242345",
 	"Description":"Замена лампочек",
-	"Type": "3",
+	"Type": "OWN",
 	"BeginDate": "/Date(1616515568000)/",
-	"Status": "1"
+	"Status": 1
 },{
 	"RequestID":"30267885",
 	"Description":"Починить дверь в переговорную",
-	"Type": "1",
+	"Type": "NEW",
 	"BeginDate": "/Date(1616515568000)/",
-	"Status": "3"
+	"Status": 3
 },{
 	"RequestID":"30243356",
 	"Description":"Перестановка мебели",
-	"Type": "3",
+	"Type": "INPR",
 	"BeginDate": "/Date(1616515568000)/",
-	"Status": "2"
+	"Status": 2
 },{
 	"RequestID":"30243343",
 	"Description":"Неполадки с разеткой",
-	"Type": "1",
+	"Type": "NEW",
 	"BeginDate": "/Date(1616515568000)/",
-	"Status": "3"
+	"Status": 3
 }]

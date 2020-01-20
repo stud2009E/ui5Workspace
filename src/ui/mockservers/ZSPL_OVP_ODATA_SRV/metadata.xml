@@ -32,7 +32,7 @@
 				<Property Name="DonutID" sap:label="Сектор ID" Type="Edm.String" Nullable="false" sap:creatable="false"	sap:updatable="false"/>
 				<Property Name="RegionID" sap:label="Регион" Type="Edm.String" Nullable="false" sap:creatable="false" sap:updatable="false"/>
 				<Property Name="ContractID" sap:label="№ контракта" Type="Edm.String" Nullable="true" sap:creatable="false" sap:updatable="false"/>
-				<Property Name="Type" sap:label="Тип заявки" Type="Edm.String" Nullable="true" MaxLength="6"/>
+				<Property Name="Type" sap:label="Затраты" Type="Edm.String" Nullable="true" MaxLength="6"/>
 				<Property Name="Description" sap:label="Описание" sap:aggregation-role="dimension" Type="Edm.String" Nullable="true" MaxLength="20"/>
 				<Property Name="Value" sap:label="Траты по сектору" sap:aggregation-role="measure" Type="Edm.Int32" Nullable="true"/>
 			</EntityType>
@@ -44,7 +44,7 @@
 				<Property Name="RequestID" sap:label="№ заявки" Type="Edm.String" Nullable="false" sap:creatable="false" sap:updatable="false"/>
 				<Property Name="Description" sap:label="Описание" Type="Edm.String" MaxLength="120" Nullable="false"/>
 				<Property Name="Type" sap:label="Тип заявки" Type="Edm.String" Nullable="true" MaxLength="6"/>
-				<Property Name="BeginDate" sap:label="Дата создания" Type="Edm.DateTime" sap:display-format="DateTime" Nullable="false"/>
+				<Property Name="BeginDate" sap:label="Дата создания" Type="Edm.DateTime" sap:display-format="Date" Nullable="false"/>
 				<Property Name="Status" sap:label="Статус заявки" Type="Edm.String" Nullable="true"/>
 			</EntityType>
 

@@ -2,28 +2,28 @@
 	"DonutID":"01",
 	"RegionID":"01",
 	"ContractID":"01",
-	"Description": "Оплаченных УПД",
+	"Description": "Оплаченные УПД",
 	"Value": "5000000",
 	"Type": "PUPD"
 },{
 	"DonutID":"02",
 	"RegionID":"01",
 	"ContractID":"02",
-	"Description": "Сформированных УПД",
+	"Description": "Сформированные УПД",
 	"Value": "2500000",
 	"Type": "FUPD"
 },{
 	"DonutID":"03",
 	"RegionID":"01",
 	"ContractID":"03",
-	"Description": "Сформированных актов",
+	"Description": "Сформированные акты",
 	"Value": "2500000",
 	"Type": "PACT"
 },{
 	"DonutID":"04",
 	"RegionID":"01",
 	"ContractID":"03",
-	"Description": "Подтвержденных актов",
+	"Description": "Подтвержденные акты",
 	"Value": "1500000",
 	"Type": "CACT"
 },{
