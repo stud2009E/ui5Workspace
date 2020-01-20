@@ -45,8 +45,18 @@
 				<Property Name="ZSOArea" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Площадь ЗСО 24, м2" sap:creatable="false" sap:updatable="true"/>
 				<Property Name="AdjArea" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Площадь прилегающей территории, м2" sap:creatable="false" sap:updatable="true"/>
 				<Property Name="RespPers" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Ответственные лица" sap:creatable="false" sap:updatable="true"/>
+				<NavigationProperty Name="ToRespPerson" Relationship="ZSPL_CONTRACT_ODATA_SRV.RealEstateObjToPerson" FromRole="FromRole_RealEstateObjToPerson" ToRole="ToRole_RealEstateObjToPerson"/>
 			</EntityType>
-			<EntityType Name="RespPersonSH" sap:label="Объекты недвижимости" sap:content-version="1">
+			<EntityType Name="RespPerson" sap:label="Ответственные лица">
+				<Key>
+					<PropertyRef Name="ObjID"/>
+					<PropertyRef Name="PersonID"/>
+				</Key>
+				<Property Name="ObjID" Type="Edm.String" Nullable="false" sap:unicode="false" sap:label="ID объекта" sap:creatable="false" sap:updatable="false"/>
+				<Property Name="PersonID" Type="Edm.String" Nullable="false" sap:unicode="false" sap:label="ID лица" sap:creatable="false" sap:updatable="false"/>
+				<Property Name="PersonName" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="ФИО" sap:creatable="false" sap:updatable="true"/>
+			</EntityType>
+			<EntityType Name="RespPersonSH" sap:label="Ответственные лциа" sap:content-version="1">
                 <Key>
                     <PropertyRef Name="PersonID"/>
                 </Key>
@@ -63,15 +73,27 @@
 				<Property Name="Count" Type="Edm.Int32" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
 				<Property Name="Text" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
 			</EntityType>
-			<Association Name="ContractToRealEstateObj" sap:content-version="1">
-				<End Type="ZSPL_CONTRACT_ODATA_SRV.Contract" Multiplicity="1" Role="FromRole_ContractToRealEstateObj"/>
-				<End Type="ZSPL_CONTRACT_ODATA_SRV.RealEstateObj" Multiplicity="*" Role="ToRole_ContractToRealEstateObj"/>
+			<Association Name="RealEstateObjToPerson" sap:content-version="1">
+				<End Type="ZSPL_CONTRACT_ODATA_SRV.Contract" Multiplicity="1" Role="FromRole_RealEstateObjToPerson"/>
+				<End Type="ZSPL_CONTRACT_ODATA_SRV.RealEstateObj" Multiplicity="*" Role="ToRole_RealEstateObjToPerson"/>
 				<ReferentialConstraint>
-					<Principal Role="FromRole_ContractToRealEstateObj">
+					<Principal Role="FromRole_RealEstateObjToPerson">
 						<PropertyRef Name="ContractID"/>
 					</Principal>
-					<Dependent Role="ToRole_ContractToRealEstateObj">
+					<Dependent Role="ToRole_RealEstateObjToPerson">
 						<PropertyRef Name="ContractID"/>
+					</Dependent>
+				</ReferentialConstraint>
+			</Association>
+			<Association Name="ContractToRealEstateObj" sap:content-version="1">
+				<End Type="ZSPL_CONTRACT_ODATA_SRV.RealEstateObj" Multiplicity="1" Role="FromRole_ContractToRealEstateObj"/>
+				<End Type="ZSPL_CONTRACT_ODATA_SRV.RespPerson" Multiplicity="*" Role="ToRole_ContractToRealEstateObj"/>
+				<ReferentialConstraint>
+					<Principal Role="FromRole_ContractToRealEstateObj">
+						<PropertyRef Name="ObjID"/>
+					</Principal>
+					<Dependent Role="ToRole_ContractToRealEstateObj">
+						<PropertyRef Name="ObjID"/>
 					</Dependent>
 				</ReferentialConstraint>
 			</Association>
@@ -93,6 +115,10 @@
 				<EntitySet Name="ContractSummarySet" EntityType="ZSPL_CONTRACT_ODATA_SRV.ContractSummary" sap:creatable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
 				<EntitySet Name="RealEstateObjSet" EntityType="ZSPL_CONTRACT_ODATA_SRV.RealEstateObj" sap:creatable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
 			</EntityContainer>
+			<AssociationSet Name="RealEstateObjToPersonSet" Association="ZSPL_CONTRACT_ODATA_SRV.RealEstateObjToPerson" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+				<End EntitySet="RealEstateObjSet" Role="FromRole_RealEstateObjToPerson"/>
+				<End EntitySet="RespPersonSet" Role="ToRole_RealEstateObjToPerson"/>
+			</AssociationSet>
 			<AssociationSet Name="ContractToRealEstateObjSet" Association="ZSPL_CONTRACT_ODATA_SRV.ContractToRealEstateObj" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
 				<End EntitySet="ContractSet" Role="FromRole_ContractToRealEstateObj"/>
 				<End EntitySet="RealEstateObjSet" Role="ToRole_ContractToRealEstateObj"/>
