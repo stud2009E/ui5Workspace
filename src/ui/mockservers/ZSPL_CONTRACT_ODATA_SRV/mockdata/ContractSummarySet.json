@@ -1,152 +1,177 @@
 [
 	{
 		"ContractID":"12304930",
-		"PosID": "1",
+		"DonutID": "1",
 		"Text": "Остаток",
-		"Count": 8000000.0
+		"Count": 8000000.0,
+		"RegionID": "5"
 	},
 	{
 		"ContractID":"12304930",
-		"PosID": "2",
+		"DonutID": "2",
 		"Text": "Оплаченных УПД",
-		"Count": 1000000.0
+		"Count": 1000000.0,
+		"RegionID": "5"
 	},
 	{
 		"ContractID":"12304930",
-		"PosID": "3",
+		"DonutID": "3",
 		"Text": "Сформированных УПД",
-		"Count": 23000000.0
+		"Count": 23000000.0,
+		"RegionID": "5"
 	},
 	{
 		"ContractID":"12304930",
-		"PosID": "4",
+		"DonutID": "4",
 		"Text": "Сформированных актов",
-		"Count": 500000.0
+		"Count": 500000.0,
+		"RegionID": "5"
 	},
 	{
 		"ContractID":"12304930",
-		"PosID": "5",
+		"DonutID": "5",
 		"Text": "Подтвержденных актов",
-		"Count": 500000.0
+		"Count": 500000.0,
+		"RegionID": "5"
 	},
 	{
 		"ContractID":"123049320",
-		"PosID": "1",
+		"DonutID": "1",
 		"Text": "Остаток",
-		"Count": 8000000.0
+		"Count": 8000000.0,
+		"RegionID": "5"
 	},
 	{
 		"ContractID":"123049320",
-		"PosID": "2",
+		"DonutID": "2",
 		"Text": "Оплаченных УПД",
-		"Count": 1000000.0
+		"Count": 1000000.0,
+		"RegionID": "5"
 	},
 	{
 		"ContractID":"123049320",
-		"PosID": "3",
+		"DonutID": "3",
 		"Text": "Сформированных УПД",
-		"Count": 2000000.0
+		"Count": 2000000.0,
+		"RegionID": "5"
 	},
 	{
 		"ContractID":"123049320",
-		"PosID": "4",
+		"DonutID": "4",
 		"Text": "Сформированных актов",
-		"Count": 500000.0
+		"Count": 500000.0,
+		"RegionID": "5"
 	},
 	{
 		"ContractID":"123049320",
-		"PosID": "5",
+		"DonutID": "5",
 		"Text": "Подтвержденных актов",
-		"Count": 500000.0
+		"Count": 500000.0,
+		"RegionID": "5"
 	},
 	{
 		"ContractID":"12304933",
-		"PosID": "1",
+		"DonutID": "1",
 		"Text": "Остаток",
-		"Count": 8000000.0
+		"Count": 8000000.0,
+		"RegionID": "5"
 	},
 	{
 		"ContractID":"12304933",
-		"PosID": "2",
+		"DonutID": "2",
 		"Text": "Оплаченных УПД",
-		"Count": 1000000.0
+		"Count": 1000000.0,
+		"RegionID": "5"
 	},
 	{
 		"ContractID":"12304933",
-		"PosID": "3",
+		"DonutID": "3",
 		"Text": "Сформированных УПД",
-		"Count": 23000000.0
+		"Count": 23000000.0,
+		"RegionID": "5"
 	},
 	{
 		"ContractID":"12304933",
-		"PosID": "4",
+		"DonutID": "4",
 		"Text": "Сформированных актов",
-		"Count": 500000.0
+		"Count": 500000.0,
+		"RegionID": "5"
 	},
 	{
 		"ContractID":"12304933",
-		"PosID": "5",
+		"DonutID": "5",
 		"Text": "Подтвержденных актов",
-		"Count": 500000.0
+		"Count": 500000.0,
+		"RegionID": "5"
 	},
 	{
 		"ContractID":"12304934",
-		"PosID": "1",
+		"DonutID": "1",
 		"Text": "Остаток",
-		"Count": 8000000.0
+		"Count": 8000000.0,
+		"RegionID": "5"
 	},
 	{
 		"ContractID":"12304934",
-		"PosID": "2",
+		"DonutID": "2",
 		"Text": "Оплаченных УПД",
-		"Count": 1000000.0
+		"Count": 1000000.0,
+		"RegionID": "5"
 	},
 	{
 		"ContractID":"12304934",
-		"PosID": "3",
+		"DonutID": "3",
 		"Text": "Сформированных УПД",
-		"Count": 23000000.0
+		"Count": 23000000.0,
+		"RegionID": "5"
 	},
 	{
 		"ContractID":"12304934",
-		"PosID": "4",
+		"DonutID": "4",
 		"Text": "Сформированных актов",
-		"Count": 500000.0
+		"Count": 500000.0,
+		"RegionID": "5"
 	},
 	{
 		"ContractID":"12304934",
-		"PosID": "5",
+		"DonutID": "5",
 		"Text": "Подтвержденных актов",
-		"Count": 500000.0
+		"Count": 500000.0,
+		"RegionID": "5"
 	},
 	{
 		"ContractID":"12304954",
-		"PosID": "1",
+		"DonutID": "1",
 		"Text": "Остаток",
-		"Count": 8000000.0
+		"Count": 8000000.0,
+		"RegionID": "5"
 	},
 	{
 		"ContractID":"12304954",
-		"PosID": "2",
+		"DonutID": "2",
 		"Text": "Оплаченных УПД",
-		"Count": 1000000.0
+		"Count": 1000000.0,
+		"RegionID": "5"
 	},
 	{
 		"ContractID":"12304954",
-		"PosID": "3",
+		"DonutID": "3",
 		"Text": "Сформированных УПД",
-		"Count": 23000000.0
+		"Count": 23000000.0,
+		"RegionID": "5"
 	},
 	{
 		"ContractID":"12304954",
-		"PosID": "4",
+		"DonutID": "4",
 		"Text": "Сформированных актов",
-		"Count": 500000.0
+		"Count": 500000.0,
+		"RegionID": "5"
 	},
 	{
 		"ContractID":"12304954",
-		"PosID": "5",
+		"DonutID": "5",
 		"Text": "Подтвержденных актов",
-		"Count": 500000.0
+		"Count": 500000.0,
+		"RegionID": "5"
 	}
 ]
