@@ -25,10 +25,10 @@ module.exports = function (grunt) {
     let sSystem = grunt.option("system");
 
 	let mRequest = {
-		ZSPL_FPI: "SDDK902757",
-		ZSPL_OVP: "SDDK902601",
-		ZSPL_LIB: "SDDK902786",
-		ZSPL_TOOL_PAGE: "SDDK902786"
+		ZSPL_FPI: "SDDK903105",
+		ZSPL_OVP: "",
+		ZSPL_LIB: "",
+		ZSPL_TOOL_PAGE: ""
 	};
 
     grunt.initConfig({
@@ -174,7 +174,7 @@ module.exports = function (grunt) {
         proxyLib.rewrite["^/sap/bc/ui5_ui5/sap/ZSPL_LIB/"] = "/ui/libs/ZSPL_LIB/src/sb/fiori/lib/spl/";
         proxies.push(proxyLib);
         let proxySDD = {
-            context: "/sap/opu/odata/SAP/",
+            context: "/sap/",
             host: "sap-sdd001.sigma.sbrf.ru",
             port: 8001,
             secure: false,
