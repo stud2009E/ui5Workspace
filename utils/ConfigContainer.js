@@ -1,18 +1,18 @@
 const path = require("path");
-const configJson = requre("../config.json");
+const configJson = require("../config.json");
 const defaults = require("./defaults.js");
 
 class SettingContainer {
 
-	_sdk: null;
-	_apps: [];
-	_libs: [];
-	_plugins: [];
-	_system: null;
-	_port: null;
-	_theme: null;
-
 	constructor(config) {
+		this._sdk = null;
+		this._apps = [];
+		this._libs = [];
+		this._plugins = [];
+		this._system = null;
+		this._port = null;
+		this._theme = null;
+
 		this.setPort(config);
 		this.setTheme(config);
 		this.setSdk(config);
@@ -128,7 +128,7 @@ class SettingContainer {
 			return;
 		}
 
-		this._validateArrayByProperty("library", libs, ["context", "path", "namespace"]);
+		this._validateArrayByProperty("library", libs, ["path", "namespace"]);
 
 		this._libs = libs;
 	}
@@ -140,27 +140,10 @@ class SettingContainer {
 	 * @type       {Array}
 	 */
 	get libs(){
+
 		return this._libs;
 	}
 
-	/**
-	 * get library proxy settings
-	 *
-	 * @return     {Array}  The library proxies.
-	 */
-	getLibProxies(){
-		return this.libs.map({path, context} => (
-			{
-				context: context,
-				host: "localhost",
-				port: defaults.port,
-				https: false,
-				rewrite: {
-					[`^${context}`]: path
-				}
-			}
-		));
-	}
 
 	/**
 	 * Gets the sap proxies.
@@ -185,19 +168,9 @@ class SettingContainer {
             secure: false,
             https: true,
             headers: {
-                "Authorization": `Basic ${ident}`
+                Authorization: `Basic ${ident}`
             }
         }];
-	}
-
-	/**
-	 * get all proxies from config
-	 *
-	 * @type       {Array}
-	 */
-	get proxies(){
-		return this.getLibProxies()
-			.concat(this.getSystemProxies());
 	}
 
 	/**

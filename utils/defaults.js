@@ -46,4 +46,4 @@ module.exports = {
 	port: 8000,
 	theme: "sap_belize",
 	configTemplate: configTemplate
-}
+};
