@@ -1,5 +1,3 @@
-const path = require('path');
-
 module.exports = function(grunt){
 
 	grunt.loadNpmTasks("grunt-contrib-watch");
@@ -15,8 +13,7 @@ module.exports = function(grunt){
 					"tasks/**/*.js"
 				],
 				tasks:[
-					"jshint:tasks",
-					"jshint:dev"
+					"jshint:tasks"
 				],
 				options:{
 					spawn:false
@@ -38,7 +35,7 @@ module.exports = function(grunt){
 						grunt: true
 					}
 				},
-				src: "tasks/**/*.js"
+				src: ["tasks/**/*.js", "utils/**/*.js"]
 			},
 			dev: {
 				options: {
@@ -74,15 +71,4 @@ module.exports = function(grunt){
 			}
 		}
 	});
-
-	grunt.registerTask("jshintprod", function () {
-
-		if(!app){
-			grunt.log.error("need to specify parameter: --app=<appname>");
-			return false;
-		}
-
-		grunt.task.run("jshint:prod");
-	});
-
 };
