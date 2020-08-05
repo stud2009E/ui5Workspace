@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+		<meta http-equiv="content-type" content="text/html;charset=utf-8">
+		<meta name="X-UA-Compatible" content="IE=edge">
+		<title>sandbox(remote)</title>
+	</head>
+
+	<script id="sap-ui-bootstrap"
+		src="/resources/sap-ui-core.js"
+		data-sap-ui-libs="sap.m, sap.ushell, sap.collaboration"
+		data-sap-ui-async="true"
+		data-sap-ui-theme="sap_belize"
+		data-sap-ui-compatVersion="edge"
+		data-sap-ui-bindingSynax="complex"
+		data-sap-ui-resourceroots='__RESOURCE__ROOTS__CONFIG__'>
+	</script>
+
+	<script type="text/javascript">
+		__USHELL__CONFIG__
+	</script>
+
+	<script id="sap-ushell-bootstrap"
+		src="/test-resources/sap/ushell/bootstrap/sandbox.js">
+	</script>
+
+	<script type="text/javascript">
+		sap.ui.getCore().attachInit(function(){
+
+			sap.ushell.__sandbox__._bootstrap(function () {
+				sap.ushell.Container.createRenderer().placeAt("content");
+			});
+		});
+	</script>
+
+	<body class="sapUiBody" id="content">
+	</body>
+
+</html>

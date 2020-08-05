@@ -1,0 +1,27 @@
+{
+  "name": "ui5",
+  "version": "1.0.0",
+  "description": "devops for ui5 applications",
+  "main": "index.js",
+  "scripts": {
+    "start": "grunt serve",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "fs-extra": "^9.0.1",
+    "grunt": "^1.2.0",
+    "grunt-connect-proxy": "https://github.com/drewzboto/grunt-connect-proxy.git",
+    "grunt-contrib-clean": "^2.0.0",
+    "grunt-contrib-connect": "^2.1.0",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-jshint": "^2.1.0",
+    "grunt-contrib-uglify": "^4.0.1",
+    "grunt-contrib-watch": "^1.1.0",
+    "grunt-openui5": "^0.16.0",
+    "grunt-text-replace": "^0.4.0",
+    "lodash": "^4.17.19"
+  },
+  "dependencies": {}
+}
