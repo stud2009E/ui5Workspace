@@ -2,5 +2,7 @@ config.json
 package-lock.json
 
 node_modules/
-workspace/
-workspace/**
+
+workspace/dist/
+workspace/apps/
+workspace/fiori-remote/index.html
