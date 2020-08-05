@@ -25,7 +25,30 @@
 	</script>
 
 	<script type="text/javascript">
+		
+		function setupLibraryNamespace(libs){
+			if(!Array.isArray(libs)){
+				return;
+			}
+
+			libs.forEach(({namespace, context}) => {
+
+				 sap.ui.loader.config({
+                    paths: {
+                        [namespace]: context
+                    }
+                });
+
+			});
+		}
+
+	</script>
+
+
+	<script type="text/javascript">
 		sap.ui.getCore().attachInit(function(){
+
+			setupLibraryNamespace(__LIB__PATHS__);
 
 			sap.ushell.__sandbox__._bootstrap(function () {
 				sap.ushell.Container.createRenderer().placeAt("content");
