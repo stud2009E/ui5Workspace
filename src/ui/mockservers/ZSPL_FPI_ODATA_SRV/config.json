@@ -1,8 +1,0 @@
-{
-  "basePath": "./extensions",
-  "customRequests": [
-    "CreateDraftFunctionImport"
-  ],
-  "hooks": [
-  ]
-}
