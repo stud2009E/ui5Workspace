@@ -4,5 +4,9 @@ package-lock.json
 node_modules/
 
 workspace/dist/
+workspace/dist/*
+
 workspace/apps/
+workspace/apps/*
+
 workspace/fiori-remote/index.html
