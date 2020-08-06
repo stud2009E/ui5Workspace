@@ -6,12 +6,11 @@ module.exports = function (grunt) {
 
 	grunt.registerTask("shellConfigCollect", "collect settings for plugins, apps", function(){
 
-		debugger;
-
 		const cwd = process.cwd();
 		const appsDir = path.join(cwd, "workspace/apps");
 		const flpPath = path.join(cwd, "workspace/fiori");
-		
+		const appInfo = {};
+
 		let applications = {};
 		let resourceroots = {};
 		let plugins = {};
@@ -35,6 +34,8 @@ module.exports = function (grunt) {
 			fs.symlinkSync(plugin.path, path.join(appsDir, pluginName), "dir");
 		});
 
+
+
 		//create settings for app tiles
 		grunt.file.recurse(appsDir, function(abspath, rootdir, subdir, filename){
 			if(filename.endsWith("manifest.json")){
@@ -44,6 +45,11 @@ module.exports = function (grunt) {
 				const manifest = grunt.file.readJSON(abspath);
 				const appId = manifest["sap.app"].id;
 				const appType = manifest["sap.app"].type;
+
+				appInfo[appName] = {
+					id: appId,
+					type: appType
+				};
 				
 				const appPath = path.join(cwd, "workspace/apps", appName, "webapp");
 
@@ -82,6 +88,7 @@ module.exports = function (grunt) {
 			return item;
 		});
 
+		grunt.config.set("appInfo", appInfo);
 		grunt.config.set("resourceroots", JSON.stringify(resourceroots));
 		grunt.config.set("applications", applications);
 		grunt.config.set("plugins", plugins);
