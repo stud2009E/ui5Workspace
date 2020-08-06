@@ -19,9 +19,9 @@
     "grunt-contrib-jshint": "^2.1.0",
     "grunt-contrib-uglify": "^4.0.1",
     "grunt-contrib-watch": "^1.1.0",
+    "grunt-nwabap-ui5uploader": "^1.0.6",
     "grunt-openui5": "^0.16.0",
-    "grunt-text-replace": "^0.4.0",
-    "lodash": "^4.17.19"
+    "grunt-text-replace": "^0.4.0"
   },
   "dependencies": {}
 }
