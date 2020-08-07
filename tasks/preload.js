@@ -1,5 +1,4 @@
 const path = require("path");
-const config = require("../utils/ConfigContainer.js");
 const fs = require("fs-extra");
 
 module.exports = function(grunt){
@@ -11,21 +10,20 @@ module.exports = function(grunt){
 
 		const cwd = process.cwd();
 		const distPath = path.join(cwd, "workspace/dist");
-
 		const appNames = fs.readdirSync(distPath);
 		const preload = {};
 		const appInfo = grunt.config.get("appInfo");
 
-		appNames.forEach(appName => {
-			let appId = appInfo[appName].id;
+		appNames.forEach(name => {
+			let appId = appInfo[name].id;
 			let prefix = appId.split(".").join("/");
 
-			preload[appName] = {};
-			preload[appName].components = true;
-			preload[appName].options = {};
-			preload[appName].options.dest = path.join(distPath, appName, "webapp");
-			preload[appName].options.resources = {
-				cwd: path.join(distPath, appName, "webapp"),
+			preload[name] = {};
+			preload[name].components = true;
+			preload[name].options = {};
+			preload[name].options.dest = path.join(distPath, name, "webapp");
+			preload[name].options.resources = {
+				cwd: path.join(distPath, name, "webapp"),
 				prefix: prefix
 			};
 
@@ -39,4 +37,4 @@ module.exports = function(grunt){
 
 	});
 
-}
+};

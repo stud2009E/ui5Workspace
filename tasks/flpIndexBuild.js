@@ -8,28 +8,27 @@ const __LIB__PATHS__= "__LIB__PATHS__";
 module.exports = function(grunt){
 
 	grunt.registerTask("flpIndexBuild", "build fiori index.html", function(){
-		const cwd = process.cwd();
+		grunt.task.requires("shellConfigCollect");
 
+		const cwd = process.cwd();
 		const fioriPath = {
 			tepmlate: path.join(cwd, "workspace/fiori/template.html"),
 			templateRemote: path.join(cwd, "workspace/fiori-remote/template.html"),
 			index: path.join(cwd, "workspace/fiori/index.html"),
 			indexRemote: path.join(cwd, "workspace/fiori-remote/index.html"),
 		};
-
 		const applications = grunt.config.get("applications");
 		const plugins = grunt.config.get("plugins");
 		const resourceroots = grunt.config.get("resourceroots");
-		const libs = JSON.stringify(grunt.config.get("libs"));
+		const libs = grunt.config.get("libs");
 
-		grunt.task.requires("shellConfigCollect");
 
 		grunt.loadNpmTasks("grunt-text-replace");
 		grunt.loadNpmTasks("grunt-contrib-clean");
 
 		grunt.config.merge({
 			clean: {
-				index:{
+				flpIndex:{
 					src: [
 						fioriPath.index,
 						fioriPath.indexRemote
@@ -51,7 +50,7 @@ module.exports = function(grunt){
 						to: resourceroots
 					},{
 						from: __LIB__PATHS__,
-						to: libs
+						to: JSON.stringify(libs)
 					}]
 				},
 				flp: {
@@ -72,7 +71,7 @@ module.exports = function(grunt){
 		});
 
 		grunt.task.run([
-			"clean",
+			"clean:flpIndex",
 			"replace:flpRemote",
 			// "replace:flp"
 		]);
@@ -81,6 +80,14 @@ module.exports = function(grunt){
 };
 
 
+/**
+ * Gets the shell configuration string.
+ *
+ * @param      {Object}  param          settings for apps and plugins
+ * @param      {object}  param.apps     The apps settings
+ * @param      {object}  param.plugins  The plugins settings
+ * @return     {string}  The shell configuration string.
+ */
 function getShellConfigStr({apps, plugins}){
 	let appsStr = JSON.stringify(apps);
 	let plugStr = JSON.stringify(plugins);

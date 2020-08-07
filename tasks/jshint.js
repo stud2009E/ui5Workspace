@@ -29,7 +29,7 @@ module.exports = function(grunt){
 			},
 			tasks:{
 				options: {
-					esversion: 6,
+					esversion: 9,
 					node: true,
 					globals: {
 						grunt: true

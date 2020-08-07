@@ -14,7 +14,11 @@ module.exports = function(grunt){
 		const systemKey = grunt.option("sys") || config.systemDefaultKey;
 		const userKey = grunt.option("user") || config.userDefaultKey;
 
-		const systemProxies = config.getSystemProxies(systemKey, userKey); 
+		let systemProxies = [];
+		if(!config.isLocalDev){
+			systemProxies = config.getSystemProxies(systemKey, userKey); 
+		}
+
 		const libProxies = grunt.config.get("libs").map(({path, context}) => {
 			return {
 				context: context,
@@ -54,7 +58,6 @@ module.exports = function(grunt){
 			}
 		});
 
-	
 		grunt.task.run([
 			"configureProxies:server",
 			"openui5_connect:server"
