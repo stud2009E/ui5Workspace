@@ -27,6 +27,15 @@ class SettingContainer {
 	}
 
 	/**
+	 * if no system, then used local development
+	 *
+	 * @type       {boolean}
+	 */
+	get isLocalDev(){
+		return !this._system;
+	}
+
+	/**
 	 * Sets the port.
 	 *
 	 * @param      {Object}  config
@@ -100,22 +109,53 @@ class SettingContainer {
 	 *
 	 * @param      {Object}  config 	
 	 * @param      {Array}  config.apps  application settings
+	 * @throws restrictions for fiori launchpad functionality 
 	 */
 	setApps({apps}){
 		this._validateArrayByProperty("application", apps, ["path"]);
+
+		apps.forEach(app => {
+			const parts = app.path.split(path.sep);
+			const appName = parts[parts.length - 1];
+
+			if(/\W/.test(appName)){
+				this.throwErrorShowConfig(`invalid characters in ${appName}! use only [a-zA-Z0-9_]`);
+			}
+
+		});
 
 		this._apps = apps;
 	}
 
 	/**
-	 * get application settings
+	 * get application settings as array
 	 *
 	 * @type       {array}
 	 */
 	get apps(){
-		return this._apps;
+		return this._apps.map(app => {
+			let name = this.lastPathPart(app.path);
+
+			return {...app, name};
+		});
 	}
 
+	/**
+	 * get application setiing as object
+	 *
+	 * @type       {object}
+	 */
+	get appInfo(){
+		const appInfo = {};
+
+		this.apps.forEach(app => {
+			let name = this.lastPathPart(app.path);
+
+			appInfo[name] = {...app};
+		});
+
+		return appInfo;
+	}
 
 	/**
 	 * Sets the libs.
@@ -125,6 +165,7 @@ class SettingContainer {
 	 */
 	setLibs({libs}){
 		if(libs === undefined){
+			this._libs = [];
 			return;
 		}
 
@@ -140,8 +181,14 @@ class SettingContainer {
 	 * @type       {Array}
 	 */
 	get libs(){
+		return this._libs.map(lib => {
+			const name = this.lastPathPart(lib.path);
 
-		return this._libs;
+			return {
+				...lib,
+				context:`/sap/bc/ui5_ui5/sap/${name}/`
+			};
+		});
 	}
 
 
@@ -181,6 +228,7 @@ class SettingContainer {
 	 */
 	setPlugins({plugins}){
 		if(plugins === undefined){
+			this._plugins = [];
 			return;
 		}
 
@@ -195,9 +243,12 @@ class SettingContainer {
 	 * @type       {array}
 	 */
 	get plugins(){
-		return this._plugins;
-	}
+		return this._plugins.map(plugin => {
+			let name = this.lastPathPart(plugin.path);
 
+			return {...plugin, name};
+		});
+	}
 
 	/**
 	 * Sets the default keys for system and user.
@@ -273,14 +324,28 @@ class SettingContainer {
 
 
 	/**
-	 * throw error and log in console config template 
+	 * throw error and log in console config template
 	 *
-	 * @param     {string}  message  error message
+	 * @param      {string}  message        error message
+	 * @param      {boolean}  bHideTemplate  hide template
 	 * @throws
 	 */
-	throwErrorShowConfig(message){
-		console.error(defaults.configTemplate);
+	throwErrorShowConfig(message, bHideTemplate){
+		if(!bHideTemplate){
+			console.error(defaults.configTemplate);
+		}
 		throw new Error(message);
+	}
+
+	/**
+	 * get subdir name
+	 *
+	 * @param      {string}  src     path to folder
+	 * @return     {string}  subdir name
+	 */
+	lastPathPart(src){
+		let parts = src.split(path.sep);
+		return parts[parts.length - 1]; 
 	}
 
 	/**
@@ -306,7 +371,6 @@ class SettingContainer {
 			});
 
 		});
-
 	}
 }
 
