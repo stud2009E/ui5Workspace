@@ -24,12 +24,12 @@ module.exports = function (grunt) {
 		grunt.registerTask("copyApps", "copy selected apps for build", function(){
 			const done = this.async();
 
-			const AllPromise = apps.map(app => 
+			const copyAll = apps.map(app => 
 				fs.copy(app.path, path.join(distPath, app.name)
 			));
 
 			Promise
-				.all(AllPromise)
+				.all(copyAll)
 				.catch(() => grunt.fail.fatal(`Can't copy files`))
 				.finally(done);
 		});
