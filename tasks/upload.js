@@ -25,7 +25,6 @@ module.exports = function(grunt){
 			grunt.fail.fatal("can't find application name");
 		}
 
-
 		const distAppNames = fs.readdirSync(distPath);
 		if(!distAppNames.some(distName => distName === appName)){
 			grunt.fail.fatal(`can't find application ${appName}`);
@@ -33,6 +32,14 @@ module.exports = function(grunt){
 
 		const appInfo = grunt.config.get("appInfo");
 		const uploadAppInfo = appInfo[appName];
+
+		if(!uploadAppInfo.package){
+			grunt.fail.fatal(`require package to upload application`);
+		}
+
+		if(!uploadAppInfo.transport){
+			grunt.fail.fatal(`require transport to upload application`);
+		}
 
 		grunt.config.merge({
 			nwabap_ui5uploader:{
@@ -50,7 +57,7 @@ module.exports = function(grunt){
 	                options: {
 	                    ui5: {
 	                        package: uploadAppInfo.package,
-	                        transportno: uploadAppInfo,
+	                        transportno: uploadAppInfo.transport,
 	                        bspcontainer: appName,
 	                        bspcontainer_text: `deploy ${appName}` 
 	                    },
