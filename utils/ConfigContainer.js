@@ -115,11 +115,13 @@ class SettingContainer {
 		this._validateArrayByProperty("application", apps, ["path"]);
 
 		apps.forEach(app => {
-			const parts = app.path.split(path.sep);
-			const appName = parts[parts.length - 1];
+			const appName = this.lastPathPart(app.path);
 
 			if(/\W/.test(appName)){
-				this.throwErrorShowConfig(`invalid characters in ${appName}! use only [a-zA-Z0-9_]`);
+				this.throwErrorShowConfig(
+					`invalid characters in ${appName}! use only [a-zA-Z0-9_]`,
+					true
+				);
 			}
 
 		});
