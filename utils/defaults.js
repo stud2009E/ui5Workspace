@@ -4,14 +4,15 @@ const configTemplate = `config.json must have structure:
 		apps: [
 			{
 				path: <path-to-application>,
-				[transport]: <transport request number>
+				[transport]: <transport request number>,
+				[package]: <package for application>,
+				[useMockServer]: true|false
 			},
 			...
 		],
 		[libs]: [
 			{
 				namespace: <library-namespace>,
-				context: <url-context>
  				path: <path-to-library>
 			},
 			...
