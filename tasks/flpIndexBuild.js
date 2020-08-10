@@ -1,8 +1,10 @@
 const path = require("path");
+const config = require("../utils/ConfigContainer.js");
 
 const __USHELL__CONFIG__= "__USHELL__CONFIG__";
 const __RESOURCE__ROOTS__CONFIG__= "__RESOURCE__ROOTS__CONFIG__";
 const __LIB__PATHS__= "__LIB__PATHS__";
+const __MOCK__SETTINGS__= "__MOCK__SETTINGS__";
 
 
 module.exports = function(grunt){
@@ -12,7 +14,7 @@ module.exports = function(grunt){
 
 		const cwd = process.cwd();
 		const fioriPath = {
-			tepmlate: path.join(cwd, "workspace/fiori/template.html"),
+			template: path.join(cwd, "workspace/fiori/template.html"),
 			templateRemote: path.join(cwd, "workspace/fiori-remote/template.html"),
 			index: path.join(cwd, "workspace/fiori/index.html"),
 			indexRemote: path.join(cwd, "workspace/fiori-remote/index.html"),
@@ -22,6 +24,14 @@ module.exports = function(grunt){
 		const resourceroots = grunt.config.get("resourceroots");
 		const libs = grunt.config.get("libs");
 
+		const appInfo = grunt.config.get("appInfo");
+		const mockSettings = config.apps.map(app => {
+			const {name} = app;
+			return {
+				name,
+				rootUri: appInfo[name].rootUri
+			};
+		});
 
 		grunt.loadNpmTasks("grunt-text-replace");
 		grunt.loadNpmTasks("grunt-contrib-clean");
@@ -57,14 +67,20 @@ module.exports = function(grunt){
 					src: fioriPath.template,
 					dest: fioriPath.index,
 					replacements:[{
-						from: __USHELL__CONFIG__,
+						from:__USHELL__CONFIG__,
 						to: getShellConfigStr({
 							apps: applications,
 							plugins: plugins
 						})
-					}, {
+					},{
 						from: __RESOURCE__ROOTS__CONFIG__,
 						to: resourceroots
+					},{
+						from: __LIB__PATHS__,
+						to: JSON.stringify(libs)
+					},{
+						from: __MOCK__SETTINGS__,
+						to: JSON.stringify(mockSettings)
 					}]
 				}
 			}
@@ -73,7 +89,7 @@ module.exports = function(grunt){
 		grunt.task.run([
 			"clean:flpIndex",
 			"replace:flpRemote",
-			// "replace:flp"
+			"replace:flp"
 		]);
 
 	});

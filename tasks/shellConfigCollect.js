@@ -12,18 +12,19 @@ module.exports = function (grunt) {
 		const {appInfo} = config;
 
 		const applications = {};
-		const resourceroots = {};
+		const resourceroots = {"flp.root": "../"};
 		const plugins = {};
 
 		//remove apps symlinks
 		fs.emptyDirSync(appsDir);
 
-		//create settings for apps and plugins
+		//create apps and plugins settings for flp index.html`
 		config.apps.concat(config.plugins).forEach(app => {
 			const {name} = app;
 			const manifest = grunt.file.readJSON(path.join(app.path, "webapp", "manifest.json"));
 			const appId = manifest["sap.app"].id;
 			const appType = manifest["sap.app"].type;
+			const serviceUri = getServiceUri(manifest, name);
 			const appKey = name + "-display";
 			const symlinkPath = path.join(cwd, "workspace/apps", name, "webapp");
 
@@ -31,6 +32,7 @@ module.exports = function (grunt) {
 
 			appInfo[name].id = appId;
 			appInfo[name].appType = appType;
+			appInfo[name].rootUri = serviceUri;
 			
 			if(appType === "component"){
 				plugins[name] = {};
@@ -42,7 +44,7 @@ module.exports = function (grunt) {
 				applications[appKey].description = name;
 				applications[appKey].title = name;
 			}else{
-				grunt.fail.fatal("can't parse application type");
+				grunt.fail.fatal(`can't parse application type for app: ${name}`);
 			}
 
 			resourceroots[appId] = path.relative(flpPath, symlinkPath);
@@ -71,3 +73,26 @@ module.exports = function (grunt) {
 		grunt.config.set("libs", libs);
 	});
 };
+
+
+/**
+ * Gets the service uri.
+ *
+ * @param      {object}  manifest  The manifest
+ * @param      {string}  appName   aplication name
+ * @return     {string}  The service uri.
+ */
+function getServiceUri(manifest, appName){
+	let dataSource;
+	let serviceUri;
+
+	try{
+		dataSource = manifest["sap.ui5"].models[""].dataSource;
+		serviceUri = manifest["sap.app"].dataSources[dataSource].uri;
+	}catch(e){
+		console.error(`can't find serviceUri for app: ${appName}`);
+	}
+
+	return serviceUri;
+
+}
