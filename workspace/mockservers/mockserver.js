@@ -5,9 +5,10 @@ sap.ui.define([
 	MockServer,
 	Log
 ){
-	"use strict";
 
-	var oModule = {
+	const LOG_COMPONENT = "MOCK_SERVER"; 
+
+	const oModule = {
 
 		/**
 		 * Initialize mockserver for apps
@@ -16,13 +17,12 @@ sap.ui.define([
 		 * @return     {Promise}  promise to load all mock extension
 		 */
 		init(settings = []){
-
 			MockServer.config({
 				autoRespond: true,
 				autoRespondAfter: 500
 			});
 
-			const allSetup = settings.map(this.setupServer);
+			const allSetup = settings.map(this.setupServer.bind(this));
 			return Promise.all(allSetup)
 				.finally(() => MockServer.startAll());
 		},
@@ -52,7 +52,7 @@ sap.ui.define([
 			});
 
 			if(this.isLogMode()){
-				// mockserver.attach();
+				this.attachLog(mockserver, rootUri, name);
 			}
 
 			return new Promise((resolve, reject) => {
@@ -70,13 +70,49 @@ sap.ui.define([
 			});
 		},
 
-
+		/**
+		 * Determines if log mode.
+		 *
+		 * @return     {boolean}  True if log mode, False otherwise.
+		 */
 		isLogMode(){
-			const uri = new URI(location.href);
-			const usp = new URLSearchParams(uri.query());
+			return /\WmockLogMode=true(\W|$)/.test(location.href);
+		},
 
-			return usp.get("log-mode") === "mock";
-		}
+		/**
+		 * Attaches the log.
+		 *
+		 * @param      {sap.ui.core.util.MockServer}  mockserver  The mockserver
+		 * @param      {string}                       rootUri     The root uri
+		 * @param      {string}                       name        application name
+		 */
+		attachLog(mockserver, rootUri, name) {
+			Log.setLevel(3, name);
+
+            function logRequest(oEvent) {
+            	const oXhr = oEvent.getParameter("oXhr");
+            	const oFilteredData = oEvent.getParameter("oFilteredData")
+            	const aResults = oFilteredData && oFilteredData.results || [];
+                const sUrl = decodeURIComponent(oXhr.url).replace(rootUri, "");
+                
+                let [entitySet, params] = sUrl.split("?");
+               	params = params.split("&").join('\n\t');
+
+                const sMessage = `\nMockServer::${oEvent.getId()} /${entitySet}\nparams:${params}\n`;
+
+                if (oXhr.status >= 400) {
+                    Log.error(sMessage, aResults, name);
+                } else if (oXhr.status >= 300) {
+                    Log.warning(sMessage, aResults, name);
+                } else {
+                    Log.info(sMessage, aResults, name);
+                }
+            }
+
+            Object.keys(MockServer.HTTPMETHOD)
+            	.map(key => MockServer.HTTPMETHOD[key])
+            	.forEach(method => mockserver.attachAfter(method, logRequest));
+        }
 
 	};
 
