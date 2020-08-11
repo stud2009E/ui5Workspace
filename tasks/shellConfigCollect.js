@@ -6,8 +6,6 @@ module.exports = function (grunt) {
 
 	grunt.registerTask("shellConfigCollect", "collect settings for plugins, apps", function(){
 
-		debugger;
-
 		const cwd = process.cwd();
 		const appsDir = path.join(cwd, "workspace/apps");
 		const flpPath = path.join(cwd, "workspace/fiori");
@@ -63,7 +61,7 @@ module.exports = function (grunt) {
 				plugins[name] = {};
 				plugins[name].component = appId;
 			} else{
-				grunt.fail.fatal(`can't parse application type for app: ${name}`);
+				grunt.fail.fatal(`can't parse plugin type for app: ${name}`);
 			}
 
 			resourceroots[appId] = path.relative(flpPath, symlinkPath);
