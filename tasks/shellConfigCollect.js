@@ -6,6 +6,8 @@ module.exports = function (grunt) {
 
 	grunt.registerTask("shellConfigCollect", "collect settings for plugins, apps", function(){
 
+		debugger;
+
 		const cwd = process.cwd();
 		const appsDir = path.join(cwd, "workspace/apps");
 		const flpPath = path.join(cwd, "workspace/fiori");
@@ -18,8 +20,8 @@ module.exports = function (grunt) {
 		//remove apps symlinks
 		fs.emptyDirSync(appsDir);
 
-		//create apps and plugins settings for flp index.html`
-		config.apps.concat(config.plugins).forEach(app => {
+		//create app settings for flp index.html`
+		config.apps.forEach(app => {
 			const {name} = app;
 			const manifest = grunt.file.readJSON(path.join(app.path, "webapp", "manifest.json"));
 			const appId = manifest["sap.app"].id;
@@ -34,16 +36,33 @@ module.exports = function (grunt) {
 			appInfo[name].appType = appType;
 			appInfo[name].rootUri = serviceUri;
 			
-			if(appType === "component"){
-				plugins[name] = {};
-				plugins[name].component = appId;
-			}else if(appType === "application"){
+			if(appType === "application"){
 				applications[appKey] = {};
 				applications[appKey].additionalInformation = `SAPUI5.Component=${appId}`;
 				applications[appKey].applicationType = "URL";
 				applications[appKey].description = name;
 				applications[appKey].title = name;
-			}else{
+			} else{
+				grunt.fail.fatal(`can't parse application type for app: ${name}`);
+			}
+
+			resourceroots[appId] = path.relative(flpPath, symlinkPath);
+		});
+
+		//create plugins settings for flp index.html`
+		config.plugins.forEach(app => {
+			const {name} = app;
+			const manifest = grunt.file.readJSON(path.join(app.path, "webapp", "manifest.json"));
+			const appId = manifest["sap.app"].id;
+			const appType = manifest["sap.app"].type;
+			const symlinkPath = path.join(cwd, "workspace/apps", name, "webapp");
+
+			fs.symlinkSync(app.path, path.join(appsDir, name), "dir");
+			
+			if(appType === "component"){
+				plugins[name] = {};
+				plugins[name].component = appId;
+			} else{
 				grunt.fail.fatal(`can't parse application type for app: ${name}`);
 			}
 
