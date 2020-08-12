@@ -6,7 +6,9 @@ const configTemplate = `config.json must have structure:
 				path: <path-to-application>,
 				[transport]: <transport request number>,
 				[package]: <package for application>,
-				[useMockServer]: true|false
+				[useMockServer]: true|false,
+				[action]: <semantic object action>,
+				[mockModelName]: <model for mockserver>
 			},
 			...
 		],

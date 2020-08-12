@@ -4,6 +4,8 @@ const config = require("../utils/ConfigContainer.js");
 
 module.exports = function (grunt) {
 
+	getServiceUri = getServiceUri.bind(grunt);
+
 	grunt.registerTask("shellConfigCollect", "collect settings for plugins, apps", function(){
 
 		const cwd = process.cwd();
@@ -20,13 +22,13 @@ module.exports = function (grunt) {
 
 		//create app settings for flp index.html`
 		config.apps.forEach(app => {
-			const {name} = app;
+			const {name, action = "display", mockModelName = ""} = app;
 			const manifest = grunt.file.readJSON(path.join(app.path, "webapp", "manifest.json"));
 			const appId = manifest["sap.app"].id;
 			const appType = manifest["sap.app"].type;
-			const serviceUri = getServiceUri(manifest, name);
-			const appKey = name + "-display";
 			const symlinkPath = path.join(cwd, "workspace/apps", name, "webapp");
+			const appKey = `${name}-${action}`;
+			const serviceUri = getServiceUri({manifest, name, mockModelName});
 
 			fs.symlinkSync(app.path, path.join(appsDir, name), "dir");
 
@@ -99,17 +101,16 @@ module.exports = function (grunt) {
  * @param      {string}  appName   aplication name
  * @return     {string}  The service uri.
  */
-function getServiceUri(manifest, appName){
+function getServiceUri({manifest, appName, mockModelName}){
 	let dataSource;
 	let serviceUri;
 
 	try{
-		dataSource = manifest["sap.ui5"].models[""].dataSource;
+		dataSource = manifest["sap.ui5"].models[mockModelName].dataSource;
 		serviceUri = manifest["sap.app"].dataSources[dataSource].uri;
 	}catch(e){
-		console.error(`can't find serviceUri for app: ${appName}`);
+		this.fail.fatal(`can't find serviceUri for app:'${appName}' model:'${mockModelName}'`);
 	}
 
 	return serviceUri;
-
 }
