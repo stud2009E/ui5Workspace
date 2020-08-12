@@ -14,5 +14,10 @@ module.exports = function(grunt){
 		"preload"
 	]);
 
+
+	grunt.registerTask("buildExcel", [
+		"shellConfigCollect",
+		"excelMaket"
+	]);
 	
 };
