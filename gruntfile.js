@@ -19,5 +19,10 @@ module.exports = function(grunt){
 		"shellConfigCollect",
 		"excelMaket"
 	]);
+
+	grunt.registerTask("parseExcel", [
+		"shellConfigCollect",
+		"excel2json"
+	]);
 	
 };
