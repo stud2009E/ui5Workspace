@@ -5,25 +5,14 @@ const defaults = require("./defaults.js");
 class SettingContainer {
 
 	constructor(config) {
-		this._sdk = null;
-		this._apps = [];
-		this._libs = [];
-		this._plugins = [];
-		this._system = null;
-		this._port = null;
-		this._theme = null;
 
-		this.setPort(config);
-		this.setTheme(config);
-		this.setSdk(config);
-		this.setApps(config);
-		this.setLibs(config);
-		this.setPlugins(config);
-		this.setTheme(config);
+		const props = [
+			"port", "theme", "sdk", "apps", "libs", "plugins",
+			"proxyModule", "defaultKeys", "system"
+		];
 
-		this.setDefaultKeys(config);
+		props.forEach(prop => this[prop] = config);
 
-		this._system = config.system;
 	}
 
 	/**
@@ -32,7 +21,28 @@ class SettingContainer {
 	 * @type       {boolean}
 	 */
 	get isLocalDev(){
-		return !this._system;
+		return !this.system;
+	}
+
+	/**
+	 * set system settings @see ./defaults.js
+	 * 
+	 * @param      {Object}  config
+	 * @param      {string}  config.system
+	 * @type       {object}
+	 */
+	set system({system}){
+		this._system = system;
+	}
+
+
+	/**
+	 * get system settings @see ./defaults.js
+	 * 
+	 * @type       {object}
+	 */
+	get system(){
+		return this._system;
 	}
 
 	/**
@@ -40,8 +50,9 @@ class SettingContainer {
 	 *
 	 * @param      {Object}  config
 	 * @param      {number}  config.port  localhost port
+	 * @type       {number}
 	 */
-	setPort({port}){
+	set port({port}){
 		this._port = port || defaults.port;
 	}
 
@@ -55,13 +66,40 @@ class SettingContainer {
 	}
 
 	/**
+	 * which proxy module use:
+	 * if npm then grunt-connect-proxy
+	 * if git then https://github.com/drewzboto/grunt-connect-proxy.git
+	 * 
+	 * @param      {Object} config
+	 * @param      {string} config.proxyModule
+	 * 
+	 * @type       {string}
+	 */
+	set proxyModule({proxyModule = "git"}){
+		if(!["git", "npm"].includes(proxyModule)){
+			this.throwErrorShowConfig("error: proxyModule must be git|npm", true);
+		}
+
+		this._proxyModule = proxyModule;
+	}
+
+	/**
+	 * get proxy module
+	 *
+	 * @type       {string}
+	 */
+	get proxyModule(){
+		return this._proxyModule;
+	}
+
+	/**
 	 * Sets the theme.
 	 *
 	 * @param      {Object}  config
 	 * @param      {string}  [config.theme="sap_belize"]  The theme
 	 */
-	setTheme({theme}){
-		this._theme = theme || defaults.theme;
+	set theme({theme = "sap_belize"}){
+		this._theme = theme;
 	}
 
 	/**
@@ -79,9 +117,9 @@ class SettingContainer {
 	 * @param      {Object}  config
 	 * @param      {string}  config.sdk  path to sdk folder
 	 */
-	setSdk({sdk}){
+	set sdk({sdk}){
 		if(typeof sdk !== "string" || sdk.length === 0){
-			this.throwErrorShowConfig("can't parse path to sofware development kit");
+			this.throwErrorShowConfig("error: require path to sofware development kit");
 		}
 		this._sdk = sdk;
 	}
@@ -109,10 +147,10 @@ class SettingContainer {
 	 *
 	 * @param      {Object}  config 	
 	 * @param      {Array}  config.apps  application settings
-	 * @throws restrictions for fiori launchpad functionality 
+	 * @throws 	   application name restrictions for fiori launchpad functionality 
 	 */
-	setApps({apps}){
-		this._validateArrayByProperty("application", apps, ["path"]);
+	set apps({apps}){
+		this.validateArrayByProperty("application", apps, ["path"]);
 
 		apps.forEach(app => {
 			const appName = this.lastPathPart(app.path);
@@ -165,13 +203,13 @@ class SettingContainer {
 	 * @param      {Object}  config
 	 * @param      {Array}  config.libs  The libs
 	 */
-	setLibs({libs}){
+	set libs({libs}){
 		if(libs === undefined){
 			this._libs = [];
 			return;
 		}
 
-		this._validateArrayByProperty("library", libs, ["path", "namespace"]);
+		this.validateArrayByProperty("library", libs, ["path", "namespace"]);
 
 		this._libs = libs;
 	}
@@ -206,16 +244,19 @@ class SettingContainer {
 		const user = this.getUser(systemKey, userKey);
 		const ident = Buffer.from(`${user.login}:${user.pwd}`).toString("base64");
 
+		const {
+			host, port, 
+			context = "/sap", 
+			secure = false,
+			https = true
+		} = system;
+
 		if(!system){
 			return [];
 		}
 
 		return [{
-            context: "/sap/",
-            host: system.host,
-            port: system.port,
-            secure: false,
-            https: true,
+			context, host, port, secure, https,
             headers: {
                 Authorization: `Basic ${ident}`
             }
@@ -228,13 +269,13 @@ class SettingContainer {
 	 * @param      {Object}  config
 	 * @param      {Array}  config.plugins  The plugins
 	 */
-	setPlugins({plugins}){
+	set plugins({plugins}){
 		if(plugins === undefined){
 			this._plugins = [];
 			return;
 		}
 
-		this._validateArrayByProperty("plugins", plugins, ["path"]);
+		this.validateArrayByProperty("plugins", plugins, ["path"]);
 
 		this._plugins = plugins;
 	}
@@ -259,7 +300,7 @@ class SettingContainer {
 	 * @param      {string}  config.systemDefault  The system default
 	 * @param      {string}  config.userDefault    The user default
 	 */
-	setDefaultKeys({systemDefault, userDefault}){
+	set defaultKeys({systemDefault, userDefault}){
 		this._systemDefaultKey = systemDefault;
 		this._userDefaultKey = userDefault;
 	}
@@ -312,7 +353,7 @@ class SettingContainer {
 	 * @return     {object}  system info.
 	 */
 	getSystem(key){
-		const system = this._system && this._system[key];
+		const system = this.system && this.system[key];
 		if(!system){
 			this.throwErrorShowConfig(`can't find system: '${key}' from config`);
 		}
@@ -357,7 +398,7 @@ class SettingContainer {
 	 * @param      {Array<object>}  items      The items
 	 * @param      {Array<strings>}  keys       The keys
 	 */
-	_validateArrayByProperty(checkName, items, keys){
+	validateArrayByProperty(checkName, items, keys){
 
 		if(!Array.isArray(items) || items.length === 0){
 			this.throwErrorShowConfig();

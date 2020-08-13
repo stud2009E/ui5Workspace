@@ -1,6 +1,7 @@
 const config = require("../utils/ConfigContainer.js");
 const defaults = require("../utils/defaults.js");
-const utils = require("grunt-connect-proxy/lib/utils");
+const utilsNpm = require("grunt-connect-proxy/lib/utils");
+const utilsGit = require("grunt-connect-proxy-git/lib/utils");
 
 module.exports = function(grunt){
 
@@ -8,8 +9,16 @@ module.exports = function(grunt){
 		grunt.task.requires("shellConfigCollect");
 
 		grunt.loadNpmTasks("grunt-contrib-connect");
-		grunt.loadNpmTasks("grunt-connect-proxy");
 		grunt.loadNpmTasks("grunt-openui5");
+
+		if(config.proxyModule === "git"){
+			grunt.loadNpmTasks("grunt-connect-proxy-git");
+			utils = utilsGit;
+		}
+		if(config.proxyModule === "npm"){
+			grunt.loadNpmTasks("grunt-connect-proxy");
+			utils = utilsNpm;
+		}
 
 		const systemKey = grunt.option("sys") || config.systemDefaultKey;
 		const userKey = grunt.option("user") || config.userDefaultKey;
