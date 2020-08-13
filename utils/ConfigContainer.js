@@ -226,6 +226,7 @@ class SettingContainer {
 
 			return {
 				...lib,
+				name,
 				context:`/sap/bc/ui5_ui5/sap/${name}/`
 			};
 		});
