@@ -76,6 +76,8 @@ module.exports = function (grunt) {
 				namespace: lib.namespace
 			};
 
+			fs.symlinkSync(lib.path, path.join(appsDir, lib.name), "dir");
+
 			grunt.file.recurse(lib.path, function(absPath, rootdir, subdir, filename) {
 				if(filename.endsWith("library.js")){
 					item.path = path.relative(flpPath, path.join(lib.path, subdir));
