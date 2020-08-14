@@ -227,7 +227,7 @@ class SettingContainer {
 			return {
 				...lib,
 				name,
-				context:`/sap/bc/ui5_ui5/sap/${name}/`
+				context:`/sap/bc/ui5_ui5/sap/${name}`
 			};
 		});
 	}
@@ -245,23 +245,16 @@ class SettingContainer {
 		const user = this.getUser(systemKey, userKey);
 		const ident = Buffer.from(`${user.login}:${user.pwd}`).toString("base64");
 
-		const {
-			host, port, 
-			context = "/sap", 
-			secure = false,
-			https = true
-		} = system;
+		const { host, port, context = "/sap", secure = false, https = true} = system;
 
-		if(!system){
-			return [];
-		}
-
-		return [{
+		const proxy =  [{
 			context, host, port, secure, https,
             headers: {
                 Authorization: `Basic ${ident}`
             }
         }];
+
+        return proxy;
 	}
 
 	/**
