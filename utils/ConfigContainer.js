@@ -7,12 +7,12 @@ class SettingContainer {
 	constructor(config) {
 
 		const props = [
-			"port", "theme", "sdk", "apps", "libs", "plugins",
-			"proxyModule", "defaultKeys", "system"
+			"port", "sdk", "apps", "libs", "plugins",
+			"proxyModule", "defaultKeys", "system",
+			"theme"
 		];
 
 		props.forEach(prop => this[prop] = config);
-
 	}
 
 	/**
@@ -98,8 +98,9 @@ class SettingContainer {
 	 * @param      {Object}  config
 	 * @param      {string}  [config.theme="sap_belize"]  The theme
 	 */
-	set theme({theme = "sap_belize"}){
+	set theme({theme = defaults.theme, themeRoots = {}}){
 		this._theme = theme;
+		this._themeRoots = themeRoots;
 	}
 
 	/**
@@ -109,6 +110,16 @@ class SettingContainer {
 	 */
 	get theme(){
 		return this._theme;
+	}
+
+
+	/**
+	 * map theme-path
+	 *
+	 * @type       {Object}
+	 */
+	get themeRoots(){
+		return this._themeRoots;
 	}
 
 	/**

@@ -1,16 +1,18 @@
 const path = require("path");
 const config = require("../utils/ConfigContainer.js");
 
+const __THEME__= "__THEME__";
 const __USHELL__CONFIG__= "__USHELL__CONFIG__";
 const __RESOURCE__ROOTS__CONFIG__= "__RESOURCE__ROOTS__CONFIG__";
 const __LIB__PATHS__= "__LIB__PATHS__";
 const __MOCK__SETTINGS__= "__MOCK__SETTINGS__";
 
-
 module.exports = function(grunt){
 
 	grunt.registerTask("flpIndexBuild", "build fiori index.html", function(){
 		grunt.task.requires("shellConfigCollect");
+		grunt.loadNpmTasks("grunt-text-replace");
+		grunt.loadNpmTasks("grunt-contrib-clean");
 
 		const cwd = process.cwd();
 		const fioriPath = {
@@ -32,9 +34,8 @@ module.exports = function(grunt){
 				rootUri: appInfo[name].rootUri
 			};
 		});
-
-		grunt.loadNpmTasks("grunt-text-replace");
-		grunt.loadNpmTasks("grunt-contrib-clean");
+		
+		console.log(config.themeRoots);
 
 		grunt.config.merge({
 			clean: {
@@ -53,7 +54,8 @@ module.exports = function(grunt){
 						from:__USHELL__CONFIG__,
 						to: getShellConfigStr({
 							apps: applications,
-							plugins: plugins
+							plugins: plugins,
+							themeRoots: config.themeRoots
 						})
 					},{
 						from: __RESOURCE__ROOTS__CONFIG__,
@@ -61,6 +63,9 @@ module.exports = function(grunt){
 					},{
 						from: __LIB__PATHS__,
 						to: JSON.stringify(libs)
+					},{
+						from: __THEME__,
+						to: config.theme
 					}]
 				},
 				flp: {
@@ -70,7 +75,8 @@ module.exports = function(grunt){
 						from:__USHELL__CONFIG__,
 						to: getShellConfigStr({
 							apps: applications,
-							plugins: plugins
+							plugins: plugins,
+							themeRoots: config.themeRoots
 						})
 					},{
 						from: __RESOURCE__ROOTS__CONFIG__,
@@ -81,6 +87,9 @@ module.exports = function(grunt){
 					},{
 						from: __MOCK__SETTINGS__,
 						to: JSON.stringify(mockSettings)
+					},{
+						from: __THEME__,
+						to: config.theme
 					}]
 				}
 			}
@@ -104,15 +113,20 @@ module.exports = function(grunt){
  * @param      {object}  param.plugins  The plugins settings
  * @return     {string}  The shell configuration string.
  */
-function getShellConfigStr({apps, plugins}){
-	let appsStr = JSON.stringify(apps);
-	let plugStr = JSON.stringify(plugins);
+function getShellConfigStr({apps, plugins, themeRoots}){
+	const appsStr = JSON.stringify(apps);
+	const plugStr = JSON.stringify(plugins);
+	const themeStr = JSON.stringify(themeRoots);
 
 	return `
+		window["sap-ui-config"] = {
+			themeRoots: ${themeStr}
+		};
+
 		window["sap-ushell-config"] = {
 			defaultRenderer: "fiori2",
 			applications: ${appsStr},
 			bootstrapPlugins: ${plugStr}
-		}
+		};
 	`;
 }
