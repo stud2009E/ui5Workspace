@@ -49,10 +49,14 @@ module.exports = function(grunt){
 						livereload: false,
 						middleware: function(connect, options, middlewares){
 							middlewares.unshift(utils.proxyRequest);
+
 							return middlewares;
 						}
 					},
-					proxies: systemProxies.concat(libProxies)
+					proxies: [
+						...libProxies,
+						...systemProxies
+					]
 				}
 			},
 

@@ -80,7 +80,7 @@ module.exports = function (grunt) {
 
 			grunt.file.recurse(lib.path, function(absPath, rootdir, subdir, filename) {
 				if(filename.endsWith("library.js")){
-					item.path = path.relative(flpPath, path.join(lib.path, subdir));
+					item.path = path.join("apps", lib.name, subdir);
 				}
 			});
 
@@ -100,10 +100,10 @@ module.exports = function (grunt) {
  * Gets the service uri.
  *
  * @param      {object}  manifest  The manifest
- * @param      {string}  appName   aplication name
+ * @param      {string}  name   aplication name
  * @return     {string}  The service uri.
  */
-function getServiceUri({manifest, appName, mockModelName}){
+function getServiceUri({manifest, name, mockModelName = ""}){
 	let dataSource;
 	let serviceUri;
 
@@ -111,7 +111,7 @@ function getServiceUri({manifest, appName, mockModelName}){
 		dataSource = manifest["sap.ui5"].models[mockModelName].dataSource;
 		serviceUri = manifest["sap.app"].dataSources[dataSource].uri;
 	}catch(e){
-		this.fail.fatal(`can't find serviceUri for app:'${appName}' model:'${mockModelName}'`);
+		this.fail.fatal(`can't find serviceUri for app:'${name}' model:'${mockModelName}'`);
 	}
 
 	return serviceUri;
