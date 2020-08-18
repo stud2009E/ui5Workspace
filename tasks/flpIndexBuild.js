@@ -35,8 +35,6 @@ module.exports = function(grunt){
 			};
 		});
 		
-		console.log(config.themeRoots);
-
 		grunt.config.merge({
 			clean: {
 				flpIndex:{

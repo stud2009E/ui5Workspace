@@ -49,16 +49,31 @@ module.exports = function(grunt){
 					grunt.log.writeln(`${set.Name}.json not exists`);
 				}
 
-				const columns = type.properties.map(property => {
-					return {
+				let keyColumns = [];
+				let otherColumns = [];
+				type.properties.forEach(property => {
+					const item = {
 						name: property.Name,
 						header: property.Name,
 						key: property.Name,
-						width: 20
+						width: 20,
+						type: property.Type
 					};
+
+					if(type.key.some(key => key.Name === property.Name)){
+						keyColumns.push(item);
+					}else{
+						otherColumns.push(item);
+					}
 				});
 
-				const rows = currentData.map(data => columns.map(column => data[column.key]));
+				const columns = [...keyColumns, ...otherColumns];
+				const rows = currentData.map(data => columns.map(column => {
+					// if(column.name){
+						
+					// }
+					return data[column.name]
+				}));
 
 				if(rows.length === 0){
 					rows.push([]);
@@ -68,16 +83,11 @@ module.exports = function(grunt){
 					name: set.Name,
 					ref: "A1",
 					headerRow: true,
-					style: {
-						theme: 'TableStyleLight10',
-						showRowStripes: true,
-					},
 					columns: columns,
 					rows: rows
 				});
 
 				ws.columns = columns;
-
 			});
 
 			await workbook.xlsx.writeFile(xlsxPath);

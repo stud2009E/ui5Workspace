@@ -50,6 +50,7 @@ module.exports = function(grunt){
 
 					table.columns.forEach((column, i) => {
 						const cell = row.getCell(i + 1);
+
 						item[column.name] = cell.value;
 					});
 
@@ -73,3 +74,52 @@ module.exports = function(grunt){
 		})();
 	});
 };
+
+
+function validateValue({grunt, entitySet, type, value}){
+	const errorMessage = `parse error: in entity set:${entitySet} value:${value} can't be type: ${type}`;
+
+	switch(type){
+		case "Edm.Guid":
+			const reguid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+			if(!regexp.test(value)){
+				grunt.fail.fatal(errorMessage);
+			}
+			break;
+		case "Edm.Decimal":
+		case "Edm.Float":
+		case "Edm.Double":
+		case "Edm.Int16":
+		case "Edm.Int32":
+		case "Edm.Int64":
+			if(isNaN(value)){
+				grunt.fail.fatal(errorMessage);
+			}
+			break;
+		case "Edm.Byte":
+			if(isNaN(value) && value >= 0 && value < 8){
+				grunt.fail.fatal(errorMessage);
+			}
+			break;
+		case "Edm.DateTime":
+			//15.12.2020  14:23:55
+			const redt = /^([0-2]\d|3[01])\.(0[1-9]|1[0-2])\.\d{4}\s\s([01]\d|2[0-3])(:[0-5]\d){2}/i;
+			if(!redt.test(value)){
+				grunt.fail.fatal(errorMessage);
+			}
+			break;
+		case "Edm.Time":
+			//14:23:55
+			const ret = /([01]\d|2[0-3])(:[0-5]\d){2}/i;
+			if(!redt.test(value)){
+				grunt.fail.fatal(errorMessage);
+			} 
+			break;
+		case "Edm.Boolean":
+			if(value !== true || value !== false){
+				grunt.fail.fatal(errorMessage);
+			}
+			break;
+	}
+}
