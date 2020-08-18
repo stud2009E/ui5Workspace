@@ -10,7 +10,7 @@ module.exports = function(grunt){
 	 * type restrictions: date, numbers, booleans
 	 * column: string maxlength, labels
 	*/
-	grunt.registerTask("excelMaket", "build excel from service metadata", function(){
+	grunt.registerTask("excelMaket", "private: build excel from metadata.xml", function(){
 		grunt.task.requires("shellConfigCollect");
 
 		const done = this.async();
@@ -70,7 +70,7 @@ module.exports = function(grunt){
 				const columns = [...keyColumns, ...otherColumns];
 				const rows = currentData.map(data => columns.map(column => {
 					// if(column.name){
-						
+
 					// }
 					return data[column.name]
 				}));

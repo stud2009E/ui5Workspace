@@ -6,7 +6,7 @@ module.exports = function (grunt) {
 
 	getServiceUri = getServiceUri.bind(grunt);
 
-	grunt.registerTask("shellConfigCollect", "collect settings for plugins, apps", function(){
+	grunt.registerTask("shellConfigCollect", "private: collect settings for plugins, apps, libs", function(){
 
 		const cwd = process.cwd();
 		const appsDir = path.join(cwd, "workspace/apps");

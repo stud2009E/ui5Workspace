@@ -10,7 +10,7 @@ module.exports = function(grunt){
 	 * type restrictions: date, numbers, booleans
 	 * column: string maxlength, labels
 	*/
-	grunt.registerTask("excel2json", "build excel from service metadata", function(){
+	grunt.registerTask("excel2json", "private: build jsons from metadata.xlsx", function(){
 		grunt.task.requires("shellConfigCollect");
 
 		const done = this.async();

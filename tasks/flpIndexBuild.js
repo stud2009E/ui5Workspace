@@ -9,7 +9,7 @@ const __MOCK__SETTINGS__= "__MOCK__SETTINGS__";
 
 module.exports = function(grunt){
 
-	grunt.registerTask("flpIndexBuild", "build fiori index.html", function(){
+	grunt.registerTask("flpIndexBuild", "private: build fiori index.html", function(){
 		grunt.task.requires("shellConfigCollect");
 		grunt.loadNpmTasks("grunt-text-replace");
 		grunt.loadNpmTasks("grunt-contrib-clean");

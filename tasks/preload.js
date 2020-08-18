@@ -3,7 +3,7 @@ const fs = require("fs-extra");
 
 module.exports = function(grunt){
 
-	grunt.registerTask("preload", "build app component preload", function(){
+	grunt.registerTask("preload", "private: build app Component-preload.js", function(){
 
 		grunt.task.requires("copyAppToDist");
 		grunt.loadNpmTasks("grunt-openui5");

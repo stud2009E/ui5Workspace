@@ -4,7 +4,7 @@ const config = require("../utils/ConfigContainer.js");
 
 module.exports = function(grunt){
 
-	grunt.registerTask("uploadApp", "upload application to server", function(){
+	grunt.registerTask("upload", "private: upload application to server", function(){
 		grunt.task.requires("build");
 		// grunt.task.requires("jshint");
 		// grunt.task.requires("test");

@@ -15,3 +15,7 @@ application/
 		index.html
 		Component.js
 		manifest.json
+
+
+Для отображения реализованных задач grunt введите команду:
+grunt --help lists

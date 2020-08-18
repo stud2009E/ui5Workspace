@@ -5,7 +5,7 @@ const utilsGit = require("grunt-connect-proxy-git/lib/utils");
 
 module.exports = function(grunt){
 
-	grunt.registerTask("serve", function(){
+	grunt.registerTask("serve", "private: setup proxy server", function(){
 		grunt.task.requires("shellConfigCollect");
 
 		grunt.loadNpmTasks("grunt-contrib-connect");

@@ -4,7 +4,7 @@ const config = require("../utils/ConfigContainer.js");
 
 module.exports = function (grunt) {
 	
-	grunt.registerTask("copyAppToDist", "clean application from dist and copy to dist", function(){
+	grunt.registerTask("copyAppToDist", "private: clean application from dist and copy to dist", function(){
 		grunt.task.requires("shellConfigCollect");
 		grunt.loadNpmTasks("grunt-contrib-clean");
 
