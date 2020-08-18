@@ -50,6 +50,30 @@ class EntityType extends Property{
 			.map(item => item["$"]);
 	}
 
+	/**
+	 * property map: property name -> property object
+	 *
+	 * @type       {object}
+	 */
+	get propMap(){
+		if(!this._map){
+			this._map = {};
+			this.properties.forEach(prop => this._map[prop.Name] = prop);
+		}
+
+		return this._map;
+	}
+
+	/**
+	 * Gets the property.
+	 *
+	 * @param      {string}  name    property name
+	 * @return     {object}  The property.
+	 */
+	getProperty(name){
+		return this.propMap[name];
+	}
+
 };
 
 module.exports = EntityType;
