@@ -18,7 +18,7 @@ module.exports = function (grunt) {
 		}
 
 		if(appName && apps.length === 0){
-			grunt.fail.fatal(`can't find any match with: ${appName}`);
+			grunt.fail.fatal(`error: can't find any app match with: ${appName}`);
 		}
 
 		grunt.registerTask("copyApps", "copy selected apps for build", function(){
@@ -30,7 +30,7 @@ module.exports = function (grunt) {
 
 			Promise
 				.all(copyAll)
-				.catch(() => grunt.fail.fatal(`Can't copy files`))
+				.catch(() => grunt.fail.fatal(`error: can't copy files`))
 				.finally(done);
 		});
 
