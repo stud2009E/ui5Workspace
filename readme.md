@@ -7,15 +7,18 @@ application/
 		i18n/
 		css/
 		test/
-			mockServer.html
+			unit/
+			integration/
+			allTest.js
+			allTest.html
 		localService/
 			mockdata/
 			ext/
 			metadata.xml
+			annotation.xml
 		index.html
 		Component.js
 		manifest.json
-
 
 Для отображения реализованных задач grunt введите команду:
 grunt --help lists

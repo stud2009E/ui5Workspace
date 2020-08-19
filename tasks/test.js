@@ -1,4 +1,3 @@
-const path = require("path");
 const config = require("../utils/ConfigContainer.js");
 
 module.exports = function(grunt){
@@ -19,7 +18,7 @@ module.exports = function(grunt){
 				all: {
 					options: {
 						urls: [
-							`http://localhost:8000/apps/${appName}/webapp/test/qunit.test.html` 
+							`http://localhost:8000/apps/${appName}/webapp/test/allTest.html` 
 						]
 					}
 				}
