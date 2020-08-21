@@ -5,7 +5,8 @@ sap.ui.define([
 	MockServer,
 	Log
 ){
-
+	"use strict";
+	
 	const LOG_COMPONENT = "MOCK_SERVER"; 
 
 	const oModule = {
@@ -40,8 +41,6 @@ sap.ui.define([
 			const {name, rootUri} = setting;
 			const metadataPath = `../apps/${name}/webapp/localService/metadata.xml`;
 			const mockdataPath = `../apps/${name}/webapp/localService/mockdata`;
-
-			 new URI(location.href);
 
 			const mockserver = new MockServer({
 				rootUri: rootUri

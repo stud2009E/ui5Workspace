@@ -22,3 +22,8 @@ application/
 
 Для отображения реализованных задач grunt введите команду:
 grunt --help lists
+
+
+npm install --global grunt-cli
+npm install --global @ui5/cli
+npm install --global yo
