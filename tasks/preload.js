@@ -1,40 +1,59 @@
+const config = require("../utils/ConfigContainer.js");
+const util = require("util");
 const path = require("path");
 const fs = require("fs-extra");
+const exec = util.promisify(require("child_process").exec);
 
 module.exports = function(grunt){
 
 	grunt.registerTask("preload", "private: build app Component-preload.js", function(){
 
-		grunt.task.requires("copyAppToDist");
-		grunt.loadNpmTasks("grunt-openui5");
+		const appName = grunt.option("app"); 
+		const appInfo = config.appInfo;
+		const done = this.async();
 
-		const cwd = process.cwd();
-		const distPath = path.join(cwd, "workspace/dist");
-		const appNames = fs.readdirSync(distPath);
-		const preload = {};
-		const appInfo = grunt.config.get("appInfo");
+		if(!appName){
+			grunt.fail.fatal("error: require app name, use --app=<app name>");
+		}
 
-		appNames.forEach(name => {
-			let appId = appInfo[name].id;
-			let prefix = appId.split(".").join("/");
+		if(!appInfo[appName]){
+			grunt.fail.fatal(`error: can't find app with name ${appName}`);
+		}
 
-			preload[name] = {};
-			preload[name].components = true;
-			preload[name].options = {};
-			preload[name].options.dest = path.join(distPath, name, "webapp");
-			preload[name].options.resources = {
-				cwd: path.join(distPath, name, "webapp"),
-				prefix: prefix
-			};
+		const appPath = appInfo[appName].path;
 
-		});
+		(async () => {
 
-		grunt.config.merge({
-			openui5_preload: preload
-		});
+			const bPackage = fs.existsSync(path.join(appPath, "package.json"));
+			if(!bPackage){
+				const {stderr, stdout} = await exec("npm init -y", {
+					cwd: appPath
+				});
 
-		grunt.task.run(["openui5_preload"]);
+				console.error(stderr);
+				console.log(stdout);
+			}
+
+			const bUi5 = fs.existsSync(path.join(appPath, "ui5.yaml"));
+			if(!bUi5){
+				const {stderr, stdout} = await exec("ui5 init", {
+					cwd: appPath
+				});
+
+				console.error(stderr);
+				console.log(stdout);
+			}
+
+			const {stderr, stdout} = await exec("ui5 build preload", {
+				cwd: appPath
+			});
+	
+			console.error(stderr);
+			console.log(stdout);
+
+			done();
+
+		})();
 
 	});
-
 };
