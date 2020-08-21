@@ -9,13 +9,6 @@ module.exports = function(grunt){
 	]);
 
 
-	grunt.registerTask("build", "public: build Component-preload.js for app", [
-		"shellConfigCollect",
-		"copyAppToDist",
-		"preload"
-	]);
-
-
 	grunt.registerTask("buildExcel", "public: build excel metadata.xlsx based on metadata.xml", [
 		"shellConfigCollect",
 		"excelMaket"
