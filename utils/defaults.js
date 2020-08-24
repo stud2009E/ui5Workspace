@@ -6,6 +6,7 @@ const configTemplate = `config.json structure:
 				path: path-to-application,
 				[transport]: transport request number,
 				[package]: package for application,
+				[bsp]: bsp container,
 				[action]: semantic object action,
 				[mockModelName]: model for mockserver
 			},

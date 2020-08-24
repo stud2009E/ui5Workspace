@@ -16,7 +16,7 @@ class SettingContainer {
 	}
 
 	/**
-	 * if no system, then used local development
+	 * if no system, then local development is used
 	 *
 	 * @type       {boolean}
 	 */
