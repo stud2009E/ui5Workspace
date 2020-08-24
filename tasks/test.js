@@ -2,7 +2,7 @@ const config = require("../utils/ConfigContainer.js");
 
 module.exports = function(grunt){
 
-	grunt.registerTask("test", "start unit test for application", function(){
+	grunt.registerTask("test", "public: start unit test for application", function(){
 
 		grunt.loadNpmTasks("grunt-contrib-qunit");
 		grunt.loadNpmTasks("grunt-contrib-connect");

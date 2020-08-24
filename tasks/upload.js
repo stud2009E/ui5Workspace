@@ -1,18 +1,14 @@
-const fs = require("fs-extra");
 const path = require("path");
 const config = require("../utils/ConfigContainer.js");
 
 module.exports = function(grunt){
 
 	grunt.registerTask("upload", "private: upload application to server", function(){
-		grunt.task.requires("build");
-		// grunt.task.requires("jshint");
-		// grunt.task.requires("test");
+		grunt.task.requires("jshint");
+		grunt.task.requires("test");
+		grunt.task.requires("preload");
 
 		grunt.loadNpmTasks("grunt-nwabap-ui5uploader");
-
-		const cwd = process.cwd();
-		const distPath = path.join(cwd, "workspace/dist");
 
 		const appName = grunt.option("app");
 		const userKey = grunt.option("user") || config.userDefaultKey;
@@ -25,21 +21,13 @@ module.exports = function(grunt){
 			grunt.fail.fatal("can't find application name");
 		}
 
-		const distAppNames = fs.readdirSync(distPath);
-		if(!distAppNames.some(distName => distName === appName)){
-			grunt.fail.fatal(`can't find application ${appName}`);
-		}
+		const app = config.appInfo[appName];
 
-		const appInfo = grunt.config.get("appInfo");
-		const uploadAppInfo = appInfo[appName];
-
-		if(!uploadAppInfo.package){
-			grunt.fail.fatal(`require package to upload application`);
-		}
-
-		if(!uploadAppInfo.transport){
-			grunt.fail.fatal(`require transport to upload application`);
-		}
+		["transport", "package", "bsp"].forEach(prop => {
+			if(!app[prop]){
+				grunt.fail.fatal(`require '${prop}' to upload application`);
+			}
+		});
 
 		grunt.config.merge({
 			nwabap_ui5uploader:{
@@ -56,13 +44,13 @@ module.exports = function(grunt){
 	            upload_build: {
 	                options: {
 	                    ui5: {
-	                        package: uploadAppInfo.package,
-	                        transportno: uploadAppInfo.transport,
-	                        bspcontainer: appName,
+	                        package: app.package,
+	                        transportno: app.transport,
+	                        bspcontainer: app.bsp,
 	                        bspcontainer_text: `deploy ${appName}` 
 	                    },
 	                    resources: {
-	                        cwd: path.join(distPath, appName, "webapp"),
+	                        cwd: path.join(app.path, "dist"," webapp"),
 	                        src: "**/*.*"
 	                    }
 	                }

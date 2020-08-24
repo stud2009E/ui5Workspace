@@ -6,7 +6,7 @@ const exec = util.promisify(require("child_process").exec);
 
 module.exports = function(grunt){
 
-	grunt.registerTask("preload", "private: build app Component-preload.js", function(){
+	grunt.registerTask("preload", "public: build app Component-preload.js", function(){
 
 		const appName = grunt.option("app"); 
 		const appInfo = config.appInfo;
