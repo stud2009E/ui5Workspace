@@ -1,22 +1,16 @@
+const config = require("../utils/ConfigContainer.js");
 const MetadataParser = require("../utils/metadata/MetadataParser.js");
 const exceljs = require("exceljs");
 const path = require("path");
+const moment = require("moment");
 const fs = require("fs-extra");
 
 module.exports = function(grunt){
 
-	/* 
-	 * TODO 
-	 * type restrictions: date, numbers, booleans
-	 * column: string maxlength, labels
-	*/
-	grunt.registerTask("excel2json", "private: build jsons from metadata.xlsx", function(){
-		grunt.task.requires("shellConfigCollect");
-
+	grunt.registerTask("excel2json", "build jsons from metadata.xlsx", function(){
 		const done = this.async();
-		const cwd = process.cwd();
 		const appName = grunt.option("app");
-		const appInfo = grunt.config.get("appInfo");
+		const {appInfo} = config;
 
 		if(!appName){
 			grunt.fail.fatal("error: require app name to build metadata.xslx");
@@ -45,20 +39,34 @@ module.exports = function(grunt){
 				const table = ws.getTable(ws.name).table;
 				const entitySet = [];
 
-				ws.eachRow(row => {
+				const entity = parser.entitySets[ws.name];
+				const entityType = parser.getEntityType(entity.typeName);
+
+				ws.eachRow((row, i) => {
+					//skip header row
+					if(i === 0) return;
+
 					const item = {};
 
-					table.columns.forEach((column, i) => {
-						const cell = row.getCell(i + 1);
+					table.columns.forEach((column, k) => {
+						const cell = row.getCell(k + 1);
+						const property = entityType.getProperty(column.name);
 
-						item[column.name] = cell.value;
+						validateXLSValue({
+							grunt: grunt,
+							entitySet: ws.name,
+							type: property.Type,
+							value: cell.value
+						});
+
+						item[column.name] = transform2json(cell.value);
 					});
 
 					entitySet.push(item);
 				});
 
-				//skip header row
-				tableData[ws.name] = entitySet.slice(1);
+				
+				tableData[ws.name] = entitySet;
 			});
 
 
@@ -75,15 +83,46 @@ module.exports = function(grunt){
 	});
 };
 
+/**
+ * tranform value by type
+ * @param {any} 	value  value
+ * @param {string}	type 
+ * 
+ * @returns {any}	transformed value
+ */
+function transform2json(type, value){
+	let transform = value;
+	
+	switch(type){
+		case "Edm.DateTime":
+			transform = moment(value, "DD.MM.YYYY hh:mm:ss").toDate();
+			break;
+		case "Edm.Time":
+			const [hh, mm, ss] = transform.split(/:/);
+			transform = `PT${hh}H${mm}M${ss}S`;
+			break;
+	}
 
-function validateValue({grunt, entitySet, type, value}){
+	return transform;
+}
+
+/**
+ * validate value by type
+ * @param {object} param0 setting
+ * @param {object} param0.grunt - task runner
+ * @param {string} param0.entitySet - entity set name
+ * @param {string} param0.type  - type for validate Edm.
+ * @param {any} param0.value - value for validate 
+ * 
+ * @throws 
+ */ 
+function validateXLSValue({grunt, entitySet, type, value}){
 	const errorMessage = `parse error: in entity set:${entitySet} value:${value} can't be type: ${type}`;
-
+	
 	switch(type){
 		case "Edm.Guid":
-			const reguid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-
-			if(!regexp.test(value)){
+			const regguid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+			if(!regguid.test(value)){
 				grunt.fail.fatal(errorMessage);
 			}
 			break;
@@ -104,15 +143,17 @@ function validateValue({grunt, entitySet, type, value}){
 			break;
 		case "Edm.DateTime":
 			//15.12.2020  14:23:55
-			const redt = /^([0-2]\d|3[01])\.(0[1-9]|1[0-2])\.\d{4}\s\s([01]\d|2[0-3])(:[0-5]\d){2}/i;
-			if(!redt.test(value)){
+			const regdt = /^([0-2]\d|3[01])\.(0[1-9]|1[0-2])\.\d{4}[\s\t]+([01]\d|2[0-3])(:[0-5]\d){2}$/i;
+			//15.12.2020
+			const regd = /^([0-2]\d|3[01])\.(0[1-9]|1[0-2])\.\d{4}$/;
+			if(!(regdt.test(value) || regd.test(value))){
 				grunt.fail.fatal(errorMessage);
 			}
 			break;
 		case "Edm.Time":
 			//14:23:55
-			const ret = /([01]\d|2[0-3])(:[0-5]\d){2}/i;
-			if(!redt.test(value)){
+			const regt = /([01]\d|2[0-3])(:[0-5]\d){2}/i;
+			if(!regt.test(value)){
 				grunt.fail.fatal(errorMessage);
 			} 
 			break;

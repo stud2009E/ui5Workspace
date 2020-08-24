@@ -1,22 +1,16 @@
+const config = require("../utils/ConfigContainer.js");
 const MetadataParser = require("../utils/metadata/MetadataParser.js");
 const exceljs = require("exceljs");
+const moment = require("moment");
 const path = require("path");
 const fs = require("fs-extra");
 
 module.exports = function(grunt){
 
-	/* 
-	 * TODO 
-	 * type restrictions: date, numbers, booleans
-	 * column: string maxlength, labels
-	*/
-	grunt.registerTask("excelMaket", "private: build excel from metadata.xml", function(){
-		grunt.task.requires("shellConfigCollect");
-
+	grunt.registerTask("excelMaket", "build excel from metadata.xml", function(){
 		const done = this.async();
-		const cwd = process.cwd();
 		const appName = grunt.option("app");
-		const appInfo = grunt.config.get("appInfo");
+		const {appInfo} = config;
 
 		if(!appName){
 			grunt.fail.fatal("error: require app name to build metadata.xslx");
@@ -69,10 +63,9 @@ module.exports = function(grunt){
 
 				const columns = [...keyColumns, ...otherColumns];
 				const rows = currentData.map(data => columns.map(column => {
-					// if(column.name){
+					const value = data[column.name];
 
-					// }
-					return data[column.name]
+					return transform2xls(column.Type, value);
 				}));
 
 				if(rows.length === 0){
@@ -96,3 +89,27 @@ module.exports = function(grunt){
 		})();
 	});
 };
+
+
+/**
+ * tranform value by type to xlsx
+ * @param {any} 	value  value
+ * @param {string}	type 
+ */
+function transform2xls(type, value){
+	let transform = value;
+	
+	switch(type){
+		case "Edm.DateTime":
+			transform = moment(value).format("DD.MM.YYYY hh:mm:ss");
+			break;
+		case "Edm.Time":
+			transform = transform
+				.split(/\D/)
+				.filter(part => !!part)
+				.join(":")
+			break;
+	}
+
+	return transform;
+}
