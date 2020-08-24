@@ -14,6 +14,7 @@
 	├──localService
 	|  ├──mockdata
 	|  ├──ext
+	|  |  └──mockExtension.js
 	|  ├──metadata.xml
 	|  ├──annotation.xml
 	|  └──mockserver.html

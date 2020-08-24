@@ -54,11 +54,13 @@
 				"flp/root/mockservers/mockserver"
 			], function(mockserver){
 
-				mockserver.init(__MOCK__SETTINGS__);
+				mockserver.init(__MOCK__SETTINGS__)
+					.finally(() => {
+						sap.ushell.__sandbox__._bootstrap(function () {
+							sap.ushell.Container.createRenderer().placeAt("content");
+						});
+					});
 
-				sap.ushell.__sandbox__._bootstrap(function () {
-					sap.ushell.Container.createRenderer().placeAt("content");
-				});
 			});
 
 		});

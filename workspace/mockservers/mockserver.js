@@ -54,9 +54,9 @@ sap.ui.define([
 				this.attachLog(mockserver, rootUri, name);
 			}
 
-			return new Promise((resolve, reject) => {
+			return new Promise(resolve => {
 				sap.ui.require([
-					`flp/root/apps/${name}/webapp/localService/mockExtension`
+					`flp/root/apps/${name}/webapp/localService/ext/mockExtension`
 				], mockExtension => {
 					if(mockExtension && typeof mockExtension.apply === "function"){
 						mockExtension.apply(mockserver);
@@ -101,8 +101,6 @@ sap.ui.define([
 
                 if (oXhr.status >= 400) {
                     Log.error(sMessage, aResults, name);
-                } else if (oXhr.status >= 300) {
-                    Log.warning(sMessage, aResults, name);
                 } else {
                     Log.info(sMessage, aResults, name);
                 }
