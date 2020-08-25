@@ -65,7 +65,7 @@ module.exports = function(grunt){
 				const rows = currentData.map(data => columns.map(column => {
 					const value = data[column.name];
 
-					return transform2xls(column.Type, value);
+					return transform2xls(column.type, value);
 				}));
 
 				if(rows.length === 0){

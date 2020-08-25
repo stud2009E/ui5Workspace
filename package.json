@@ -23,7 +23,9 @@
     "grunt-nwabap-ui5uploader": "^1.0.6",
     "grunt-openui5": "^0.16.0",
     "grunt-text-replace": "^0.4.0",
+    "lorem-ipsum": "^2.0.3",
     "moment": "^2.27.0",
+    "uuid": "^8.3.0",
     "xml2js": "^0.4.23"
   },
   "dependencies": {}

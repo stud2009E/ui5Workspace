@@ -3,11 +3,16 @@ const MetadataParser = require("../utils/metadata/MetadataParser.js");
 const exceljs = require("exceljs");
 const path = require("path");
 const moment = require("moment");
+const {LoremIpsum} = require("lorem-ipsum");
 const fs = require("fs-extra");
+const { v4: uuidv4 } = require('uuid');
 
 module.exports = function(grunt){
 
 	grunt.registerTask("excel2json", "build jsons from metadata.xlsx", function(){
+
+		debugger
+
 		const done = this.async();
 		const appName = grunt.option("app");
 		const {appInfo} = config;
@@ -39,12 +44,12 @@ module.exports = function(grunt){
 				const table = ws.getTable(ws.name).table;
 				const entitySet = [];
 
-				const entity = parser.entitySets[ws.name];
+				const entity = parser.getEntity(ws.name);
 				const entityType = parser.getEntityType(entity.typeName);
 
 				ws.eachRow((row, i) => {
 					//skip header row
-					if(i === 0) return;
+					if(i === 1) return;
 
 					const item = {};
 
@@ -52,19 +57,16 @@ module.exports = function(grunt){
 						const cell = row.getCell(k + 1);
 						const property = entityType.getProperty(column.name);
 
-						validateXLSValue({
+						item[column.name] = transform2json({
 							grunt: grunt,
 							entitySet: ws.name,
 							type: property.Type,
 							value: cell.value
 						});
-
-						item[column.name] = transform2json(cell.value);
 					});
 
 					entitySet.push(item);
 				});
-
 				
 				tableData[ws.name] = entitySet;
 			});
@@ -83,62 +85,38 @@ module.exports = function(grunt){
 	});
 };
 
-/**
- * tranform value by type
- * @param {any} 	value  value
- * @param {string}	type 
- * 
- * @returns {any}	transformed value
- */
-function transform2json(type, value){
-	let transform = value;
-	
-	switch(type){
-		case "Edm.DateTime":
-			transform = moment(value, "DD.MM.YYYY hh:mm:ss").toDate();
-			break;
-		case "Edm.Time":
-			const [hh, mm, ss] = transform.split(/:/);
-			transform = `PT${hh}H${mm}M${ss}S`;
-			break;
+const lorem = new LoremIpsum({
+	sentencesPerParagraph:{
+		max: 2,
+		min: 1
+	},
+	wordsPerSentence: {
+		max: 4,
+		min: 2
 	}
-
-	return transform;
-}
+});
 
 /**
- * validate value by type
+ * transform value by type
+ * if value is incompatible to type, it will be generate
  * @param {object} param0 setting
  * @param {object} param0.grunt - task runner
  * @param {string} param0.entitySet - entity set name
  * @param {string} param0.type  - type for validate Edm.
  * @param {any} param0.value - value for validate 
  * 
- * @throws 
+ * @returns {any} parsed value for json 
  */ 
-function validateXLSValue({grunt, entitySet, type, value}){
-	const errorMessage = `parse error: in entity set:${entitySet} value:${value} can't be type: ${type}`;
+function transform2json({grunt, entitySet, type, value}){
+	const errorMessage = `parse error: in set:'${entitySet}' value:'${value}' can't be type:'${type}'. Will be replaced!`;
+	let transform = value;
 	
 	switch(type){
 		case "Edm.Guid":
 			const regguid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-			if(!regguid.test(value)){
-				grunt.fail.fatal(errorMessage);
-			}
-			break;
-		case "Edm.Decimal":
-		case "Edm.Float":
-		case "Edm.Double":
-		case "Edm.Int16":
-		case "Edm.Int32":
-		case "Edm.Int64":
-			if(isNaN(value)){
-				grunt.fail.fatal(errorMessage);
-			}
-			break;
-		case "Edm.Byte":
-			if(isNaN(value) && value >= 0 && value < 8){
-				grunt.fail.fatal(errorMessage);
+			if(!regguid.test(transform)){
+				grunt.log.error(errorMessage);
+				transform = uuidv4();
 			}
 			break;
 		case "Edm.DateTime":
@@ -147,20 +125,57 @@ function validateXLSValue({grunt, entitySet, type, value}){
 			//15.12.2020
 			const regd = /^([0-2]\d|3[01])\.(0[1-9]|1[0-2])\.\d{4}$/;
 			if(!(regdt.test(value) || regd.test(value))){
-				grunt.fail.fatal(errorMessage);
+				grunt.log.error(errorMessage);
+				transform = moment().valueOf();
+			}else{
+				transform = moment(value, "DD.MM.YYYY hh:mm:ss").valueOf();
 			}
+			transform = `\/Date(${transform})\/`;
 			break;
 		case "Edm.Time":
-			//14:23:55
-			const regt = /([01]\d|2[0-3])(:[0-5]\d){2}/i;
-			if(!regt.test(value)){
-				grunt.fail.fatal(errorMessage);
-			} 
+			let hh, mm, ss;
+			const regt = /^([01]\d|2[0-3])(:[0-5]\d){2}$/i;
+			if(regt.test(transform)){
+				[hh, mm, ss] = transform.split(/:/);
+			}else{
+				grunt.log.error(errorMessage);
+			}
+			hh = hh || "23";
+			mm = mm || "59";
+			ss = ss || "59";
+
+			transform = `PT${hh}H${mm}M${ss}S`;
 			break;
-		case "Edm.Boolean":
-			if(value !== true || value !== false){
-				grunt.fail.fatal(errorMessage);
+		case "Edm.String":
+			if(!transform){
+				transform = lorem.generateSentences();
 			}
 			break;
+		case "Edm.Int":
+		case "Edm.Int16":
+		case "Edm.Int32":
+		case "Edm.Int64":
+			if(isNaN(parseInt(transform))){
+				grunt.log.error(errorMessage);
+				transform = Math.random() * 1000;
+			}
+			transform = parseInt(transform);
+			break;
+		case "Edm.Double":
+		case "Edm.Decimal":
+			if(transform && transform.replace){
+				transform = transform.replace(",", ".");
+			}
+			if(isNaN(parseFloat(transform))){
+				grunt.log.error(errorMessage);
+				transform = Math.random() * 1000;
+			}
+			transform = parseFloat(transform);
+			break;
+		case "Edm.Boolean":
+			transform = !!transform;
+			break;
 	}
+
+	return transform;
 }
