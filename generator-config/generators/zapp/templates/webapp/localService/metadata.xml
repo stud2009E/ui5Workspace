@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<edmx:Edmx xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData" Version="1.0">
+   <edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="http://shichi7.sigma.sbrf.ru:8000/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMON',Version='0001',SAP__Origin='LOCAL')/$value">
+      <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common" />
+   </edmx:Reference>
+   <edmx:DataServices m:DataServiceVersion="2.0">
+      <Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="<%= modelName %>" xml:lang="ru" sap:schema-version="1">
+         <EntityType Name="TestDataType" sap:label="test types" sap:content-version="1">
+            <Key>
+               <PropertyRef Name="Guid" />
+            </Key>
+            <Property Name="Guid" Type="Edm.Guid" Nullable="false" sap:label="GUID" />
+            <Property Name="String" Type="Edm.String" Nullable="false" sap:label="String"/>
+            <Property Name="Decimal" Type="Edm.Decimal" Nullable="false" sap:label="Decimal"/>
+            <Property Name="Boolean" Type="Edm.Boolean" Nullable="false" sap:label="Boolean"/>
+            <Property Name="Int16" Type="Edm.Int16" Nullable="false" sap:label="Int16"/>
+            <Property Name="Int32" Type="Edm.Int32" Nullable="false" sap:label="Int32"/>
+            <Property Name="Date" Type="Edm.DateTime" Nullable="false" sap:label="Date"/>
+            <Property Name="Time" Type="Edm.Time" Nullable="false" sap:label="Time"/>
+            <Property Name="Byte" Type="Edm.Byte" Nullable="false" sap:label="Byte"/>
+         </EntityType>
+         <EntityContainer Name="<%= modelName %>_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+            <EntitySet Name="TestDataSet" EntityType="<%= modelName %>.TestDataType" sap:content-version="1" />
+         </EntityContainer>
+         <atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="self" href="http://shichi7.sigma.sbrf.ru:8000/sap/opu/odata/sap/ZAC_D7903_C_PURCH_PLAN_CDS/$metadata" />
+         <atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="latest-version" href="http://shichi7.sigma.sbrf.ru:8000/sap/opu/odata/sap/ZAC_D7903_C_PURCH_PLAN_CDS/$metadata" />
+      </Schema>
+   </edmx:DataServices>
+</edmx:Edmx>

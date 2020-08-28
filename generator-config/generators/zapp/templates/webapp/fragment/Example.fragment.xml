@@ -1,0 +1,10 @@
+<mvc:XMLView
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:smt="sap.ui.comp.smarttable">
+
+    <smt:Smarttable enableAutoBinding="true"
+        entitySet="TestDataSet"
+        initiallyVisibleFields="Guid,String,Decimal,Boolean,Int16,Int32,Date,Time"
+        requestAtLeastFields="Byte"
+    />
+</mvc:XMLView>
