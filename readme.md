@@ -4,6 +4,7 @@
 └──webapp
 	├──controller
 	├──view
+	├──fragments
 	├──i18n
 	├──css
 	├──test

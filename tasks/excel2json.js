@@ -10,9 +10,7 @@ const { v4: uuidv4 } = require('uuid');
 module.exports = function(grunt){
 
 	grunt.registerTask("excel2json", "build jsons from metadata.xlsx", function(){
-
-		debugger
-
+		
 		const done = this.async();
 		const appName = grunt.option("app");
 		const {appInfo} = config;

@@ -7,8 +7,6 @@ sap.ui.define([
 ){
 	"use strict";
 	
-	const LOG_COMPONENT = "MOCK_SERVER"; 
-
 	const oModule = {
 
 		/**
