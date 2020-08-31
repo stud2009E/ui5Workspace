@@ -4,7 +4,7 @@ sap.ui.define([
 ], function (Controller, History) {
     "use strict";
 
-    return Controller.extend("<%= dotnsp %>.controller.BaseController", {
+    return Controller.extend("<%= nmsp %>.controller.BaseController", {
         /**
          * get router
          * @public

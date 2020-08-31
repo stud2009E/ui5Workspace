@@ -5,7 +5,7 @@ sap.ui.define([
 ) {
     "use strict";
 
-    return BaseController.extend("<%= dotnsp %>.controller.App", {
+    return BaseController.extend("<%= nmsp %>.controller.App", {
 
         onInit : function () {
             var oView = this.getView();
@@ -15,8 +15,14 @@ sap.ui.define([
             };
 
             oView.setBusy(true);
-            oServerModel.metadataLoaded().then(fnBusy);
+            
+            Promise.allSettled([
+                oServerModel.metadataLoaded(),
+                oServerModel.annotationsLoaded()
+            ]).then(fnBusy);
+
             oServerModel.attachMetadataFailed(fnBusy);
+            oServerModel.attachAnnotationsFailed(fnBusy);
 
             oView.addStyleClass(this.getOwnerComponent().getContentDensityClass());
         }

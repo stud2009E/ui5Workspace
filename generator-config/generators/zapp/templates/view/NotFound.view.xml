@@ -1,5 +1,5 @@
 <mvc:View
-	controllerName="<%= dotnsp %>.controller.NotFound"
+	controllerName="<%= nmsp %>.controller.NotFound"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns="sap.m">
 

@@ -1,7 +1,7 @@
 sap.ui.define([
     "sap/ui/core/UIComponent",
     "sap/ui/Device",
-    "<%/%>/module/models",
+    "<%= path %>/module/models",
     "sap/ui/thirdparty/jquery"
 ], function (
     UIComponent, 
@@ -11,7 +11,7 @@ sap.ui.define([
 ) {
 	"use strict";
 
-	return UIComponent.extend("<%= dotnsp %>.Component", {
+	return UIComponent.extend("<%= nmsp %>.Component", {
 
 		metadata : {
 			manifest : "json"

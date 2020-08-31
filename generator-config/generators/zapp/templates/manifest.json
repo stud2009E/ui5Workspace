@@ -1,7 +1,7 @@
 {
 	"_version": "1.0.0",
 	"sap.app": {
-		"id": "<%= dotnsp %>",
+		"id": "<%= nmsp %>",
 		"type": "application",
 		"i18n": "i18n/i18n.properties",
 		"title": "{{appTitle}}",
@@ -48,9 +48,10 @@
 	},
 	"sap.ui5": {
 		"rootView": {
-			"viewName": "<%= dotnsp %>.view.App",
+			"viewName": "<%= nmsp %>.view.App",
 			"type": "XML",
-			"async": true
+			"async": true,
+			"id": "app"
 		},
 		"dependencies": {
 			"minUI5Version": "1.60.6",
@@ -76,7 +77,7 @@
 			"i18n": {
 				"type": "sap.ui.model.resource.ResourceModel",
 				"settings": {
-					"bundleName": "<%= dotnsp %>.i18n.i18n"
+					"bundleName": "<%= nmsp %>.i18n.i18n"
 				}
 			},
 			"": {
@@ -96,8 +97,9 @@
 			"config": {
 				"routerClass": "sap.m.routing.Router",
 				"viewType": "XML",
-				"viewPath": "<%= dotnsp %>.view",
+				"viewPath": "<%= nmsp %>.view",
 				"controlId": "app",
+				"controlAggregation": "pages",
 				"bypassed": {
 					"target": "notFound"
 				},

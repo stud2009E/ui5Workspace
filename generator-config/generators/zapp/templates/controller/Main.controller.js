@@ -5,7 +5,7 @@ sap.ui.define([
 ) {
     "use strict";
 
-    return BaseController.extend("<%= dotnsp %>otnsp %>.controller.Main", {
+    return BaseController.extend("<%= nmsp %>otnsp %>.controller.Main", {
 
         onInit : function () {
 

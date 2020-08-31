@@ -1,0 +1,9 @@
+<core:FragmentDefinition
+    xmlns:core="sap.ui.core"
+    xmlns:smt="sap.ui.comp.smarttable">
+
+    <smt:SmartTable enableAutoBinding="true"
+        entitySet="TestDataSet"
+        requestAtLeastFields="Byte"
+    />
+</core:FragmentDefinition>

@@ -5,7 +5,7 @@ sap.ui.define([
 ){
     "use strict";
 
-    return BaseController.extend("<%= dotnsp %>.controller.NotFound", {
+    return BaseController.extend("<%= nmsp %>.controller.NotFound", {
 
         onInit: function () {
             this.getRouter().getTarget("notFound").attachDisplay(this._onNotFoundDisplayed, this);
