@@ -4,9 +4,9 @@ const config = require("../utils/ConfigContainer.js");
 module.exports = function(grunt){
 
 	grunt.registerTask("upload", "private: upload application to server", function(){
-		grunt.task.requires("jshint");
-		grunt.task.requires("test");
-		grunt.task.requires("preload");
+		// grunt.task.requires("jshint");
+		// grunt.task.requires("test");
+		// grunt.task.requires("preload");
 
 		grunt.loadNpmTasks("grunt-nwabap-ui5uploader");
 
@@ -34,7 +34,7 @@ module.exports = function(grunt){
 				options: {
 	                conn: {
 	                    useStrictSSL: false,
-	                    server:`${system.host}:${system.port}`
+	                    server:`https://${system.host}:${system.port}`
 	                },
 	                auth: {
 	                    user: user.login,
