@@ -13,9 +13,9 @@ module.exports = function(grunt){
 		const appName = grunt.option("app");
 		const userKey = grunt.option("user") || config.userDefaultKey;
 		const systemKey = grunt.option("sys") || config.systemDefaultKey;
-
+	
 		const system = config.getSystem(systemKey);
-		const user = config.getUser(userKey);
+		const user = config.getUser(systemKey, userKey);
 
 		if(!appName){
 			grunt.fail.fatal("can't find application name");
@@ -50,7 +50,7 @@ module.exports = function(grunt){
 	                        bspcontainer_text: `deploy ${appName}` 
 	                    },
 	                    resources: {
-	                        cwd: path.join(app.path, "dist"," webapp"),
+	                        cwd: path.join(app.path, "dist"),
 	                        src: "**/*.*"
 	                    }
 	                }
