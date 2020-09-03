@@ -208,6 +208,24 @@ class SettingContainer {
 		return appInfo;
 	}
 
+
+	/**
+	 * get library setting as object
+	 * 
+	 * @type {object}
+	 */
+	get libInfo(){
+		const libInfo = {};
+
+		this.libs.forEach(lib => {
+			let name = this.lastPathPart(lib.path);
+
+			libInfo[name] = {...lib};
+		});
+
+		return libInfo;
+	}
+
 	/**
 	 * Sets the libs.
 	 *

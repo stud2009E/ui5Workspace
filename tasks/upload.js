@@ -3,10 +3,10 @@ const config = require("../utils/ConfigContainer.js");
 
 module.exports = function(grunt){
 
-	grunt.registerTask("upload", "private: upload application to server", function(){
+	grunt.registerTask("uploadProd", "private: upload application to server", function(){
 		// grunt.task.requires("jshint");
 		// grunt.task.requires("test");
-		// grunt.task.requires("preload");
+		grunt.task.requires("preload");
 
 		grunt.loadNpmTasks("grunt-nwabap-ui5uploader");
 
@@ -21,9 +21,12 @@ module.exports = function(grunt){
 			grunt.fail.fatal("can't find application name");
 		}
 
-		const app = config.appInfo[appName];
+		let app = config.appInfo[appName];
+		if(!app){
+			app = config.libInfo[appName];
+		}
 
-		["transport", "package", "bsp"].forEach(prop => {
+		["transport", "package", "bsp", "path"].forEach(prop => {
 			if(!app[prop]){
 				grunt.fail.fatal(`require '${prop}' to upload application`);
 			}
