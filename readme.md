@@ -36,5 +36,3 @@
 ```
 grunt --help lists
 ```
-
-//todo сборка config.json

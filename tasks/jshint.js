@@ -7,22 +7,33 @@ module.exports = function(grunt){
 
 	grunt.config.merge({
 		watch: {
-			scripts: {
+			dev: {
 				files:[
-					"workspace/apps/**/*.js",
-					"tasks/**/*.js"
+					"workspace/apps/**/*.js"
 				],
-				tasks:[
+				tasks: [
+					"jshint:dev"
+				],
+				options:{
+					spawn: false
+				}
+			},
+			taskDev: {
+				files:[
+					"tasks/**/*.js",
+					"utils/**/*.js"
+				],
+				tasks: [
 					"jshint:tasks"
 				],
 				options:{
-					spawn:false
+					spawn: false
 				}
 			}
 		},
 		jshint:{
 			options: {
-				eqeqeq:true,
+				eqeqeq: true,
 				curly: true,
 				undef: true,
 				unused: true
