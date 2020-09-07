@@ -50,7 +50,8 @@ module.exports = function(grunt){
 	                        package: app.package,
 	                        transportno: app.transport,
 	                        bspcontainer: app.bsp,
-	                        bspcontainer_text: `deploy ${appName}` 
+							bspcontainer_text: `deploy ${appName}`,
+							calc_appindex: true
 	                    },
 	                    resources: {
 	                        cwd: path.join(app.path, "dist"),
