@@ -15,4 +15,9 @@ module.exports = function(grunt){
 		"flpIndexBuild",
 		"serve"
 	]);
+
+	grunt.registerTask("syncMetadata", "public: sync metadata for app", [
+		"shellConfigCollect",
+		"fetchMetadata"
+	]);
 };
