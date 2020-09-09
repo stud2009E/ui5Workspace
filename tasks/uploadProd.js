@@ -25,6 +25,9 @@ module.exports = function(grunt){
 		if(!app){
 			app = config.libInfo[appName];
 		}
+		if(!app){
+			app = config.pluginInfo[appName];
+		}
 
 		["transport", "package", "bsp", "path"].forEach(prop => {
 			if(!app[prop]){
