@@ -18,7 +18,7 @@ module.exports = function(grunt){
 				all: {
 					options: {
 						urls: [
-							`http://localhost:8000/apps/${appName}/webapp/test/allTest.html` 
+							`http://localhost:8000/apps/${appName}/webapp/test/unit/allTests.html`
 						]
 					}
 				}
