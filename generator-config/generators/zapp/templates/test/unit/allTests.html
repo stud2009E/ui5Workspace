@@ -8,8 +8,7 @@
     data-sap-ui-theme="sap_belize"
     data-sap-ui-preload="async"
     data-sap-ui-resourceroots='{
-      "unit": "./",
-      "root": "../../"
+      "<%= nmsp %>": "../../"
     }'
     data-sap-ui-noConflict="true">
   </script>
@@ -27,8 +26,11 @@
     QUnit.config.autostart = false;
 
     sap.ui.getCore().attachInit(function(){
-
-      sap.ui.require(["unit/allTests"], function(allTests){
+      "use strict";
+      
+      sap.ui.require([
+        "<%= path %>/test/unit/allUnitTests"
+      ], function(allTests){
         QUnit.start();
       });
 

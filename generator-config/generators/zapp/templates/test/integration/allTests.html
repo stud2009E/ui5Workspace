@@ -13,8 +13,7 @@
 			data-sap-ui-animation="false"
 			data-sap-ui-compatVersion="edge"
 			data-sap-ui-resourceroots='{
-				"opa": "./",
-				"root" : "../../"
+				"<%= nmsp %>" : "../../"
 			}'
 			data-sap-ui-preload="async">
 		</script>
@@ -30,10 +29,8 @@
 			sap.ui.getCore().attachInit(function () {
 				"use strict";
 				sap.ui.require([
-					"opa/AllOpaTests"
-				], function (
-                    AllJourneys
-                ) {
+					"<%= path %>/test/integration/AllOpaTests"
+				], function () {
 					QUnit.start();
 				});
 			});

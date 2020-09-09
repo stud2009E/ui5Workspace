@@ -1,6 +1,6 @@
 <edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
-	<edmx:Reference Uri="/sap/opu/odata/SAP/CUSTOM_DATA_SRV/$metadata">
-		<edmx:Include Alias="Metadata" Namespace="CUSTOM_DATA_SRV"/>
+	<edmx:Reference Uri="/sap/opu/odata/SAP/<%= model %>/$metadata">
+		<edmx:Include Alias="Metadata" Namespace="<%= model %>"/>
 	</edmx:Reference>
 	<edmx:Reference Uri="https://wiki.scn.sap.com/wiki/download/attachments/448470968/UI.xml?api=v2">
 		<edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
@@ -16,7 +16,7 @@
 	</edmx:Reference>
 	<edmx:DataServices>
 		<Schema xmlns="http://docs.oasis-open.org/odata/ns/edm"
-			Namespace="annotation.CUSTOM_DATA_SRV">
+			Namespace="annotation.<%= model %>">
 			<Annotations Target="Metadata.TestDataType">
 				<Annotation Term="UI.LineItem">
 					<Collection>

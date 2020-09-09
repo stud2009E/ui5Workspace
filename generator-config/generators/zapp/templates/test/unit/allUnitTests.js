@@ -1,5 +1,5 @@
 sap.ui.define([
-	"unit/example/test"
+	"<%= path %>/test/unit/example/test"
 ], function(){
 
 	"use strict";

@@ -1,20 +1,26 @@
 sap.ui.define([
-	"sap/ui/test/Opa5"
-], function(
-    Opa5
+	"sap/ui/test/Opa5",
+	"sap/ui/test/actions/Press",
+	"sap/ui/test/matchers/Properties"
+],function(
+	Opa5,
+	Press,
+	Properties
 ){
 	"use strict";
 
-	return Opa5.extend("opa.arrangement.Arrangement", {
-		iStartMyApp : function (oAdditionalUrlParameters) {
-
-			oAdditionalUrlParameters = oAdditionalUrlParameters || {};
-			return this.iStartMyUIComponent({
-				componentConfig: {
-					name: "<%= ?? %>"
-				},
-				hash: oAdditionalUrlParameters.hash
-			});
+	return Opa5.extend("<%= nmsp %>.test.integration.arrangement.Arrangement", {
+		iStartMyApp : function () {
+			
+			//try to open our application
+			return this.iStartMyAppInAFrame("/fiori/index.html")
+				.waitFor({
+					controlType: "sap.m.GenericTile",
+					actions: new Press(),
+					matchers: new Properties({
+						header: "<%= appName %>"
+					})
+				});
 		}
 	});
 });
