@@ -9,17 +9,19 @@
 	├──css
 	├──test
 	|  ├──unit
-	|  ├──integration
-	|  ├──allTest.js
-	|  └──allTest.html
+	|  |	├──allTest.js
+	|  |	├──allTest.html
+	|  |	└──...
+	|  └──integration
+	|  		├──allTest.js
+	|  		├──allTest.html
+	|		└──...
 	├──localService
 	|  ├──mockdata
 	|  ├──ext
 	|  |  └──mockExtension.js
 	|  ├──metadata.xml
-	|  ├──annotation.xml
-	|  └──mockserver.html
-	├──index.html
+	|  └──annotation.xml
 	├──Component.js
 	└──manifest.json
 ```
@@ -29,7 +31,6 @@
 - cd zspl_workspace
 - npm install --global grunt-cli [docs](https://gruntjs.com)
 - npm install --global @ui5/cli [docs](https://sap.github.io/ui5-tooling/)
-- npm install --global yo [docs](https://yeoman.io/)
 - npm install
 
 Для отображения реализованных задач grunt введите команду:
