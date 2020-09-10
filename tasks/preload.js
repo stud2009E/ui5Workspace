@@ -9,7 +9,7 @@ module.exports = function(grunt){
 	grunt.registerTask("preload", "public: build app Component-preload.js", function(){
 
 		const appName = grunt.option("app"); 
-		const {appInfo, libInfo} = config;
+		const {appInfo, libInfo, pluginInfo} = config;
 
 		const done = this.async();
 
@@ -17,19 +17,16 @@ module.exports = function(grunt){
 			grunt.fail.fatal("error: require app name, use --app=<app name>");
 		}
 
-		if(!(appInfo[appName] || libInfo[appName])){
-			grunt.fail.fatal(`error: can't find app/lib with name ${appName}`);
+		let app = appInfo[appName] || libInfo[appName] || pluginInfo[appName];
+	
+		if(!app){
+			grunt.fail.fatal(`error: can't find application||library||plugin with name ${appName}`);
 		}
 
-		let appPath = appInfo[appName] && appInfo[appName].path;
-		if(!appPath){
-			appPath = libInfo[appName] && libInfo[appName].path;
+		const appPath = app.path;
+		if(appPath){
+			grunt.fail.fatal(`error: can't get path for ${appName}`);
 		}
-
-		if(!appPath){
-			grunt.fail.fatal(`error: can't define path to ${appName}`);
-		}
-
 
 		(async () => {
 

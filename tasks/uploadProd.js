@@ -21,14 +21,8 @@ module.exports = function(grunt){
 			grunt.fail.fatal("can't find application name");
 		}
 
-		let app = config.appInfo[appName];
-		if(!app){
-			app = config.libInfo[appName];
-		}
-		if(!app){
-			app = config.pluginInfo[appName];
-		}
-
+		let app = config.appInfo[appName] || config.libInfo[appName] || config.pluginInfo[appName];
+	
 		["transport", "package", "bsp", "path"].forEach(prop => {
 			if(!app[prop]){
 				grunt.fail.fatal(`require '${prop}' to upload application`);

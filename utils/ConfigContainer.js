@@ -317,6 +317,25 @@ class SettingContainer {
 	}
 
 	/**
+	 * get plugin info map 
+	 * 
+	 * @type {object}
+	 */
+	get pluginInfo(){
+		if(!this._pluginIfo){
+			this._pluginIfo = {};
+
+			this.plugins.forEach(plugin => {
+				const name = this.lastPathPart(plagin.path);
+
+				this._pluginIfo[name] = {...plugin};
+			});
+		}
+
+		return this._pluginInfo;
+	}
+
+	/**
 	 * Sets the default keys for system and user.
 	 *
 	 * @param      {Object}  config
