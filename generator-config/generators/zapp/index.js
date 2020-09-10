@@ -58,7 +58,7 @@ module.exports = class extends Generator{
 			validate: this._validateAppId
 		},{
 			name: "sourceUri",
-			message: "data source uri",
+			message: "manifest data source uri",
 			default: "/sap/opu/odata/sap/CUSTOM_DATA_SRV/",
 			validate: this._validateSourceUri
 		}]);
@@ -79,7 +79,8 @@ module.exports = class extends Generator{
 				path: nmsp.split(".").join("/"),
 				nmsp: nmsp,
 				model: modelName,
-				sourceUri: sourceUri
+				sourceUri: sourceUri,
+				appName: appName
 			}
 		);
 	}
