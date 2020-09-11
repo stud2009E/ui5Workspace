@@ -9,7 +9,7 @@ module.exports = function(grunt){
     const genPath = path.join(confPath, "generators");
     const env = yeoman.createEnv();
 
-    grunt.registerTask("init", "symlink a global module to our local generator", function(){
+    grunt.registerTask("yo-init", "symlink a global module to our local generator", function(){
         const done = this.async();
 
         (async () => {
@@ -37,4 +37,5 @@ module.exports = function(grunt){
         const done = this.async();
         env.run("config:init", done);
     });
-}
+  
+};
