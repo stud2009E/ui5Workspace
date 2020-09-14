@@ -24,11 +24,11 @@ module.exports = function(grunt){
         })();
     });
 
-    grunt.registerTask("zapp", "public: create new custom application from template", function(){
-        env.register(path.join(genPath, "zapp"), "config:zapp");
+    grunt.registerTask("newapp", "public: create new custom application from template", function(){
+        env.register(path.join(genPath, "zapp"), "config:app");
         
         const done = this.async();
-        env.run("config:zapp", done);
+        env.run("config:app", done);
     });
 
     grunt.registerTask("config", "public: create workspace main setup config.json", function(){

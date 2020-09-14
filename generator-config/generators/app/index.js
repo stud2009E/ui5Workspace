@@ -1,5 +1,14 @@
 const Generator = require("yeoman-generator");
 
+const EntityType = {
+	z: "custom app",
+	ovp: "overview page",
+	op: "object page",
+	lr: "list report",
+	lrop: "list report - object page",
+	lib: "custom library"
+};
+
 module.exports = class extends Generator{
 
 	_validateEmpty = input => !!input ? true : "required field!"
@@ -45,6 +54,28 @@ module.exports = class extends Generator{
 
 	async prompting(){
 		this._answers = await this.prompt([{
+			name: "appType",
+			message: "select application template",
+			choices: [{
+				name: "custom application",
+				value: EntityType.z
+			},{
+				name: "overview page",
+				value: EntityType.ovp
+			},{
+				name: "object page",
+				value: EntityType.op
+			},{
+				name: "list report",
+				value: EntityType.lr
+			},{
+				name: "list report - object page",
+				value: EntityType.lrop
+			},{
+				name: "library",
+				value: EntityType.lib
+			}]
+		},{
 			name: "dir",
 			message: "path to application dir",
 			validate: this._validateEmpty
@@ -61,26 +92,48 @@ module.exports = class extends Generator{
 			message: "manifest data source uri",
 			default: "/sap/opu/odata/sap/CUSTOM_DATA_SRV/",
 			validate: this._validateSourceUri
+		},{
+			name: "entitySet",
+			message: "entity set for fiori application",
+			when: answers => [EntityType.lr, EntityType.lrop, EntityType.op, EntityType.ovp].contains(answers.appType),
+			validate: this._validateEmpty
 		}]);
 	}
 
 	writing(){
-		const {dir, appName, sourceUri, nmsp} = this._answers;
-		const parts = sourceUri.split("/")
-			.filter(part => !!part);
-		const modelName = parts[parts.length - 1];
+		const {dir, appType, appName} = this._answers;
 
 		this.destinationRoot(`${dir}/${appName}`);
 
+		if([EntityType.lr, EntityType.lrop, EntityType.op, EntityType.ovp, EntityType.lib].includes(appType)){
+			throw new Error("template not realized!")
+		}
+
+		switch (appType) {
+			case "zapp":
+				this._copyAppTemplate();
+				break;
+			default:
+				break;
+		}
+	}
+
+	_copyAppTemplate(answers){
+		const {appType, appName, sourceUri, nmsp, entitySet} = answers;
+		const parts = sourceUri.split("/")
+			.filter(part => !!part);
+		const srvName = parts[parts.length - 1];
+
 		this.fs.copyTpl(
-			this.templatePath("./**/*"),
-			this.destinationPath("webapp/"),
+			this.templatePath(`${appType}/**/*`),
+			this.destinationPath("webapp"),
 			{
 				path: nmsp.split(".").join("/"),
 				nmsp: nmsp,
-				model: modelName,
+				model: srvName,
 				sourceUri: sourceUri,
-				appName: appName
+				appName: appName,
+				entitySet: entitySet
 			}
 		);
 	}
