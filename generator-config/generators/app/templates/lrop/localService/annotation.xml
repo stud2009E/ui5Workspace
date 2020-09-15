@@ -50,7 +50,7 @@
 					<Collection>
 						<Record Type="UI.ReferenceFacet">
 							<PropertyValue Property="ID" String="Example_Facet"/>
-							<PropertyValue Property="Label" String="{i18n&gt;labelExampleFacet}"/>
+							<PropertyValue Property="Label" String="{@i18n&gt;labelExampleFacet}"/>
 						</Record>
 					</Collection>
 				</Annotation>

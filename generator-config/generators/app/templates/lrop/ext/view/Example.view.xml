@@ -1,7 +1,7 @@
 <core:View xmlns:core="sap.ui.core"
 	xmlns="sap.m"
 	xmlns:template="http://schemas.sap.com/sapui5/extension/sap.ui.core.template/1"
-	controllerName="<%= nmsp %>.controller.Example">
+	controllerName="<%= nmsp %>.ext.controller.Example">
 	
 	<Button text="Test"
 		press="onTestPress"

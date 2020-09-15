@@ -14,7 +14,7 @@
 		},
 		"dataSources": {
 			"mainService": {
-				"uri": "/sap/opu/odata/SAP/ZSB_N0019_UPD_SRV/",
+				"uri": "<%= sourceUri %>",
 				"type": "OData",
 				"settings": {
 					"odataVersion": "2.0",
@@ -114,6 +114,10 @@
 				"type": "sap.ui.model.resource.ResourceModel",
 				"uri": "i18n/i18n.properties"
 			},
+			"@i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"uri": "i18n/i18n.properties"
+			},
 			"": {
 				"dataSource": "mainService",
 				"settings": {
@@ -159,7 +163,7 @@
 		}
 	},
 	"sap.ui.generic.app": {
-		"_version": "0.0.1",
+		"_version": "1.3.0",
 		"settings": {
 			"showDraftToggle": false,
 			"objectPageHeaderType": "Dynamic",

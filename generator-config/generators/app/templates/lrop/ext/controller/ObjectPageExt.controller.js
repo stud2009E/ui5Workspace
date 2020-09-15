@@ -44,13 +44,6 @@
 			}
 			
 			MessageUtil.handleTransientMessages(getMessageDialogForView.bind(null, oView));
-		},
-		
-		/**
-		 * to list report
-		 */
-		onToListReportActionPress: function(oEvent){
-			this.extensionAPI.getNavigationController().navigateInternal();
 		}
 
 	});
