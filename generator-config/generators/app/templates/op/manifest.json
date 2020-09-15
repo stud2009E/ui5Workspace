@@ -19,15 +19,15 @@
 				"settings": {
 					"localUri": "localService/metadata.xml",
 					"annotations": [
-						"annotation0"
+						"local"
 					]
 				}
 			},
-			"annotation0": {
+			"local": {
 				"type": "ODataAnnotation",
-				"uri": "localService/annotation0.xml",
+				"uri": "localService/annotation.xml",
 				"settings": {
-					"localUri": "localService/annotation0.xml"
+					"localUri": "localService/annotation.xml"
 				}
 			}
 		},
@@ -63,7 +63,7 @@
 			"css": []
 		},
 		"dependencies": {
-			"minUI5Version": "1.38.34",
+			"minUI5Version": "1.60.6",
 			"libs": {
 				"sap.ui.core": {
 					"lazy": false
@@ -79,6 +79,10 @@
 		},
 		"models": {
 			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"uri": "i18n/i18n.properties"
+			},
+			"@i18n": {
 				"type": "sap.ui.model.resource.ResourceModel",
 				"uri": "i18n/i18n.properties"
 			},

@@ -20,21 +20,9 @@ sap.ui.controller("<%= nmsp %>.ext.controller.ObjectPageExt", {
 	 */
 	_onRouteMatch: function(oEvent){
 		var oView = this.getView();
-		var sCategoryId = this.getUrlParamByName("CategoryID");
 		var oModel = this.getOwnerComponent().getModel();
 		
-		if(!sCategoryId){
-			throw new Error("need obligatory parameter 'CategoryID' in url");
-		}
-		
-		var sPath = oModel.createKey("/<%= entitySet %>",{
-			CategoryID: sCategoryId
-		});
-		
-		oView.bindElement({
-			path: sPath,
-			expand: "Products"
-		});
+		//here need to parse url and bind view for application
 	},
 	
 	/**

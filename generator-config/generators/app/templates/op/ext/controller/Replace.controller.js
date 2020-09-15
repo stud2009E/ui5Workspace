@@ -5,6 +5,10 @@ sap.ui.define([
 
 	return Controller.extend("<%= nmsp %>.ext.controller.Replace", {
 
+		onInit: function(){
+			
+		}
+
 	});
 
 });
