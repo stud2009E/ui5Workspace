@@ -1,12 +1,15 @@
+const path = require("path");
+
 const Generator = require("yeoman-generator");
 
-const EntityType = {
-	z: "custom app",
-	ovp: "overview page",
-	op: "object page",
-	lr: "list report",
-	lrop: "list report - object page",
-	lib: "custom library"
+const AppType = {
+	z: "zapp",
+	ovp: "ovp",
+	op: "op",
+	lr: "lr",
+	lrop: "lrop",
+	lib: "lib",
+	plugin: "plugin"
 };
 
 module.exports = class extends Generator{
@@ -40,6 +43,17 @@ module.exports = class extends Generator{
 		return /^(\/\w+)+\/$/.test(input) ? true: "source uri must be like '/my/odata/service/uri/': /^(\/\w+)+\/$/";
 	}
 
+	
+	constructor(args, opts){
+		super(args, opts);
+		
+		this.option("root", {
+            description: "root path for gruntfile.js",
+            type: String,
+            required: true
+        });
+	}
+
 	initializing(){
 		const info = [
 			"will create next folder structure:",
@@ -55,78 +69,74 @@ module.exports = class extends Generator{
 	async prompting(){
 		this._answers = await this.prompt([{
 			name: "appType",
+			type: "list",
 			message: "select application template",
 			choices: [{
 				name: "custom application",
-				value: EntityType.z
+				value: AppType.z
 			},{
 				name: "overview page",
-				value: EntityType.ovp
+				value: AppType.ovp
 			},{
 				name: "object page",
-				value: EntityType.op
+				value: AppType.op
 			},{
 				name: "list report",
-				value: EntityType.lr
+				value: AppType.lr
 			},{
 				name: "list report - object page",
-				value: EntityType.lrop
+				value: AppType.lrop
 			},{
 				name: "library",
-				value: EntityType.lib
+				value: AppType.lib
+			},{
+				name: "plugin",
+				value: AppType.plugin
 			}]
 		},{
 			name: "dir",
 			message: "path to application dir",
-			validate: this._validateEmpty
+			validate: this._validateEmpty,
+			default: "C:\\Users\\18547995\\Desktop"
 		},{
 			name: "appName",
 			message: "application name: gateway bsp",
 			validate: this._validateAppName
 		},{
 			name: "nmsp",
-			message: "application id like my.new.custom.app",
+			message: "application namespace like my.new.custom.app",
 			validate: this._validateAppId
 		},{
 			name: "sourceUri",
 			message: "manifest data source uri",
 			default: "/sap/opu/odata/sap/CUSTOM_DATA_SRV/",
+			when: answers => answers.appType !== AppType.lib,
 			validate: this._validateSourceUri
 		},{
 			name: "entitySet",
 			message: "entity set for fiori application",
-			when: answers => [EntityType.lr, EntityType.lrop, EntityType.op, EntityType.ovp].contains(answers.appType),
-			validate: this._validateEmpty
+			when: answers => [AppType.lr, AppType.lrop, AppType.op, AppType.ovp].includes(answers.appType),
+			validate: this._validateEmpty,
+			default: "TestDataSet"
 		}]);
 	}
 
 	writing(){
-		const {dir, appType, appName} = this._answers;
+		const {dir, appType, appName, sourceUri, nmsp, entitySet} = this._answers;
+
+		const parts = sourceUri.split("/").filter(part => !!part);
+		const srvName = parts[parts.length - 1];
+		const destPath = this._getDestinationPath(appType, nmsp);
 
 		this.destinationRoot(`${dir}/${appName}`);
 
-		if([EntityType.lr, EntityType.lrop, EntityType.op, EntityType.ovp, EntityType.lib].includes(appType)){
+		if([AppType.ovp, AppType.lib, AppType.plugin].includes(appType)){
 			throw new Error("template not realized!")
 		}
 
-		switch (appType) {
-			case "zapp":
-				this._copyAppTemplate();
-				break;
-			default:
-				break;
-		}
-	}
-
-	_copyAppTemplate(answers){
-		const {appType, appName, sourceUri, nmsp, entitySet} = answers;
-		const parts = sourceUri.split("/")
-			.filter(part => !!part);
-		const srvName = parts[parts.length - 1];
-
 		this.fs.copyTpl(
 			this.templatePath(`${appType}/**/*`),
-			this.destinationPath("webapp"),
+			this.destinationPath(destPath),
 			{
 				path: nmsp.split(".").join("/"),
 				nmsp: nmsp,
@@ -136,6 +146,42 @@ module.exports = class extends Generator{
 				entitySet: entitySet
 			}
 		);
+
+		this._updateConfig();
+	}
+
+	_getDestinationPath(appType, nmsp){
+		if(AppType.lib === appType){
+			return path.join("src", ...nmsp.split("."));
+		}else{
+			return "webapp";
+		}
+	}
+
+	_updateConfig(){
+		const {appType, dir, appName} = this._answers;
+		const appPath = path.join(dir, appName);
+		const {root} = this.options;
+
+		const configJSON = this.fs.readJSON(path.join(root, "config.json"));
+		
+		let section;
+		if(AppType.lib === appType){
+			section = "libs";
+		}else if(appType.plugin === appType){
+			section = "plugins";
+		}else{
+			section = "apps";
+		}
+
+		if(!configJSON[section]){
+			configJSON[section] = [];
+		}
+		configJSON[section].push({
+			path: appPath
+		});
+
+		this.fs.writeJSON(path.join(root, "config.json"), configJSON, "\t");
 	}
 
 	end(){

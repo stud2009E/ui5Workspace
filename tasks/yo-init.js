@@ -25,10 +25,12 @@ module.exports = function(grunt){
     });
 
     grunt.registerTask("newapp", "public: create new custom application from template", function(){
-        env.register(path.join(genPath, "zapp"), "config:app");
+        env.register(path.join(genPath, "app"), "config:app");
         
         const done = this.async();
-        env.run("config:app", done);
+        env.run("config:app", {
+            root: process.cwd()
+        }, done);
     });
 
     grunt.registerTask("config", "public: create workspace main setup config.json", function(){
