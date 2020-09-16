@@ -159,15 +159,22 @@ module.exports = class extends Generator{
 	}
 
 	_updateConfig(){
-		const {appType, dir, appName} = this._answers;
+		const {appType, dir, appName, nmsp} = this._answers;
 		const appPath = path.join(dir, appName);
 		const {root} = this.options;
 
 		const configJSON = this.fs.readJSON(path.join(root, "config.json"));
-		
+		const appConfig = {
+			path: appPath,
+			transport: "",
+			package: "",
+			bsp: appName
+		};
+
 		let section;
 		if(AppType.lib === appType){
 			section = "libs";
+			appConfig.namespace = nmsp.split(".").join("/");
 		}else if(appType.plugin === appType){
 			section = "plugins";
 		}else{
@@ -177,9 +184,7 @@ module.exports = class extends Generator{
 		if(!configJSON[section]){
 			configJSON[section] = [];
 		}
-		configJSON[section].push({
-			path: appPath
-		});
+		configJSON[section].push(appConfig);
 
 		this.fs.writeJSON(path.join(root, "config.json"), configJSON, "\t");
 	}
