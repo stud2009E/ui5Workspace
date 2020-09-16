@@ -122,7 +122,7 @@ module.exports = class extends Generator{
 	}
 
 	writing(){
-		const {dir, appType, appName, sourceUri, nmsp, entitySet} = this._answers;
+		const {dir, appType, appName, sourceUri = "", nmsp, entitySet} = this._answers;
 
 		const parts = sourceUri.split("/").filter(part => !!part);
 		const srvName = parts[parts.length - 1];
@@ -130,7 +130,7 @@ module.exports = class extends Generator{
 
 		this.destinationRoot(`${dir}/${appName}`);
 
-		if([AppType.ovp, AppType.lib, AppType.plugin].includes(appType)){
+		if([AppType.ovp, AppType.plugin].includes(appType)){
 			throw new Error("template not realized!")
 		}
 
