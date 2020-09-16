@@ -1,0 +1,125 @@
+{
+	"_version": "1.7.0",
+	"sap.app": {
+		"id": "<%= nmsp %>",
+		"type": "application",
+		"i18n": "i18n/i18n.properties",
+		"applicationVersion": {
+			"version": "1.0.0"
+		},
+		"title": "{{app_title}}",
+		"description": "{{app_description}}",
+		"dataSources": {
+			"main": {
+				"uri": "<%= sourceUri %>",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0",
+					"localUri": "localService/metadata.xml",
+					"annotations": [
+						"local"
+					]
+				}
+			},
+			"local": {
+				"uri": "localService/annotation.xml",
+				"type": "ODataAnnotation",
+				"settings": {
+					"localUri": "localService/annotation.xml"
+				}
+			}
+		},
+		"sourceTemplate": {
+			"id": "OVP.cardtemplate",
+			"version": "0.0.0"
+		}
+	},
+	"sap.ui": {
+		"technology": "UI5",
+		"icons": {
+			"icon": ""
+		},
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		},
+		"supportedThemes": [
+			"sap_belize"
+		]
+	},
+	"sap.ui5": {
+		"dependencies": {
+			"minUI5Version": "${sap.ui5.dist.version}",
+			"libs": {
+				"sap.ui.core": {
+					"lazy": false
+				},
+				"sap.ui.generic.app": {
+					"lazy": false
+				},
+				"sap.suite.ui.generic.template": {
+					"lazy": false
+				},
+				"sap.ovp": {
+					"lazy": false
+				}
+			}
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"uri": "i18n/i18n.properties"
+			},
+			"@i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"uri": "i18n/i18n.properties"
+			},
+			"main": {
+				"dataSource": "main",
+				"settings": {
+					"defaultCountMode": "Inline",
+					"metadataUrlParams": {
+						"sap-value-list": "none"
+					}
+				}
+			}
+		},
+		"extends": {
+			"extensions": {}
+		},
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		}
+	},
+	"sap.ovp": {
+		"globalFilterModel": "main",
+		"globalFilterEntitySet": "<%= entitySet %>",
+		"containerLayout": "fixed",
+		"enableLiveFilter": false,
+		"considerAnalyticalParameters": true,
+		"cards": {
+			"card00": {
+				"model": "main",
+				"template": "sap.ovp.cards.table",
+				"settings": {
+					"title": "{{card00_title}}",
+					"entitySet": "<%= entitySet %>",
+					"addODataSelect": false,
+					"annotationPath": "com.sap.vocabularies.UI.v1.LineItem"
+				}
+			},
+			"card01": {
+				"model": "main",
+				"template": "sap.ovp.cards.charts.analytical",
+				"settings": {
+					"title": "{{card01_title}}",
+					"entitySet": "<%= entitySet %>",
+					"presentationAnnotationPath": "com.sap.vocabularies.UI.v1.PresentationVariant",
+					"chartAnnotationPath": "com.sap.vocabularies.UI.v1.Chart#column"
+				}
+			}
+		}
+	}
+}

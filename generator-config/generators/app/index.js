@@ -130,7 +130,7 @@ module.exports = class extends Generator{
 
 		this.destinationRoot(`${dir}/${appName}`);
 
-		if([AppType.ovp, AppType.plugin].includes(appType)){
+		if([AppType.plugin].includes(appType)){
 			throw new Error("template not realized!")
 		}
 
@@ -179,6 +179,11 @@ module.exports = class extends Generator{
 			section = "plugins";
 		}else{
 			section = "apps";
+			
+			appConfig.action = "display";
+			if(AppType.ovp === appType){
+				appConfig.mockModelName = "main";
+			}
 		}
 
 		if(!configJSON[section]){
