@@ -1,0 +1,68 @@
+{
+	"_version": "1.7.0",
+	"sap.app": {
+		"id": "<%= nmsp %>",
+		"type": "component",
+		"i18n": "i18n/i18n.properties",
+		"applicationVersion": {
+			"version": "1.0.0"
+		},
+		"title": "{{app_title}}",
+		"description": "{{app_description}}",
+		"dataSources": {
+			"main": {
+				"uri": "<%= sourceUri %>",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0",
+					"localUri": "localService/metadata.xml"
+				}
+			}
+		}
+	},
+	"sap.ui": {
+		"technology": "UI5",
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		},
+		"supportedThemes": []
+	},
+	"sap.ui5": {
+		"dependencies": {
+			"minUI5Version": "${sap.ui5.dist.version}",
+			"libs": {
+				"sap.ui.core": {
+					"lazy": false
+				}
+			}
+		},
+		"componentName": "<%= nmsp %>",
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"uri": "i18n/i18n.properties"
+			},
+			"": {
+				"dataSource": "main",
+				"settings": {
+					"defaultCountMode": "Inline",
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "OneWay"
+				},
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"preload": true
+			}
+		},
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		},
+		"sap.flp": {
+			"_version": "1.1.0",
+			"type": "plugin",
+			"config": {}
+		}
+	}
+}

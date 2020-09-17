@@ -59,7 +59,7 @@ module.exports = class extends Generator{
 			"will create next folder structure:",
 			"-path/to/dir",
 			"\t-application name(bsp)",
-			"\t\t-webapp",
+			"\t\t-source code",
 			"\t\t\t..." 	
 		];
 
@@ -96,8 +96,7 @@ module.exports = class extends Generator{
 		},{
 			name: "dir",
 			message: "path to application dir",
-			validate: this._validateEmpty,
-			default: "C:\\Users\\18547995\\Desktop"
+			validate: this._validateEmpty
 		},{
 			name: "appName",
 			message: "application name: gateway bsp",
@@ -129,10 +128,6 @@ module.exports = class extends Generator{
 		const destPath = this._getDestinationPath(appType, nmsp);
 
 		this.destinationRoot(`${dir}/${appName}`);
-
-		if([AppType.plugin].includes(appType)){
-			throw new Error("template not realized!")
-		}
 
 		this.fs.copyTpl(
 			this.templatePath(`${appType}/**/*`),
