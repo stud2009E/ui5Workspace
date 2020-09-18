@@ -7,7 +7,6 @@ const exec = util.promisify(require("child_process").exec);
 module.exports = function(grunt){
 
 	grunt.registerTask("preload", "public: build app Component-preload.js", function(){
-
 		const appName = grunt.option("app"); 
 		const {appInfo, libInfo, pluginInfo} = config;
 
@@ -24,7 +23,7 @@ module.exports = function(grunt){
 		}
 
 		const appPath = app.path;
-		if(appPath){
+		if(!appPath){
 			grunt.fail.fatal(`error: can't get path for ${appName}`);
 		}
 
