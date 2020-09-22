@@ -14,7 +14,7 @@ module.exports = function (grunt) {
 		const {appInfo} = config;
 
 		const applications = {};
-		const resourceroots = {"flp.root": "../"};
+		const resourceroots = {};
 		const plugins = {};
 
 		//remove apps symlinks
@@ -42,6 +42,7 @@ module.exports = function (grunt) {
 				applications[appKey].applicationType = "URL";
 				applications[appKey].description = name;
 				applications[appKey].title = name;
+				applications[appKey].url = path.relative(flpPath, symlinkPath);
 			} else{
 				grunt.fail.fatal(`can't parse application type for app: ${name}`);
 			}
