@@ -30,15 +30,14 @@
 			if(!Array.isArray(libs)){
 				return;
 			}
+			var oPath = {};
 
-			libs.forEach(({namespace, context}) => {
+			libs.forEach(function(setting){	
+				oPath[setting.namespace] = setting.context;
+			});
 
-				 sap.ui.loader.config({
-                    paths: {
-                        [namespace]: context
-                    }
-                });
-
+			sap.ui.loader.config({
+				paths: oPath
 			});
 		}
 	</script>
