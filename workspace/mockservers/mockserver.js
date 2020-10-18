@@ -93,7 +93,7 @@ sap.ui.define([
                 const sUrl = decodeURIComponent(oXhr.url).replace(rootUri, "");
                 
                 let [entitySet, params] = sUrl.split("?");
-               	params = params.split("&").join('\n\t');
+               	params = params && params.split("&").join('\n\t') || "";
 
                 const sMessage = `\nMockServer::${oEvent.getId()} /${entitySet}\nparams:${params}\n`;
 
