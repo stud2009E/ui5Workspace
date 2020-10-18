@@ -14,7 +14,7 @@ module.exports = function (grunt) {
 		const {appInfo} = config;
 
 		const applications = {};
-		const resourceroots = {};
+		const resourceroots = {"flp.root": "/"};
 		const plugins = {};
 
 		//remove apps symlinks
