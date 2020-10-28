@@ -27,7 +27,8 @@ module.exports = function (grunt) {
 			const appId = manifest["sap.app"].id;
 			const appType = manifest["sap.app"].type;
 			const symlinkPath = path.join(cwd, "workspace/apps", name, "webapp");
-			const appKey = `${name}-${action}`;
+			const semanticObject = name.toUpperCase();
+			const appKey = `${semanticObject}-${action}`;
 			const serviceUri = getServiceUri({manifest, name, mockModelName});
 
 			fs.symlinkSync(app.path, path.join(appsDir, name), "dir");
