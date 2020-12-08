@@ -16,7 +16,7 @@
             <Property Name="Time" Type="Edm.Time" MaxLength="10" Nullable="false" sap:label="Time"/>
             <Property Name="Byte" Type="Edm.Byte" MaxLength="10" Nullable="false" sap:label="Byte"/>
          </EntityType>
-         <EntityContainer Name="<%= model %>_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+         <EntityContainer Name="<%= model %>Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
             <EntitySet Name="<%= entitySet %>" EntityType="<%= model %>.TestDataType" sap:content-version="1" />
          </EntityContainer>
       </Schema>

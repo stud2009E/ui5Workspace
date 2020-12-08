@@ -1,7 +1,0 @@
-<core:View xmlns:core="sap.ui.core"
-	xmlns="sap.m"
-	controllerName="<%= nmsp %>.ext.controller.Replace">
-	
-	<Text text="I'm a view added as a dynamic facet extensionpoint"/>
-
-</core:View>

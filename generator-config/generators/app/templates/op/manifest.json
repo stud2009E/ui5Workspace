@@ -1,5 +1,5 @@
 {
-	"_version": "1.8.0",
+	"_version": "1.7.0",
 	"sap.app": {
 		"id": "<%= nmsp %>",
 		"type": "application",
@@ -17,24 +17,25 @@
 				"uri": "<%= sourceUri %>",
 				"type": "OData",
 				"settings": {
+					"odataVersion": "2.0",
 					"localUri": "localService/metadata.xml",
 					"annotations": [
-						"local"
+						"annotation0"
 					]
 				}
 			},
-			"local": {
+			"annotation0": {
 				"type": "ODataAnnotation",
 				"uri": "localService/annotation.xml",
 				"settings": {
-					"localUri": "localService/annotation.xml"
+					"localUri": "annotations/annotation.xml"
 				}
 			}
 		},
 		"offline": false,
 		"sourceTemplate": {
-			"id": "ui5template.smartTemplate",
-			"version": "1.40.12"
+			"id": "LROP.worklist",
+			"version": "1.41.1"
 		}
 	},
 	"sap.ui": {
@@ -53,19 +54,38 @@
 			"phone": true
 		},
 		"supportedThemes": [
-			"sap_hcb",
-			"sap_belize"
+			"sap_belize",
+			"sbt_spl_belize"
 		]
 	},
 	"sap.ui5": {
 		"resources": {
 			"js": [],
-			"css": []
+			"css": [
+				{
+					"uri": "css/style.css"
+				}
+			]
 		},
 		"dependencies": {
-			"minUI5Version": "1.60.6",
+			"minUI5Version": "1.60.1",
 			"libs": {
+				"sap.collaboration": {
+					"lazy": false
+				},
+				"sap.ushell": {
+					"lazy": false
+				},
+				"sap.uxap": {
+					"lazy": false
+				},
 				"sap.ui.core": {
+					"lazy": false
+				},
+				"sap.m": {
+					"lazy": false
+				},
+				"sap.f": {
 					"lazy": false
 				},
 				"sap.ui.generic.app": {
@@ -73,43 +93,61 @@
 				},
 				"sap.suite.ui.generic.template": {
 					"lazy": false
-				}
+				},
+				"sap.ui.comp": {
+					"lazy": false
+				},
+				"sap.ui.layout": {
+					"lazy": false
+				},
+				"sap.ui.table": {
+					"lazy": false
+				},
+				"sap.ui.fl": {
+					"lazy": false
+				}	
 			},
 			"components": {}
 		},
 		"models": {
-			"i18n": {
-				"type": "sap.ui.model.resource.ResourceModel",
-				"uri": "i18n/i18n.properties"
-			},
 			"@i18n": {
 				"type": "sap.ui.model.resource.ResourceModel",
 				"uri": "i18n/i18n.properties"
 			},
 			"": {
 				"dataSource": "mainService",
-				"preload": true,
 				"settings": {
+					"useBatch": true,
 					"defaultBindingMode": "TwoWay",
 					"defaultCountMode": "Inline",
-					"refreshAfterChange": false,
-					"useBatch": true
+					"refreshAfterChange": false
 				}
 			}
 		},
 		"extends": {
 			"extensions": {
-				"sap.ui.controllerExtensions": {
-					"sap.suite.ui.generic.template.ObjectPage.view.Details": {
-						"controllerName": "<%= nmsp %>.ext.controller.ObjectPageExt"
-					}
-				},
 				"sap.ui.viewExtensions": {
 					"sap.suite.ui.generic.template.ObjectPage.view.Details": {
-						"ReplaceFacet|<%= entitySet %>|replace": {
+						"ReplaceFacet|<%= entitySet %>|Example_Facet": {
 							"type": "XML",
 							"className": "sap.ui.core.mvc.View",
-							"viewName": "<%= nmsp %>.ext.view.Replace"
+							"viewName": "<%= nmsp %>.ext.view.Example"
+						}
+					}
+				},
+				"sap.ui.controllerExtensions": {
+					"sap.suite.ui.generic.template.ListReport.view.ListReport": {
+						"controllerName": "<%= nmsp %>.ext.controller.ListReportExt"
+					},
+					"sap.suite.ui.generic.template.ObjectPage.view.Details": {
+						"controllerName": "<%= nmsp %>.ext.controller.ObjectPageExt",
+						"sap.ui.generic.app": {
+							"<%= entitySet %>": {
+								"EntitySet": "<%= entitySet %>",
+								"Header": {
+									"Actions": {}
+								}
+							}
 						}
 					}
 				}
@@ -123,15 +161,30 @@
 	"sap.ui.generic.app": {
 		"_version": "1.3.0",
 		"settings": {
-			"forceGlobalRefresh": false,
+			"showDraftToggle": false,
 			"objectPageHeaderType": "Dynamic",
-			"showDraftToggle": false
+			"forceGlobalRefresh": false
 		},
 		"pages": {
-			"ObjectPage|<%= entitySet %>": {
+			"ListReport|<%= entitySet %>": {
 				"entitySet": "<%= entitySet %>",
 				"component": {
-					"name": "sap.suite.ui.generic.template.ObjectPage"
+					"name": "sap.suite.ui.generic.template.ListReport",
+					"list": true,
+					"settings": {
+						"multiSelect": true,
+						"smartVariantManagement": true,
+						"enableTableFilterInPageVariant": true
+					}
+				},
+				"pages": {
+					"ObjectPage|<%= entitySet %>": {
+						"entitySet": "<%= entitySet %>",
+						"component": {
+							"name": "sap.suite.ui.generic.template.ObjectPage",
+							"settings": {}
+						}
+					}
 				}
 			}
 		}

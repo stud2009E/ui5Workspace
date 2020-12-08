@@ -16,7 +16,7 @@
 	</edmx:Reference>
 	<edmx:DataServices>
 		<Schema xmlns="http://docs.oasis-open.org/odata/ns/edm"
-			Namespace="<%= model %>">
+			Namespace="annotation.<%= model %>">
 			<Annotations Target="Metadata.TestDataType">
 				<Annotation Term="UI.LineItem">
 					<Collection>
@@ -46,17 +46,15 @@
 						</Record>
 					</Collection>
 				</Annotation>
-
 				<Annotation Term="UI.Facets">
 					<Collection>
-						<Record Type="UI.CollectionFacet">
-							<PropertyValue Property="ID" String="replace"/>
-							<PropertyValue Property="Label" String="{@i18n&gt;replace}"/>
+						<Record Type="UI.ReferenceFacet">
+							<PropertyValue Property="ID" String="Example_Facet"/>
+							<PropertyValue Property="Label" String="{@i18n&gt;labelExampleFacet}"/>
 						</Record>
 					</Collection>
 				</Annotation>
 			</Annotations>
-
 		</Schema>
 	</edmx:DataServices>
 </edmx:Edmx>
