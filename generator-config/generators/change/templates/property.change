@@ -1,0 +1,42 @@
+{
+	"fileName": "id_1583827959950_195_propertyChange",
+	"fileType": "change",
+	"changeType": "propertyChange",
+	"moduleName": "",
+	"reference": "sb.fiori.app.spl.contract.tmc.Component",
+	"packageName": "$TMP",
+	"content": {
+		"property": "growingScrollToLoad",
+		"newValue": true
+	},
+	"selector": {
+		"id": "sb.fiori.app.spl.contract.tmc::sap.suite.ui.generic.template.ObjectPage.view.Details::zc_contract_header--AnIDRoA::responsiveTable",
+		"type": "sap.m.Table",
+		"idIsLocal": false
+	},
+	"layer": "CUSTOMER_BASE",
+	"texts": {},
+	"namespace": "apps/sb.fiori.app.spl.contract.tmc/changes/",
+	"projectId": "sb.fiori.app.spl.contract.tmc",
+	"creation": "2020-03-10T08:12:54.839Z",
+	"originalLanguage": "RU",
+	"conditions": {},
+	"context": "",
+	"support": {
+		"generator": "Change.createInitialFileContent",
+		"service": "",
+		"user": "",
+		"sapui5Version": "1.60.7",
+		"sourceChangeFileName": "",
+		"compositeCommand": ""
+	},
+	"oDataInformation": {},
+	"dependentSelector": {},
+	"validAppVersions": {
+		"creation": "1.0.0",
+		"from": "1.0.0",
+		"to": "1.0.0"
+	},
+	"jsOnly": false,
+	"variantReference": ""
+}
