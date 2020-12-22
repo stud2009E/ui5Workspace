@@ -1,0 +1,75 @@
+{
+	"fileName": "<%= fileName %>",
+	"fileType": "change",
+	"changeType": "moveControls",
+	"moduleName": "",
+	"reference": "<%= appId %>.Component",
+	"packageName": "$TMP",
+	"content": {
+		"movedElements": [{
+			"selector": {
+				"id": "id",
+				"idIsLocal": false
+			},
+			"sourceIndex": "sourceIndex",
+			"targetIndex": "targetIndex"  
+		}],
+		"source": {
+			"selector": {
+				"aggregation": "aggregation",
+				"type": "type",
+				"id": "id",
+				"idIsLocal": false
+			}
+		},
+		"target": {
+			"selector": {
+				"aggregation": "aggregation",
+				"type": "type",
+				"id": "id",
+				"idIsLocal": false
+			}
+		}
+	},
+	"selector": {
+		"id": "",
+		"idIsLocal": false
+	},
+	"layer": "CUSTOMER_BASE",
+	"texts": {},
+	"namespace": "apps/<%= appId %>/changes/",
+	"projectId": "<%= appId %>",
+	"creation": "<%= creationDate %>",
+	"originalLanguage": "RU",
+	"context": "",
+	"support": {
+		"generator": "Change.createInitialFileContent",
+		"service": "",
+		"user": "",
+		"sapui5Version": "1.60.7",
+		"sourceChangeFileName": "",
+		"compositeCommand": ""
+	},
+	"oDataInformation": {},
+	"dependentSelector": {
+		"source": {
+			"id": "id",
+			"idIsLocal": false
+		},
+		"target": {
+			"id": "id",
+			"idIsLocal": false
+		},
+		"movedElements": [{
+			"id": "id",
+			"idIsLocal": false
+		}]
+	},
+	"validAppVersions": {
+		"creation": "1.0.0",
+		"from": "1.0.0",
+		"to": "1.0.0"
+	},
+	"jsOnly": false,
+	"variantReference": ""
+}

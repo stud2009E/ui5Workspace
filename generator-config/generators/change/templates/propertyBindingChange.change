@@ -1,0 +1,28 @@
+{
+    "fileName": "<%= fileName %>",
+    "fileType": "change",
+    "changeType": "propertyBindingChange",
+    "reference": "<%= appId %>.Component",
+    "packageName": "$TMP",
+    "content": {
+        "property": "property",
+        "newBinding": "{newBinding}"
+    },
+    "selector": {
+        "id": "id",
+        "type": "type",
+        "idIsLocal": false
+    },
+    "layer": "CUSTOMER_BASE",
+    "texts": {},
+    "namespace": "apps/<%= appId %>/changes/",
+    "creation": "<%= creationDate %>",
+    "originalLanguage": "RU",
+    "conditions": {},
+    "context": "",
+    "support": {
+        "generator": "Change.createInitialFileContent",
+        "service": "",
+        "user": ""
+    }
+}

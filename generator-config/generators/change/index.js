@@ -1,18 +1,22 @@
 const path = require("path");
-const fs = require("fs");
+const fs = require("fs-extra");
 const Generator = require("yeoman-generator");
 const MetadataParser = require("../../../utils/metadata/MetadataParser.js");
 
 const ChangeType = {
-    property: "property",
-    move: "move",
-    column: "column"
+    property: "propertyChange",
+    move: "moveControls",
+    column: "columnWidthChange",
+    binding: "propertyBindingChange"
 };
 
 module.exports = class extends Generator{
 
     _getAppId(appPath){
-        //get id from manifest
+        const manifestPath = path.join(appPath, "webapp", "manifest.json");
+        const manifest = fs.readJsonSync(manifestPath);
+        
+        return manifest["sap.app"] && manifest["sap.app"]["id"];
     }
 
     _getApps(){
@@ -50,7 +54,7 @@ module.exports = class extends Generator{
     }
 
     async prompting(){
-        const commonPrompt = await this.prompt([
+        const commonPrompt0 = await this.prompt([
             {
                 name: "changeType",
                 type: "list",
@@ -58,6 +62,9 @@ module.exports = class extends Generator{
                 choices: [{
                     name: "property change",
                     value: ChangeType.property
+                },{
+                    name: "property binding change",
+                    value: ChangeType.binding
                 },{
                     name: "move change",
                     value: ChangeType.move
@@ -73,7 +80,7 @@ module.exports = class extends Generator{
                 choices: this._getApps()
             }
         ]);
-        const {appPath, changeType} = commonPrompt;
+        const {appPath, changeType} = commonPrompt0;
 
 
         const columnPrompt = await this.prompt([
@@ -85,36 +92,86 @@ module.exports = class extends Generator{
                 choices: await this._getEntityTypes(appPath)
             },
             {
-                name: "tableId",
-                message: "input table id (<column id> = <table id>-<prop name>)",
-                default: "default-table-id",
+                name: "commonColumnId",
+                message: "input common id part (<common id>-<prop name>)",
+                default: "common-column-part",
                 when: () => changeType === ChangeType.column,
-                validate: input => !!input ? true : "required field!"
+                validate: input => (!!input && input.length ) > 5 ? true : "required field! length > 5"
             }
         ]);
 
-        const movePropmpt = await this.prompt([
+        const commonPrompt1 = await this.prompt([
             {
                 name: "fileName",
                 message: "input change file name",
-                default: ""
+                when: () => changeType !== ChangeType.column,
+                default: `id_${new Date().getMilliseconds()}_${changeType}`,
+                validate: input => (!!input && input.length ) > 5 ? true : "required field! length > 5"
             }
-        ])
+        ]);
         
-        this._answers = Object.assign({}, commonPrompt, columnPrompt);
+        this._answers = Object.assign({}, commonPrompt0, commonPrompt1, columnPrompt);
     }
 
     writing(){
-        const {changeType, appPath, entityType} = this._answers;
+        const {changeType, appPath} = this._answers;
+        this.destinationRoot(path.join(appPath, "webapp", "changes"));
 
-        const properites = this._getEntityTypeProperties(entityType);
-        
+        if(changeType === ChangeType.column){
+            this._columnsChange();
+        }else{
+            this._commonChangeHandle()
+        }
+    }
 
-        this.log(
-            properites.map(
-                property => `${property.Name} \t-\t ${property["sap:label"]}`
-            ).join('\n')
-        );
+
+    _commonChangeHandle(){
+        const {changeType, fileName, appPath} = this._answers;
+        const appId = this._getAppId(appPath);
+
+        if(!appId){
+            throw new Error("can't get application id");
+        }
+
+        this.fs.copyTpl(
+			this.templatePath(`template/${changeType}.change`),
+			this.destinationPath(`${fileName}.change`),
+			{
+				appId: appId,
+                fileName: fileName,
+                creationDate: new Date().toISOString()
+			}
+		);
+    }
+
+    _columnsChange(){
+        const {changeType, appPath, commonColumnId, entityType} = this._answers;
+        const appId = this._getAppId(appPath);
+        const fileName = `id_${entityType}`;
+
+        if(!appId){
+            throw new Error("can't get application id");
+        }
+
+        const properties = this._getEntityTypeProperties(entityType);
+        if(!(Array.isArray(properties) && properties.length > 0)){
+            throw new Error("can't parse properties from entityType");
+        }
+
+        properties.forEach(property => {
+
+            this.fs.copyTpl(
+                this.templatePath(`${changeType}.change`),
+                this.destinationPath(`${fileName}-${property.Name}.change`),
+                {
+                    appId: appId,
+                    fileName: `${fileName}-${property.Name}`,
+                    columnId: `${commonColumnId}-${property.Name}`,
+                    columnWidth: "10rem",
+                    creationDate: new Date().toISOString()
+                }
+            );
+        });
     }
 
     end(){

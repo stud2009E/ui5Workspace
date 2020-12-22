@@ -1,24 +1,24 @@
 {
-	"fileName": "id_1583827959950_195_propertyChange",
+	"fileName": "<%= fileName %>",
 	"fileType": "change",
 	"changeType": "propertyChange",
 	"moduleName": "",
-	"reference": "sb.fiori.app.spl.contract.tmc.Component",
+	"reference": "<%= appId %>.Component",
 	"packageName": "$TMP",
 	"content": {
-		"property": "growingScrollToLoad",
-		"newValue": true
+		"property": "width",
+		"newValue": "<%= columnWidth %>"
 	},
 	"selector": {
-		"id": "sb.fiori.app.spl.contract.tmc::sap.suite.ui.generic.template.ObjectPage.view.Details::zc_contract_header--AnIDRoA::responsiveTable",
-		"type": "sap.m.Table",
+		"id": "<%= columnId %>",
+		"type": "sap.m.Column",
 		"idIsLocal": false
 	},
 	"layer": "CUSTOMER_BASE",
 	"texts": {},
-	"namespace": "apps/sb.fiori.app.spl.contract.tmc/changes/",
-	"projectId": "sb.fiori.app.spl.contract.tmc",
-	"creation": "2020-03-10T08:12:54.839Z",
+	"namespace": "apps/<%= appId %>/changes/",
+	"projectId": "<%= appId %>",
+	"creation": "<%= creationDate %>",
 	"originalLanguage": "RU",
 	"conditions": {},
 	"context": "",
