@@ -322,13 +322,13 @@ class SettingContainer {
 	 * @type {object}
 	 */
 	get pluginInfo(){
-		if(!this._pluginIfo){
-			this._pluginIfo = {};
+		if(!this._pluginInfo){
+			this._pluginInfo = {};
 
 			this.plugins.forEach(plugin => {
-				const name = this.lastPathPart(plagin.path);
+				const name = this.lastPathPart(plugin.path);
 
-				this._pluginIfo[name] = {...plugin};
+				this._pluginInfo[name] = {...plugin};
 			});
 		}
 
