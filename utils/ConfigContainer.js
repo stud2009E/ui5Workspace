@@ -341,10 +341,14 @@ class SettingContainer {
 	 * @param      {Object}  config
 	 * @param      {string}  config.systemDefault  The system default
 	 * @param      {string}  config.userDefault    The user default
+	 * @param      {string}  config.systemCD  The system deploy
+	 * @param      {string}  config.userCD    The user deploy
 	 */
-	set defaultKeys({systemDefault, userDefault}){
+	set defaultKeys({systemDefault, userDefault, systemCD, userCD}){
 		this._systemDefaultKey = systemDefault;
 		this._userDefaultKey = userDefault;
+		this._systemCDKey = systemCD;
+		this._userCDKey = userCD;
 	}
 
 	/**
@@ -363,6 +367,24 @@ class SettingContainer {
 	 */
 	get userDefaultKey(){
 		return this._userDefaultKey;
+	}
+
+	/**
+	 * deploy system key
+	 *
+	 * @type       {string}
+	 */
+	 get systemCDKey(){
+		return this._systemCDKey;
+	}
+
+	/**
+	 * deploy user key
+	 *
+	 * @type       {string}
+	 */
+	get userCDKey(){
+		return this._userCDKey;
 	}
 
 	/**

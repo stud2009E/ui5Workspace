@@ -11,8 +11,8 @@ module.exports = function(grunt){
 		grunt.loadNpmTasks("grunt-nwabap-ui5uploader");
 
 		const appName = grunt.option("app");
-		const userKey = grunt.option("user") || config.userDefaultKey;
-		const systemKey = grunt.option("sys") || config.systemDefaultKey;
+		const userKey = grunt.option("user") || config.userCDKey || config.userDefaultKey;
+		const systemKey = grunt.option("sys") || config.systemCDKey || config.systemDefaultKey;
 	
 		const system = config.getSystem(systemKey);
 		const user = config.getUser(systemKey, userKey);
