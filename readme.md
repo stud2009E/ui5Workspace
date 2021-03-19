@@ -28,8 +28,8 @@
 
 ### Начало работы:
 - скачать software development kit ui5 нужной версии [src](https://tools.hana.ondemand.com/#sapui5)
-- git clone https://sbtatlas.sigma.sbrf.ru/stash/scm/sapsus/zspl_workspace.git
-- cd zspl_workspace
+- git clone repository
+- cd directory
 - npm install --global grunt-cli [docs](https://gruntjs.com)
 - npm install --global @ui5/cli [docs](https://sap.github.io/ui5-tooling/)
 - npm install
@@ -40,7 +40,6 @@
 Для отображения задач grunt введите команду:
 ```
 grunt --help
-```
 
 ### config.json
 Для работы окружения необходим настроечный файл config.json, расположенный в корне проекта.
