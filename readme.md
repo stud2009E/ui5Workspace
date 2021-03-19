@@ -33,17 +33,13 @@
 - npm install --global grunt-cli [docs](https://gruntjs.com)
 - npm install --global @ui5/cli [docs](https://sap.github.io/ui5-tooling/)
 - npm install
-- создать config.json
+- создать config.json по шаблону
+- добавить путь %AppData%\npm (для windows) в системный переменные для grunt
 - grunt dev
 
 Для отображения задач grunt введите команду:
 ```
-grunt --help lists
-```
-
-Для настройки задач с использованием [yeoman](https://yeoman.io) (создание прототипов приложений, сборка config.json) введите команду:
-```
-grunt yo-init
+grunt --help
 ```
 
 ### config.json
@@ -87,6 +83,8 @@ grunt yo-init
 		[theme-name] : url-to-theme,
 		...
 	},
+	[systemCD]: system-key-2,
+  	[userCD]: system-key-2,
 	[systemDefault]: system-key-1,
 	[userDefault]: user-key-1,
 	[proxyModule] : npm|git = git,
@@ -111,8 +109,12 @@ grunt yo-init
 ```
 
 ### Детали реализации
-После запуска команды grunt dev поднимется локальный сервер на 80 порту.
+После запуска команды grunt dev поднимется локальный сервер на 8000 порту.
 Если указаны system, то окружение создаст проксирование на основе context для выбранной systemDefault.
+systemDefault, userDefault используются для доступа к данным по умолчанию, если при запуска не указаны иные
+логин и пароль.
+systemCD, userCD используются для деплоя приложения, если не указаны, то берутся логины по-умолчанию, иначе 
+их необходимо указать явно при запуске grunt-task.
 
 Для разработки на данных сервера использовать url: /fiori-remote/index.html.
 Для разработки на локальных данных (mockServer) использовать url: /fiori/index.html.

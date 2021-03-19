@@ -11,13 +11,14 @@ module.exports = function(grunt){
         const done = this.async();
 
         const appName = grunt.option("app");
-        const userKey = grunt.option("user") || config.userDefaultKey;
-        const systemKey = grunt.option("sys") || config.systemDefaultKey;
+        const mandt = grunt.option("mandt");
+        const userKey = grunt.option("user") || config.userCDKey;
+        const systemKey = grunt.option("sys") || config.systemCDKey;
 
         const user = config.getUser(systemKey, userKey);
         const system = config.getSystem(systemKey);
 
-        if(!appName){
+        if(!appName || !mandt){
             grunt.fail.fatal("error: require app name, use --app=<app name>");
         }
 
@@ -28,7 +29,7 @@ module.exports = function(grunt){
             host: system.host,
             port: system.port,
             method: "GET",
-            path: `${appInfo.rootUri}$metadata`,
+            path: `${appInfo.rootUri}$metadata?sap-client=${mandt}`,
             rejectUnauthorized: false
         });
 
@@ -40,7 +41,12 @@ module.exports = function(grunt){
             let xml = "";
 
             if(response.statusCode >= 400){
-                grunt.fail.fatal(`error get metadata.xml: ${err}`);
+                console.dir(response, {
+                    depth: 1,
+                    showHidden: false,
+                    colors: true
+                });
+                grunt.fail.fatal(`error get metadata.xml`);
             }
 
             response
