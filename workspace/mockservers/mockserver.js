@@ -1,9 +1,7 @@
 sap.ui.define([
-	"sap/ui/core/util/MockServer",
-	"sap/base/Log",
+	"sap/ui/core/util/MockServer"
 ], function(
-	MockServer,
-	Log
+	MockServer
 ){
 	"use strict";
 	
@@ -61,7 +59,7 @@ sap.ui.define([
 					}
 					resolve(mockserver);
 				}, err => {
-					Log.error(`mock server for app '${name}' started without mockExtension: ${err}`);
+					console.error(`mock server for app '${name}' started without mockExtension: ${err}`);
 					resolve(mockserver);
 				});
 			});
@@ -84,7 +82,6 @@ sap.ui.define([
 		 * @param      {string}                       name        application name
 		 */
 		attachLog(mockserver, rootUri, name) {
-			Log.setLevel(3, name);
 
             function logRequest(oEvent) {
             	const oXhr = oEvent.getParameter("oXhr");
@@ -98,9 +95,9 @@ sap.ui.define([
                 const sMessage = `\nMockServer::${oEvent.getId()} /${entitySet}\nparams:${params}\n`;
 
                 if (oXhr.status >= 400) {
-                    Log.error(sMessage, aResults, name);
+                    console.error(sMessage, aResults, name);
                 } else {
-                    Log.info(sMessage, aResults, name);
+                    console.info(sMessage, aResults, name);
                 }
             }
 
