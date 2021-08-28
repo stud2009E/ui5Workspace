@@ -71,7 +71,8 @@ sap.ui.define([
 		 * @return     {boolean}  True if log mode, False otherwise.
 		 */
 		isLogMode(){
-			return /\WmockLogMode=true(\W|$)/.test(location.href);
+			return true;
+			// return /\WmockLogMode=true(\W|$)/.test(location.href);
 		},
 
 		/**
@@ -85,8 +86,9 @@ sap.ui.define([
 
             function logRequest(oEvent) {
             	const oXhr = oEvent.getParameter("oXhr");
+				const oEntry = oEvent.getParameter("oEntry");
             	const oFilteredData = oEvent.getParameter("oFilteredData")
-            	const aResults = oFilteredData && oFilteredData.results || [];
+            	const aResults = oFilteredData && oFilteredData.results || oEntry;
                 const sUrl = decodeURIComponent(oXhr.url).replace(rootUri, "");
                 
                 let [entitySet, params] = sUrl.split("?");
