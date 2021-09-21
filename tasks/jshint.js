@@ -57,28 +57,35 @@ module.exports = function(grunt){
 					jquery: true,
 					browser: true,
 					globals: {
-						sap: true,
-						console: true
+						sap: false,
+						console: false
 					}
 				},
 				src: "workspace/apps/**/*.js"
 			},
 			prod: {
 				options: {
-					strict: true,
 					esversion: 5,
 					camelcase: true,
+					undef: true,
 					bitwise: true,
 					jquery: true,
 					browser: true,
-					shadow: true,
-					maxerr: 100,
+					shadow: false,
+					forin: true,
+					maxerr: 20,
+					strict: false,
+					unused: "vars",
+					leanswitch: true,
 					globals: {
-						sap: true,
-						Promise: true
+						sap: false,
+						Promise: false,
+						jQuery: false,
+						QUnit: false,
+						$: false
 					}
 				},
-				src: `workspace/apps/${app}/**/*.js`
+				src: `workspace/apps/${app}/webapp/**/*.js`
 			}
 		}
 	});

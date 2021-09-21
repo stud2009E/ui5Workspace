@@ -82,7 +82,7 @@ module.exports = function (grunt) {
 
 			grunt.file.recurse(lib.path, function(absPath, rootdir, subdir, filename) {
 				if(filename.endsWith("library.js")){
-					item.path = path.join("apps", lib.name, subdir);
+					item.path = path.join("/apps", lib.name, subdir);
 				}
 			});
 
