@@ -71,7 +71,8 @@ sap.ui.define([
 		 * @return     {boolean}  True if log mode, False otherwise.
 		 */
 		isLogMode(){
-			return /\WmockLogMode=true(\W|$)/.test(location.href);
+			return true;
+			// return /\WmockLogMode=true(\W|$)/.test(location.href);
 		},
 
 		/**
@@ -83,16 +84,16 @@ sap.ui.define([
 		 */
 		attachLog(mockserver, rootUri, name) {
 
-            function logRequest(oEvent) {
+            function logGetRequest(oEvent) {
             	const oXhr = oEvent.getParameter("oXhr");
+				const oEntry = oEvent.getParameter("oEntry");
             	const oFilteredData = oEvent.getParameter("oFilteredData")
-            	const aResults = oFilteredData && oFilteredData.results || [];
+            	const aResults = oFilteredData && oFilteredData.results || oEntry;
                 const sUrl = decodeURIComponent(oXhr.url).replace(rootUri, "");
                 
-                let [entitySet, params] = sUrl.split("?");
-               	params = params && params.split("&").join('\n\t') || "";
-
-                const sMessage = `\nMockServer::${oEvent.getId()} /${entitySet}\nparams:${params}\n`;
+				let [entitySet, params] = sUrl.split("?");
+				params = params && params.split("&").join('\n\t') || "";
+				let sMessage = `\nMockServer::${oEvent.getId()} /${entitySet}\nparams:${params}\n`;
 
                 if (oXhr.status >= 400) {
                     console.error(sMessage, aResults, name);
@@ -101,9 +102,27 @@ sap.ui.define([
                 }
             }
 
-            Object.keys(MockServer.HTTPMETHOD)
-            	.map(key => MockServer.HTTPMETHOD[key])
-            	.forEach(method => mockserver.attachAfter(method, logRequest));
+			function logChangeRequest(oEvent) {
+            	const oXhr = oEvent.getParameter("oXhr");
+                const sUrl = decodeURIComponent(oXhr.url).replace(rootUri, "");
+                let [entitySet] = sUrl.split("?");
+
+				let requestBody = JSON.parse(oXhr.requestBody);
+				let sMessage = `\nMockServer::${oEvent.getId()} /${entitySet}\n`;
+
+
+                if (oXhr.status >= 400) {
+                    console.error(sMessage,requestBody, name);
+                } else {
+                    console.info(sMessage,requestBody, name);
+                }
+            }
+
+			mockserver.attachAfter(MockServer.HTTPMETHOD.GET, logGetRequest);
+			mockserver.attachBefore(MockServer.HTTPMETHOD.POST, logChangeRequest);
+			mockserver.attachBefore(MockServer.HTTPMETHOD.MERGE, logChangeRequest);
+			mockserver.attachBefore(MockServer.HTTPMETHOD.DELETE, logChangeRequest);
+
         }
 
 	};
