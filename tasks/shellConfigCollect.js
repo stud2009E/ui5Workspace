@@ -64,6 +64,7 @@ module.exports = function (grunt) {
 			if(appType === "component"){
 				plugins[name] = {};
 				plugins[name].component = appId;
+				plugins[name].config = app.config || {};
 			} else{
 				grunt.fail.fatal(`can't parse plugin type for app: ${name}`);
 			}
