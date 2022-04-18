@@ -18,7 +18,6 @@
     "grunt-contrib-clean": "^2.0.0",
     "grunt-contrib-connect": "^2.1.0",
     "grunt-contrib-jshint": "^2.1.0",
-    "grunt-contrib-qunit": "^4.0.0",
     "grunt-contrib-watch": "^1.1.0",
     "grunt-nwabap-ui5uploader": "^1.0.6",
     "grunt-openui5": "^0.16.0",
