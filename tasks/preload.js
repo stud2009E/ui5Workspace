@@ -49,7 +49,7 @@ module.exports = function(grunt){
 				console.log(stdout);
 			}
 
-			const {stderr, stdout} = await exec("ui5 build preload", {
+			const {stderr, stdout} = await exec("ui5 build preload --clean-dest=true --dest='./dist'", {
 				cwd: appPath
 			});
 	
