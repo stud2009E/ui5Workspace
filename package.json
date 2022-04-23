@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "ajv": "^8.11.0",
     "fs-extra": "^9.1.0",
     "grunt": "^0.4.5",
     "grunt-connect-proxy": "^0.2.0",
