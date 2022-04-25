@@ -1,9 +1,7 @@
-const { registerTask } = require("grunt");
-
 module.exports = function(grunt){
 	grunt.loadTasks("tasks");
 
-	grunt,registerTask("upload", "public: deploy application", [
+	grunt.registerTask("upload", "public: deploy application", [
 		// "jshint:prod",
 		// "test",
 		"preload",
