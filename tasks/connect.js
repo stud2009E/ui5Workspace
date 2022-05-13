@@ -1,5 +1,4 @@
 const config = require("../utils/ConfigContainer.js");
-const defaults = require("../utils/defaults.js");
 const utilsNpm = require("grunt-connect-proxy/lib/utils");
 const utilsGit = require("grunt-connect-proxy-git/lib/utils");
 
@@ -32,7 +31,7 @@ module.exports = function(grunt){
 			return {
 				context: context,
 				host: "localhost",
-				port: defaults.port,
+				port: config.port,
 				https: false,
 				rewrite: {
 					[`^${context}`]: path
@@ -40,10 +39,11 @@ module.exports = function(grunt){
 			};
 		});
 
+
 		grunt.config.merge({
 			connect:{
 				server:{
-					options:{
+					options:{	
 						port: config.port,
 						keepalive: true,
 						livereload: false,
@@ -76,5 +76,4 @@ module.exports = function(grunt){
 			"openui5_connect:server"
 		]);
 	});
-
 };

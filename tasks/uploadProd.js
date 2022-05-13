@@ -4,8 +4,6 @@ const config = require("../utils/ConfigContainer.js");
 module.exports = function(grunt){
 
 	grunt.registerTask("uploadProd", "private: upload application to server", function(){
-		// grunt.task.requires("jshint");
-		// grunt.task.requires("test");
 		grunt.task.requires("preload");
 
 		grunt.loadNpmTasks("grunt-nwabap-ui5uploader");
