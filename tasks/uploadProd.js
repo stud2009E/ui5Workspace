@@ -1,31 +1,51 @@
 const path = require("path");
-const config = require("../utils/ConfigContainer.js");
+const Ajv = require("ajv");
+const fs = require("fs-extra");
+const objectPath = require("object-path");
+const {systemSchema, deploySchema} = require("../utils/configSchema.js");
 
 module.exports = function(grunt){
 
 	grunt.registerTask("uploadProd", "private: upload application to server", function(){
 		grunt.task.requires("preload");
-
 		grunt.loadNpmTasks("grunt-nwabap-ui5uploader");
 
-		const appName = grunt.option("app");
-		const userKey = grunt.option("user") || config.userCDKey || config.userDefaultKey;
-		const systemKey = grunt.option("sys") || config.systemCDKey || config.systemDefaultKey;
-	
-		const system = config.getSystem(systemKey);
-		const user = config.getUser(systemKey, userKey);
+		const appMap = grunt.config.get("appMap");
+		const pluginMap = grunt.config.get("pluginMap");
+		const libMap = grunt.config.get("libMap");
 
+		const configJSON = fs.readJSONSync("../config.json", {
+			encoding: "utf8"
+		});
+
+		const appName = grunt.option("app");
+		const userKey = grunt.option("user") || objectPath.get(configJSON, "userCDKey") || objectPath.get(configJSON, "userDefaultKey");
+		const systemKey = grunt.option("sys") || objectPath.get(configJSON, "systemCDKey") || objectPath.get(configJSON, "systemDefaultKey");
+		
+		if(!userKey || !systemKey){
+			grunt.fail.fatal("can't find user or system");
+		}
 		if(!appName){
 			grunt.fail.fatal("can't find application name");
 		}
 
-		let app = config.appInfo[appName] || config.libInfo[appName] || config.pluginInfo[appName];
-	
-		["transport", "package", "bsp", "path"].forEach(prop => {
-			if(!app[prop]){
-				grunt.fail.fatal(`require '${prop}' to upload application`);
-			}
-		});
+		const app = appMap[appName] || pluginMap[appName] || libMap[appName];
+		const system = objectPath.get(configJSON, ["system", systemKey]);
+		const user = objectPath.get(configJSON, ["system", systemKey, "user", userKey]);
+
+		if(!app || !system || !user ){
+			grunt.fail.fatal("can't define app or system or user");
+		}
+
+		const ajv = new Ajv({useDefaults: true});
+		const validateSystem = ajv.compile(systemSchema);
+		if(validateSystem(system)){
+			grunt.fail.fatal(validateSystem.errors);
+		}
+		const validateDeploy = ajv.compile(deploySchema) ;
+		if(validateDeploy(app)){
+			grunt.fail.fatal(validateDeploy.errors);
+		}
 
 		grunt.config.merge({
 			nwabap_ui5uploader:{
@@ -45,8 +65,8 @@ module.exports = function(grunt){
 	                        package: app.package,
 	                        transportno: app.transport,
 	                        bspcontainer: app.bsp,
-							bspcontainer_text: `deploy ${appName}`,
-							calc_appindex: true
+							calc_appindex: true,
+							create_transport: false
 	                    },
 	                    resources: {
 	                        cwd: path.join(app.path, "dist"),

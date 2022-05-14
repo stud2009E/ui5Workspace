@@ -84,10 +84,21 @@ const systemSchema = {
 					}
 				}
 			},
-			required: ["host", "port"]
+			required: ["host", "port", "user"]
 		}
 	}
 };
 
+const deploySchema = {
+	type:"object",
+	properties:{
+		transport: { type: "string"},
+		package: {type: "string"},
+		bsp: { type: "string"}
+	},
+	required: ["transport", "package", "bsp"]
+};
+
 module.exports.baseSchema = baseSchema;
 module.exports.systemSchema = systemSchema;
+module.exports.deploySchema = deploySchema;
