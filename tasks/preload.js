@@ -1,4 +1,3 @@
-const config = require("../utils/ConfigContainer.js");
 const util = require("util");
 const path = require("path");
 const fs = require("fs-extra");
@@ -8,18 +7,20 @@ module.exports = function(grunt){
 
 	grunt.registerTask("preload", "public: build app Component-preload.js", function(){
 		const appName = grunt.option("app"); 
-		const {appInfo, libInfo, pluginInfo} = config;
-
 		const done = this.async();
 
+		const appMap = grunt.config.get("appMap");
+		const pluginMap = grunt.config.get("pluginMap");
+		const libMap = grunt.config.get("libMap");
+
 		if(!appName){
-			grunt.fail.fatal("error: require app name, use --app=<app name>");
+			grunt.fail.fatal("require app name, use --app=<app name>");
 		}
 
-		let app = appInfo[appName] || libInfo[appName] || pluginInfo[appName];
+		const app = appMap[appName] || libMap[appName] || pluginMap[appName];
 	
 		if(!app){
-			grunt.fail.fatal(`error: can't find application||library||plugin with name ${appName}`);
+			grunt.fail.fatal(`can't find application||library||plugin with name ${appName}`);
 		}
 
 		const appPath = app.path;
@@ -28,14 +29,15 @@ module.exports = function(grunt){
 		}
 
 		(async () => {
-
 			const bPackage = fs.existsSync(path.join(appPath, "package.json"));
 			if(!bPackage){
 				const {stderr, stdout} = await exec("npm init -y", {
 					cwd: appPath
 				});
 
-				console.error(stderr);
+				if(stderr){
+					grunt.fail.fatal(stderr);
+				}
 				console.log(stdout);
 			}
 
@@ -45,7 +47,9 @@ module.exports = function(grunt){
 					cwd: appPath
 				});
 
-				console.error(stderr);
+				if(stderr){
+					grunt.fail.fatal(stderr);
+				}
 				console.log(stdout);
 			}
 
@@ -53,12 +57,12 @@ module.exports = function(grunt){
 				cwd: appPath
 			});
 	
-			console.error(stderr);
+			if(stderr){
+				grunt.fail.fatal(stderr);
+			}
 			console.log(stdout);
 
 			done();
-
 		})();
-
 	});
 };
