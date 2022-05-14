@@ -12,8 +12,6 @@ module.exports = function (grunt) {
 		const appsDir = path.join(cwd, "workspace/apps");
 		const flpPath = path.join(cwd, "workspace/fiori");
 		
-		const applications = {};
-		const plugins = {};
 		const resourceroots = {"flp.root": "/"};
 		
 		//remove apps symlinks
@@ -27,8 +25,10 @@ module.exports = function (grunt) {
 		if(validate(configJSON)){
 			grunt.fail.fatal(validate.errors);
 		}
-
-		const applicationsConfig = objectPath.get(configJSON, "apps");
+		
+		const applications = {};
+		const appMap = {};
+		const applicationsConfig = objectPath.get(configJSON, "apps") || [];
 		//create settings for flpd index.html
 		applicationsConfig.forEach(app => {
 			const {name, action = "display"} = app;
@@ -52,11 +52,15 @@ module.exports = function (grunt) {
 			} else{
 				grunt.fail.fatal(`${name}: app type must be 'application'`);
 			}
+			
+			appMap[name] = app; 
 
 			resourceroots[manifest.id()] = path.relative(flpPath, symlinkPath);
 		});
 		
-		const pluginsConfig = objectPath.get(configJSON, "plugins");
+		const plugins = {};
+		const pluginMap = {};
+		const pluginsConfig = objectPath.get(configJSON, "plugins") || [];
 		//create plugins settings for flp index.html`
 		pluginsConfig.forEach(app => {
 			const {name} = app;
@@ -73,26 +77,30 @@ module.exports = function (grunt) {
 				grunt.fail.fatal(`${name}: app type for plugin must be 'component'`);
 			}
 
+			pluginMap[name] = app;
+
 			resourceroots[manifest.id()] = path.relative(flpPath, symlinkPath);
 		});
 
 		
-		const liblariesConfig = objectPath.get(configJSON, "libs");
+		const libMap = {};
+		const liblariesConfig = objectPath.get(configJSON, "libs") || [];
 		//lib files path setup, proxy
-		const libs = liblariesConfig.map(lib => {
-			const item = {
-				context: path.join(lib.context, lib.name),
-				namespace: lib.namespace
-			};
+		const libraries = liblariesConfig.map(lib => {
+			const {name} = lib;
+			const item = Object.assign({}, lib);
 
-			fs.symlinkSync(lib.path, path.join(appsDir, lib.name), "dir");
-
+			fs.symlinkSync(lib.path, path.join(appsDir, name), "dir");
+			
+			item.context = path.join(lib.context, name);
 			grunt.file.recurse(lib.path, (absPath, rootdir, subdir, filename) => {
 				if(filename.endsWith("library.js")){
-					item.path = path.join("/apps", lib.name, subdir);
-					return;
+					item.path = path.join("/apps", name, subdir);
+					return false;
 				}
 			});
+
+			libMap[name] = lib;
 
 			return item;
 		});
@@ -100,6 +108,9 @@ module.exports = function (grunt) {
 		grunt.config.set("resourceroots", JSON.stringify(resourceroots));
 		grunt.config.set("applications", applications);
 		grunt.config.set("plugins", plugins);
-		grunt.config.set("libs", libs);
+		grunt.config.set("libraries", libraries);
+		grunt.config.set("libMap", libMap);
+		grunt.config.set("pluginMap", pluginMap);
+		grunt.config.set("appMap", appMap);
 	});
 };
