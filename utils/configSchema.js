@@ -8,11 +8,14 @@ const baseSchema = {
 				type: "object",
 				properties: {
 					path: { type: "string"},
+					name: { type: "string"},
+					action: { type: "string", default: "display"},
+					modelName: { type: "string", default: ""},
 					transport: { type: "string"},
-					bsp: { type: "string"},
-					action: { type: "string"}
+					package: {type: "string"},
+					bsp: { type: "string"}
 				},
-				required:["path"]
+				required:["name", "path"]
 			}
 	  	},
 		libs:{
@@ -20,13 +23,15 @@ const baseSchema = {
 			items: {
 				type: "object",
 				properties: {
+					name: {type: "string"},
+					context: {type: "string", default: "/sap/bc/ui5_ui5/sap/"},
 					namespace: { type: "string"},
 					path: { type: "string"},
 					transport: { type: "string"},
 					package: { type: "string"},
 					bsp: { type: "string"}
 				},
-				required: ["namespace", "path"]
+				required: ["name", "path", "namespace"]
 			}
 		},
 		plugins: {
@@ -35,11 +40,12 @@ const baseSchema = {
 				type: "object",
 				properties: {
 					path: { type: "string"},
+					name: { type: "string"},
 					transport: { type: "string"},
 					bsp: { type: "string"},
 					action: { type: "string"}
 				},
-				required:["path"]
+				required:["name", "path"]
 			}
 		},
 		theme: { type: "string", default: "sap_belize"},
@@ -81,7 +87,7 @@ const systemSchema = {
 			required: ["host", "port"]
 		}
 	}
-}
+};
 
-module.exports.app = baseSchema;
-module.exports.system = systemSchema;
+module.exports.baseSchema = baseSchema;
+module.exports.systemSchema = systemSchema;

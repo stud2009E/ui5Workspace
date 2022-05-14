@@ -1,121 +1,105 @@
 const path = require("path");
 const fs = require("fs-extra");
-const config = require("../utils/ConfigContainer.js");
+const objectPath = require("object-path");
+const Manifest = require("../utils/Manifest.js");
+const {baseSchema} = require("../utils/configSchema.js");
+const Ajv = require("ajv");
 
 module.exports = function (grunt) {
-
-	getServiceUri = getServiceUri.bind(grunt);
-
+	
 	grunt.registerTask("shellConfigCollect", "private: collect settings for plugins, apps, libs", function(){
-
 		const cwd = process.cwd();
 		const appsDir = path.join(cwd, "workspace/apps");
 		const flpPath = path.join(cwd, "workspace/fiori");
-		const {appInfo} = config;
-
+		
 		const applications = {};
-		const resourceroots = {"flp.root": "/"};
 		const plugins = {};
-
+		const resourceroots = {"flp.root": "/"};
+		
 		//remove apps symlinks
 		fs.emptyDirSync(appsDir);
+		
+		const configJSON = fs.readJSONSync("../config.json", {
+			encoding: "utf8"
+		});
+		const ajv = new Ajv({useDefaults: true});
+		const validate = ajv.compile(baseSchema);
+		if(validate(configJSON)){
+			grunt.fail.fatal(validate.errors);
+		}
 
-		//create app settings for flp index.html`
-		config.apps.forEach(app => {
-			const {name, action = "display", mockModelName = ""} = app;
-			const manifest = grunt.file.readJSON(path.join(app.path, "webapp", "manifest.json"));
-			const appId = manifest["sap.app"].id;
-			const appType = manifest["sap.app"].type;
+		const applicationsConfig = objectPath.get(configJSON, "apps");
+		//create settings for flpd index.html
+		applicationsConfig.forEach(app => {
+			const {name, action = "display"} = app;
+			const manifest = new Manifest(app.path);
 			const symlinkPath = path.join(cwd, "workspace/apps", name, "webapp");
-			const semanticObject = name.toUpperCase();
-			const appKey = `${semanticObject}-${action}`;
-			const serviceUri = getServiceUri({manifest, name, mockModelName});
-
-			fs.symlinkSync(app.path, path.join(appsDir, name), "dir");
-
-			appInfo[name].id = appId;
-			appInfo[name].appType = appType;
-			appInfo[name].rootUri = serviceUri;
 			
-			if(appType === "application"){
+			fs.symlinkSync(app.path, path.join(appsDir, name), "dir");
+			
+			if(manifest.type() === "application"){
+				const appKey = `${name}-${action}`;
+				
 				applications[appKey] = {};
-				applications[appKey].additionalInformation = `SAPUI5.Component=${appId}`;
+				applications[appKey].id = manifest.id();
+				applications[appKey].type = manifest.type();
+				applications[appKey].rootUri = manifest.serviceUrl(app.modelName);
+				applications[appKey].additionalInformation = `SAPUI5.Component=${manifest.id()}`;
 				applications[appKey].applicationType = "URL";
-				applications[appKey].description = name;
+				applications[appKey].description = appKey;
 				applications[appKey].title = name;
 				applications[appKey].url = path.relative(flpPath, symlinkPath);
 			} else{
-				grunt.fail.fatal(`can't parse application type for app: ${name}`);
+				grunt.fail.fatal(`${name}: app type must be 'application'`);
 			}
 
-			resourceroots[appId] = path.relative(flpPath, symlinkPath);
+			resourceroots[manifest.id()] = path.relative(flpPath, symlinkPath);
 		});
-
+		
+		const pluginsConfig = objectPath.get(configJSON, "plugins");
 		//create plugins settings for flp index.html`
-		config.plugins.forEach(app => {
+		pluginsConfig.forEach(app => {
 			const {name} = app;
-			const manifest = grunt.file.readJSON(path.join(app.path, "webapp", "manifest.json"));
-			const appId = manifest["sap.app"].id;
-			const appType = manifest["sap.app"].type;
+			const manifest = new Manifest(app.path);
 			const symlinkPath = path.join(cwd, "workspace/apps", name, "webapp");
 
 			fs.symlinkSync(app.path, path.join(appsDir, name), "dir");
 			
 			if(appType === "component"){
 				plugins[name] = {};
-				plugins[name].component = appId;
+				plugins[name].component = manifest.id();
 				plugins[name].config = app.config || {};
 			} else{
-				grunt.fail.fatal(`can't parse plugin type for app: ${name}`);
+				grunt.fail.fatal(`${name}: app type for plugin must be 'component'`);
 			}
 
-			resourceroots[appId] = path.relative(flpPath, symlinkPath);
+			resourceroots[manifest.id()] = path.relative(flpPath, symlinkPath);
 		});
 
+		
+		const liblariesConfig = objectPath.get(configJSON, "libs");
 		//lib files path setup, proxy
-		const libs = config.libs.map(lib => {
+		const libs = liblariesConfig.map(lib => {
 			const item = {
-				context: lib.context,
+				context: path.join(lib.context, lib.name),
 				namespace: lib.namespace
 			};
 
 			fs.symlinkSync(lib.path, path.join(appsDir, lib.name), "dir");
 
-			grunt.file.recurse(lib.path, function(absPath, rootdir, subdir, filename) {
+			grunt.file.recurse(lib.path, (absPath, rootdir, subdir, filename) => {
 				if(filename.endsWith("library.js")){
 					item.path = path.join("/apps", lib.name, subdir);
+					return;
 				}
 			});
 
 			return item;
 		});
 
-		grunt.config.set("appInfo", appInfo);
 		grunt.config.set("resourceroots", JSON.stringify(resourceroots));
 		grunt.config.set("applications", applications);
 		grunt.config.set("plugins", plugins);
 		grunt.config.set("libs", libs);
 	});
 };
-
-
-/**
- * Gets the service uri.
- *
- * @param      {object}  manifest  The manifest
- * @param      {string}  name   aplication name
- * @return     {string}  The service uri.
- */
-function getServiceUri({manifest, name, mockModelName = ""}){
-	let dataSource;
-	let serviceUri;
-
-	try{
-		dataSource = manifest["sap.ui5"].models[mockModelName].dataSource;
-		serviceUri = manifest["sap.app"].dataSources[dataSource].uri;
-	}catch(e){
-		this.fail.fatal(`can't find serviceUri for app:'${name}' model:'${mockModelName}'`);
-	}
-
-	return serviceUri;
-}
