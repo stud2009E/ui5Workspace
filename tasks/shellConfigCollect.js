@@ -6,7 +6,7 @@ const {baseSchema} = require("../utils/configSchema.js");
 const Ajv = require("ajv");
 
 module.exports = function (grunt) {
-	
+
 	grunt.registerTask("shellConfigCollect", "private: collect settings for plugins, apps, libs", function(){
 		const cwd = process.cwd();
 		const appsDir = path.join(cwd, "workspace/apps");
@@ -17,13 +17,16 @@ module.exports = function (grunt) {
 		//remove apps symlinks
 		fs.emptyDirSync(appsDir);
 		
-		const configJSON = fs.readJSONSync("../config.json", {
+		const configJSON = fs.readJSONSync(path.join(cwd, "config.json"), {
 			encoding: "utf8"
 		});
 		const ajv = new Ajv({useDefaults: true});
 		const validate = ajv.compile(baseSchema);
-		if(validate(configJSON)){
-			grunt.fail.fatal(validate.errors);
+		if(!validate(configJSON)){
+			validate.errors.forEach( err => {
+				grunt.log.error(`${err.message}:\n${err.schemaPath}`);
+			});
+			grunt.fail.fatal(validate.errors[0].message);
 		}
 		
 		const applications = {};
