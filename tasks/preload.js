@@ -6,9 +6,9 @@ const objectPath = require("object-path");
 const exec = util.promisify(require("child_process").exec);
 
 module.exports = function(grunt){
-	grunt.registerTask("preload", "private: build app Component-preload.js", function(){
-		grunt.task.require("configCollect");
-
+	grunt.registerTask("preload_build", "private: build app Component-preload.js", function(){
+		grunt.task.requires("configCollect");
+		
 		const appName = grunt.option("app"); 
 		const done = this.async();
 
@@ -55,7 +55,9 @@ module.exports = function(grunt){
 				}
 				grunt.log.writeln(stdout);
 
-				let ui5Yaml = fs.readFileSync(path.join(appPath, "ui5.yaml"));
+				let ui5Yaml = fs.readFileSync(path.join(appPath, "ui5.yaml"), {
+					encoding : "utf8"
+				});
 				const uiJson = yaml.parse(ui5Yaml);
 				objectPath.set(uiJson, [ "resources", "configuration", "paths", "webapp"],  "webapp");
 				objectPath.set(uiJson, [ "builder", "resources", "excludes"],  ["localService/**", "test/**"]);
@@ -67,15 +69,23 @@ module.exports = function(grunt){
 				});
 			}
 
-			const {stderr, stdout} = await exec("ui5 build preload --clean-dest=true --dest='./dist'", {
+			const {stdout, stderr} = await exec("ui5 build preload --clean-dest=true --dest='./dist'", {
 				cwd: appPath
 			});
-	
-			if(stderr){
+			
+			if(/Build succeeded/.test(stderr)){
+				grunt.log.ok(stderr);
+			}
+			if(/Build succeeded/.test(stdout)){
+				grunt.log.ok(stdout);
+			}
+
+			if(/error/.test(stderr)){
 				grunt.fail.fatal(stderr);
 			}
-			grunt.log.writeln(stdout);
-
+			if(/error/.test(stdout)){
+				grunt.fail.fatal(stdout);
+			}
 			done();
 		})();
 	});

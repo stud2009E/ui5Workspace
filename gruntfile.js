@@ -1,8 +1,12 @@
 module.exports = function(grunt){
 	grunt.loadTasks("tasks");
+	
+	grunt.registerTask("preload", "public: preload application", [
+		"configCollect",
+		"preload_build"
+	]);
 
 	grunt.registerTask("upload", "public: deploy application", [
-		"configCollect",
 		"preload",
 		"uploadProd"
 	]);

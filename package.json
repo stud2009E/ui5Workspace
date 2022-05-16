@@ -23,7 +23,7 @@
     "grunt-text-replace": "^0.4.0",
     "object-path": "^0.11.8",
     "xml-beautifier": "^0.4.3",
-    "yaml": "^2.1.0",
+    "yaml": "^2.0.0",
     "yeoman-environment": "^2.10.3",
     "yeoman-generator": "^4.13.0"
   }
