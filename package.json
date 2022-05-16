@@ -18,13 +18,12 @@
     "grunt-connect-proxy-git": "github:drewzboto/grunt-connect-proxy",
     "grunt-contrib-clean": "^2.0.1",
     "grunt-contrib-connect": "^2.1.0",
-    "grunt-contrib-jshint": "^3.2.0",
-    "grunt-contrib-watch": "^1.1.0",
     "grunt-nwabap-ui5uploader": "^1.0.7",
     "grunt-openui5": "^0.16.0",
     "grunt-text-replace": "^0.4.0",
     "object-path": "^0.11.8",
     "xml-beautifier": "^0.4.3",
+    "yaml": "^2.1.0",
     "yeoman-environment": "^2.10.3",
     "yeoman-generator": "^4.13.0"
   }

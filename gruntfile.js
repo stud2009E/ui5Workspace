@@ -2,19 +2,19 @@ module.exports = function(grunt){
 	grunt.loadTasks("tasks");
 
 	grunt.registerTask("upload", "public: deploy application", [
-		"shellConfigCollect",
+		"configCollect",
 		"preload",
 		"uploadProd"
 	]);
 
 	grunt.registerTask("dev", "public: start dev server", [
-		"shellConfigCollect",
+		"configCollect",
 		"flpIndexBuild",
 		"serve"
 	]);
 
 	grunt.registerTask("syncMetadata", "public: sync metadata for app", [
-		"shellConfigCollect",
+		"configCollect",
 		"fetchMetadata"
 	]);
 };

@@ -6,7 +6,7 @@ const fs = require("fs");
 
 module.exports = function(grunt){
     grunt.registerTask("fetchMetadata", "private: synchronize metadata.xml", function(){
-        grunt.task.requires("shellConfigCollect");
+        grunt.task.requires("configCollect");
         
         const done = this.async();
 

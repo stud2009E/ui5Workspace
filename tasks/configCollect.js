@@ -7,7 +7,7 @@ const Ajv = require("ajv");
 
 module.exports = function (grunt) {
 
-	grunt.registerTask("shellConfigCollect", "private: collect settings for plugins, apps, libs", function(){
+	grunt.registerTask("configCollect", "private: collect settings for plugins, apps, libs", function(){
 		const cwd = process.cwd();
 		const appsDir = path.join(cwd, "workspace/apps");
 		const flpPath = path.join(cwd, "workspace/fiori");
