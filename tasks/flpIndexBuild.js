@@ -1,5 +1,4 @@
 const path = require("path");
-const config = require("../utils/ConfigContainer.js");
 
 const __THEME__= "__THEME__";
 const __USHELL__CONFIG__= "__USHELL__CONFIG__";
@@ -21,19 +20,20 @@ module.exports = function(grunt){
 			index: path.join(cwd, "workspace/fiori/index.html"),
 			indexRemote: path.join(cwd, "workspace/fiori-remote/index.html"),
 		};
+		const config = grunt.config.get("config");
 		const applications = grunt.config.get("applications");
 		const plugins = grunt.config.get("plugins");
 		const resourceroots = grunt.config.get("resourceroots");
 		const libs = grunt.config.get("libs");
 
-		const appInfo = grunt.config.get("appInfo");
-		const mockSettings = config.apps.map(app => {
-			const {name} = app;
-			return {
-				name,
-				rootUri: appInfo[name].rootUri
-			};
-		});
+		const mockSettings = []
+		// const mockSettings = applications.map(app => {
+		// 	const {name} = app;
+		// 	return {
+		// 		name,
+		// 		rootUri: appInfo[name].rootUri
+		// 	};
+		// });
 		
 		grunt.config.merge({
 			clean: {

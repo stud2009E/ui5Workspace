@@ -7,29 +7,29 @@ const baseSchema = {
 			items: {
 				type: "object",
 				properties: {
-					path: { type: "string"},
-					name: { type: "string"},
-					action: { type: "string", default: "display"},
-					modelName: { type: "string", default: ""},
-					transport: { type: "string"},
-					package: {type: "string"},
-					bsp: { type: "string"}
+					path: { type: "string" },
+					name: { type: "string" },
+					action: { type: "string", default: "display" },
+					modelName: { type: "string", default: "" },
+					transport: { type: "string" },
+					package: { type: "string" },
+					bsp: { type: "string" }
 				},
-				required:["name", "path"]
+				required: ["name", "path"]
 			}
-	  	},
-		libs:{
+		},
+		libs: {
 			type: "array",
 			items: {
 				type: "object",
 				properties: {
-					name: {type: "string"},
-					context: {type: "string", default: "/sap/bc/ui5_ui5/sap/"},
-					namespace: { type: "string"},
-					path: { type: "string"},
-					transport: { type: "string"},
-					package: { type: "string"},
-					bsp: { type: "string"}
+					name: { type: "string" },
+					context: { type: "string", default: "/sap/bc/ui5_ui5/sap/" },
+					namespace: { type: "string" },
+					path: { type: "string" },
+					transport: { type: "string" },
+					package: { type: "string" },
+					bsp: { type: "string" }
 				},
 				required: ["name", "path", "namespace"]
 			}
@@ -39,45 +39,45 @@ const baseSchema = {
 			items: {
 				type: "object",
 				properties: {
-					path: { type: "string"},
-					name: { type: "string"},
-					transport: { type: "string"},
-					bsp: { type: "string"},
-					action: { type: "string"}
+					path: { type: "string" },
+					name: { type: "string" },
+					transport: { type: "string" },
+					bsp: { type: "string" },
+					action: { type: "string" }
 				},
-				required:["name", "path"]
+				required: ["name", "path"]
 			}
 		},
-		theme: { type: "string", default: "sap_belize"},
-		systemCD: { type: "string" },
-		userCD: { type: "string" },
-		systemDefault: { type: "string" },
-		userDefault: { type: "string" },
+		theme: { type: "string", default: "sap_belize" },
+		systemCDKey: { type: "string" },
+		userCDKey: { type: "string" },
+		systemDefaultKey: { type: "string" },
+		userDefaultKey: { type: "string" },
 		proxyModule: { enum: ["npm", "git"], default: "git" },
-		system: {type: "object"}
+		system: { type: "object" }
 	},
-	required:["sdk", "apps"]
+	required: ["sdk", "apps"]
 }
 
 const systemSchema = {
 	type: "object",
-	patternProperties:{
+	patternProperties: {
 		"\w+": {
 			type: "object",
 			properties: {
-				host: {type: "string"},
-				port: {type: "number"},
-				context: {type: "string", default: "/sap"},
-				secure: {type: "boolean", default: false},
-				https: {type: "boolean", default: true},
+				host: { type: "string" },
+				port: { type: "number" },
+				context: { type: "string", default: "/sap" },
+				secure: { type: "boolean", default: false },
+				https: { type: "boolean", default: true },
 				user: {
 					type: "object",
 					patternProperties: {
 						"\w+": {
 							type: "object",
 							properties: {
-								login: {type: "string"},
-								pwd: {type: "string"}
+								login: { type: "string" },
+								pwd: { type: "string" }
 							},
 							required: ["login", "pwd"]
 						}
@@ -90,11 +90,11 @@ const systemSchema = {
 };
 
 const deploySchema = {
-	type:"object",
-	properties:{
-		transport: { type: "string"},
-		package: {type: "string"},
-		bsp: { type: "string"}
+	type: "object",
+	properties: {
+		transport: { type: "string" },
+		package: { type: "string" },
+		bsp: { type: "string" }
 	},
 	required: ["transport", "package", "bsp"]
 };

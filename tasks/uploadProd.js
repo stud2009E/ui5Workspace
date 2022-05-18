@@ -35,12 +35,12 @@ module.exports = function(grunt){
 
 		const ajv = new Ajv({useDefaults: true});
 		const validateSystem = ajv.compile(systemSchema);
-		if(validateSystem(system)){
-			grunt.fail.fatal(validateSystem.errors);
+		if(!validateSystem(system)){
+			grunt.config.get("showErrorsAndFail")(validateSystem);
 		}
 		const validateDeploy = ajv.compile(deploySchema) ;
-		if(validateDeploy(app)){
-			grunt.fail.fatal(validateDeploy.errors);
+		if(!validateDeploy(app)){
+			grunt.config.get("showErrorsAndFail")(validateDeploy);
 		}
 
 		grunt.config.merge({

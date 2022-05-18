@@ -23,10 +23,7 @@ module.exports = function (grunt) {
 		const ajv = new Ajv({useDefaults: true});
 		const validate = ajv.compile(baseSchema);
 		if(!validate(configJSON)){
-			validate.errors.forEach( err => {
-				grunt.log.error(`${err.message}:\n${err.schemaPath}`);
-			});
-			grunt.fail.fatal(validate.errors[0].message);
+			grunt.config.get("showErrorsAndFail")(validate);
 		}
 		
 		const applications = {};
@@ -35,7 +32,7 @@ module.exports = function (grunt) {
 		//create settings for flpd index.html
 		applicationsConfig.forEach(app => {
 			const {name, action = "display"} = app;
-			const manifest = new Manifest(app.path);
+			const manifest = new Manifest(path.join(app.path, "webapp"));
 			const symlinkPath = path.join(cwd, "workspace/apps", name, "webapp");
 			
 			fs.symlinkSync(app.path, path.join(appsDir, name), "dir");
@@ -92,7 +89,9 @@ module.exports = function (grunt) {
 		const libraries = liblariesConfig.map(lib => {
 			const {name} = lib;
 			const item = Object.assign({}, lib);
+			const manifest = new Manifest(path.join(lib.path,"src", lib.namespace));
 
+			const symlinkPath = path.join(cwd, "workspace/apps", name,"src", lib.namespace );
 			fs.symlinkSync(lib.path, path.join(appsDir, name), "dir");
 			
 			item.context = path.join(lib.context, name);
@@ -104,6 +103,8 @@ module.exports = function (grunt) {
 			});
 
 			libMap[name] = lib;
+
+			resourceroots[manifest.id()] = path.relative(flpPath, symlinkPath);
 
 			return item;
 		});

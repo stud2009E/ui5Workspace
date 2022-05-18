@@ -5,7 +5,7 @@ const fs = require("fs-extra");
 module.exports = class Manifest{
 
 	constructor(appPath){
-		this._manifest = fs.readJSONSync(path.join(appPath, "webapp", "manifest.json"), {
+		this._manifest = fs.readJSONSync(path.join(appPath, "manifest.json"), {
 			encoding: "utf8"
 		});
 		
