@@ -115,5 +115,6 @@ module.exports = function (grunt) {
 		grunt.config.set("libMap", libMap);
 		grunt.config.set("pluginMap", pluginMap);
 		grunt.config.set("appMap", appMap);
+		grunt.config.set("config", configJSON);
 	});
 };

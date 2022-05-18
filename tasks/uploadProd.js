@@ -1,6 +1,5 @@
 const path = require("path");
 const Ajv = require("ajv");
-const fs = require("fs-extra");
 const objectPath = require("object-path");
 const {systemSchema, deploySchema} = require("../utils/configSchema.js");
 
@@ -13,10 +12,7 @@ module.exports = function(grunt){
 		const appMap = grunt.config.get("appMap");
 		const pluginMap = grunt.config.get("pluginMap");
 		const libMap = grunt.config.get("libMap");
-
-		const configJSON = fs.readJSONSync("../config.json", {
-			encoding: "utf8"
-		});
+		const configJSON = grunt.config.get("config");
 
 		const appName = grunt.option("app");
 		const userKey = grunt.option("user") || objectPath.get(configJSON, "userCDKey") || objectPath.get(configJSON, "userDefaultKey");

@@ -1,9 +1,10 @@
-const config = require("../utils/ConfigContainer.js");
 const utilsNpm = require("grunt-connect-proxy/lib/utils");
 const utilsGit = require("grunt-connect-proxy-git/lib/utils");
+const objectPath = require("object-path");
+const {systemSchema} = require("../utils/configSchema.js");
+const Ajv = require("ajv");
 
 module.exports = function(grunt){
-
 	grunt.registerTask("serve", "private: setup proxy server", function(){
 		grunt.task.requires("configCollect");
 
@@ -19,14 +20,42 @@ module.exports = function(grunt){
 			utils = utilsNpm;
 		}
 
-		const systemKey = grunt.option("sys") || config.systemDefaultKey;
-		const userKey = grunt.option("user") || config.userDefaultKey;
+		const config = grunt.config.get("config");
+		const systemKey = grunt.option("sys") || objectPath.get(config, "systemDefaultKey");
+		const userKey = grunt.option("user") || objectPath.get(config, "userDefaultKey");
+		const system = objectPath.get(config, "system");
 
-		let systemProxies = [];
-		if(!config.isLocalDev){
-			systemProxies = config.getSystemProxies(systemKey, userKey); 
+		// getSystemProxies(systemKey, userKey){
+		// 	const system = this.getSystem(systemKey);
+		// 	const user = this.getUser(systemKey, userKey);
+		// 	const ident = Buffer.from(`${user.login}:${user.pwd}`).toString("base64");
+	
+		// 	const { host, port, context = "/sap", secure = false, https = true} = system;
+	
+		// 	const proxy =  [{
+		// 		context, host, port, secure, https,
+		// 		headers: {
+		// 			Authorization: `Basic ${ident}`
+		// 		}
+		// 	}];
+	
+		// 	return proxy;
+		// }
+
+		const ajv = new Ajv({useDefaults: true});
+		const validate = ajv.compile(systemSchema);
+		if(!validate(system)){
+			validate.errors.forEach( err => {
+				grunt.log.error(`${err.message}:\n${err.schemaPath}`);
+			});
+			grunt.fail.fatal(validate.errors[0].message);
 		}
 
+		const systemProxies = [];
+		if(!config.isLocalDev){
+			systemProxies = config.getSystemProxies(systemKey, userKey);
+		}
+		
 		const libProxies = grunt.config.get("libs").map(({path, context}) => {
 			return {
 				context: context,
@@ -38,7 +67,6 @@ module.exports = function(grunt){
 				}
 			};
 		});
-
 
 		grunt.config.merge({
 			connect:{
