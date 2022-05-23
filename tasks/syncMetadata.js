@@ -1,5 +1,4 @@
 const beatify = require("xml-beautifier");
-const config = require("../utils/ConfigContainer.js");
 const path = require("path");
 const https = require("https");
 const fs = require("fs");

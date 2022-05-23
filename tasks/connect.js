@@ -9,8 +9,6 @@ module.exports = function(grunt){
 	grunt.registerTask("serve", "private: setup proxy server", function(){
 		grunt.task.requires("configCollect");
 
-		debugger
-
 		const config = grunt.config.get("config");
 		const systemKey = grunt.option("sys") || objectPath.get(config, "systemDefaultKey");
 		const userKey = grunt.option("user") || objectPath.get(config, "userDefaultKey");

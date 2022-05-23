@@ -3,7 +3,6 @@ const path = require("path");
 const __THEME__= "__THEME__";
 const __USHELL__CONFIG__= "__USHELL__CONFIG__";
 const __RESOURCE__ROOTS__CONFIG__= "__RESOURCE__ROOTS__CONFIG__";
-const __LIB__PATHS__= "__LIB__PATHS__";
 const __MOCK__SETTINGS__= "__MOCK__SETTINGS__";
 
 module.exports = function(grunt){
@@ -24,7 +23,6 @@ module.exports = function(grunt){
 		const applications = grunt.config.get("applications");
 		const plugins = grunt.config.get("plugins");
 		const resourceroots = grunt.config.get("resourceroots");
-		const libs = grunt.config.get("libs");
 
 		const mockSettings = []
 		// const mockSettings = applications.map(app => {
@@ -59,9 +57,6 @@ module.exports = function(grunt){
 						from: __RESOURCE__ROOTS__CONFIG__,
 						to: resourceroots
 					},{
-						from: __LIB__PATHS__,
-						to: JSON.stringify(libs)
-					},{
 						from: __THEME__,
 						to: config.theme
 					}]
@@ -79,9 +74,6 @@ module.exports = function(grunt){
 					},{
 						from: __RESOURCE__ROOTS__CONFIG__,
 						to: resourceroots
-					},{
-						from: __LIB__PATHS__,
-						to: JSON.stringify(libs)
 					},{
 						from: __MOCK__SETTINGS__,
 						to: JSON.stringify(mockSettings)

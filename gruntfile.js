@@ -1,9 +1,9 @@
-module.exports = function(grunt){
+module.exports = function (grunt) {
 	grunt.loadTasks("tasks");
 
 	grunt.config.set("showErrorsAndFail", validate => {
-		if(validate.errors){
-			validate.errors.forEach( err => {
+		if (validate.errors) {
+			validate.errors.forEach(err => {
 				grunt.log.error(`${err.message}:\n${err.schemaPath}`);
 			});
 			grunt.fail.fatal(validate.errors[0].message);
