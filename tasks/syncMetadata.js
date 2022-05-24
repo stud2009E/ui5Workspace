@@ -1,7 +1,11 @@
 const beatify = require("xml-beautifier");
 const path = require("path");
+const objectPath = require("object-path");
 const https = require("https");
 const fs = require("fs");
+const Ajv = require("ajv");
+const {systemSchema} = require("../utils/configSchema.js");
+
 
 module.exports = function(grunt){
     grunt.registerTask("fetchMetadata", "private: synchronize metadata.xml", function(){
@@ -10,22 +14,35 @@ module.exports = function(grunt){
         const done = this.async();
 
         const appName = grunt.option("app");
-        const mandt = grunt.option("mandt");
-        const userKey = grunt.option("user") || config.userCDKey;
-        const systemKey = grunt.option("sys") || config.systemCDKey;
-
-        const user = config.getUser(systemKey, userKey);
-        const system = config.getSystem(systemKey);
+        const configJSON = grunt.config.get("config");
 
         if(!appName){
             grunt.fail.fatal("error: require app name, use --app=<app name>");
         }
-        if( !mandt){
-            grunt.fail.fatal("error: require mandt, use --mandt=<mandt>");
+
+		const userKey = grunt.option("user") || objectPath.get(configJSON, "userDefaultKey");
+		const systemKey = grunt.option("sys") || objectPath.get(configJSON, "systemDefaultKey");
+        if(!systemKey || !userKey){
+			grunt.fail.fatal("can't find user or system");
+		}
+
+        const systemConfig = objectPath.get(config, "system");
+        const ajv = new Ajv({useDefaults: true});
+        const validate = ajv.compile(systemSchema);
+        if(!validate(systemConfig)){
+            validate.errors.forEach( err => {
+                grunt.log.error(`${err.message}:\n${err.schemaPath}`);
+            });
+            grunt.fail.fatal(validate.errors[0].message);
+        }
+
+        const system = objectPath.get(config, ["system", systemKey]);
+        const user = objectPath.get(config, ["system", systemKey, "user", userKey]);
+
+        if(!system || !user){
+			grunt.fail.fatal("can't find user or system");
         }
         
-        const flpAppInfo = grunt.config.get("appInfo");
-        const appInfo = flpAppInfo[appName];
         const metadataPath = path.join(appInfo.path, "webapp", "localService", "metadata.xml");
 
         appInfo.rootUri = appInfo.rootUri.endsWith("/") ? appInfo.rootUri : `${appInfo.rootUri}/`;

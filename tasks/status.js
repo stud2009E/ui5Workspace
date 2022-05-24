@@ -1,32 +1,32 @@
 const util = require("util");
-const fs = require("fs-extra");
-const path = require("path");
 const exec = util.promisify(require("child_process").exec);
 
 module.exports = function(grunt){
 
     grunt.registerTask("git-status", "git status for all repo in workspace", function(){
-        const cwd = process.cwd();
-        const configPath = path.join(cwd, "config.json");
-        const config = fs.readJsonSync(configPath);
+        grunt.task.requires("configCollect");
+
         const done = this.async();
+        const applications = grunt.config.get("applications");
+        const libraries = grunt.config.get("libraries");
+        const plugins = grunt.config.get("plugins");
 
         let appPaths = [];
-        if(Array.isArray(config.apps)){
-            config.apps.map(app => app.path)
+        if(applications){
+            applications.map(app => app.path)
                 .forEach(p => appPaths.push(p))
         }
-        if(Array.isArray(config.libs)){
-            config.libs.map(app => app.path)
+        if(libraries){
+            libraries.map(app => app.path)
                 .forEach(p => appPaths.push(p))
         }
-        if(Array.isArray(config.plugins)){
-            config.libs.map(app => app.path)
+        if(plugins){
+            plugins.map(app => app.path)
                 .forEach(p => appPaths.push(p))
         }
 
         (async() => {
-            for(const appPath of appPaths){
+            for(let appPath of appPaths){
                 const {stdout} = await exec("git status",{
                     cwd: appPath
                 });

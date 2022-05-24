@@ -76,10 +76,11 @@ const systemSchema = {
 						"\w+": {
 							type: "object",
 							properties: {
+								mandt: { type: "number" },
 								login: { type: "string" },
 								pwd: { type: "string" }
 							},
-							required: ["login", "pwd"]
+							required: ["login", "pwd", "mandt"]
 						}
 					}
 				}
