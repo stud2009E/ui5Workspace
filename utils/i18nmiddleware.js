@@ -1,30 +1,37 @@
-const config = require("../utils/ConfigContainer.js");
 const path = require("path");
 const fs = require("fs");
 const { Buffer } = require("buffer");
 
-module.exports = function(req, res, next){
+module.exports = function(grunt){
+    const regexp = /apps\W+(\w+)\W+webapp.+i18n.properties/;
+    const libMap = grunt.config.get("libMap");
+	const pluginMap = grunt.config.get("pluginMap");
+	const appMap = grunt.config.get("appMap");
 
-    const cwd = process.cwd();
+    return function(req, res, next){
+        const url = decodeURI(req.url); 
+        if (regexp.test(url)){
+            const urlExec = regexp.exec(url);
+            const appName = urlExec[1];
 
-    if (/.*webapp.*i18n.properties/.test(req.url)){
-        const i18nUrlPath =  path.join(cwd, path.normalize(decodeURI(req.url)));
-        console.log("i18nUrlPath ", i18nUrlPath);
-        const linkPath = path.resolve( i18nUrlPath, "../../../");
-        console.log("linkPath ", linkPath);
-        const filePart = i18nUrlPath.replace(linkPath, "");
-        const dirPath = fs.realpathSync(linkPath);
+            const app = appMap[appName] || libMap[appName] || pluginMap[appName];
 
-        const file = fs.readFileSync(path.join(dirPath, filePart) , {
-            encoding: "utf8"
-        });
+            if(!app){
+                next();
+            }
 
-        res.writeHead(200, {
-            'Content-Length': Buffer.byteLength(file),
-            'Content-Type': 'text/plain; charset=UTF-8'
+            const i18nPath =  path.join(app.path, "webapp", "i18n", "i18n.properties");
+
+            const file = fs.readFileSync(i18nPath, {
+                encoding: "utf8"
+            });
+
+            res.writeHead(200, {
+                'Content-Length': Buffer.byteLength(file),
+                'Content-Type': 'text/plain; charset=UTF-8'
             }).end(file);
-
-        return;
+        }else{
+            next()
+        }
     }
-    next();
 };

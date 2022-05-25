@@ -54,6 +54,7 @@ const baseSchema = {
 		systemDefaultKey: { type: "string" },
 		userDefaultKey: { type: "string" },
 		proxyModule: { enum: ["npm", "git"], default: "git" },
+        useUtf8: { type: "boolean", default: false },
 		system: { type: "object" }
 	},
 	required: ["sdk", "apps"]

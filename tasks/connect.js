@@ -3,6 +3,7 @@ const utilsGit = require("grunt-connect-proxy-git/lib/utils");
 const path = require("path");
 const objectPath = require("object-path");
 const Ajv = require("ajv");
+const i18nmiddleware = require("../utils/i18nmiddleware.js");
 const {systemSchema} = require("../utils/configSchema.js");
 
 module.exports = function(grunt){
@@ -12,6 +13,7 @@ module.exports = function(grunt){
 		const config = grunt.config.get("config");
 		const systemKey = grunt.option("sys") || objectPath.get(config, "systemDefaultKey");
 		const userKey = grunt.option("user") || objectPath.get(config, "userDefaultKey");
+		const useUtf8 = grunt.option("useUtf8") || objectPath.get(config, "useUtf8");
 	
 		grunt.loadNpmTasks("grunt-contrib-connect");
 		grunt.loadNpmTasks("grunt-openui5");
@@ -75,6 +77,10 @@ module.exports = function(grunt){
 						livereload: false,
 						middleware: function(connect, options, middlewares){
 							middlewares.unshift(utils.proxyRequest);
+
+                            if(!!useUtf8){
+                                middlewares.unshift(i18nmiddleware(grunt));
+                            }
 
 							return middlewares;
 						}
