@@ -59,8 +59,10 @@ module.exports = function(grunt){
 					encoding : "utf8"
 				});
 				const uiJson = yaml.parse(ui5Yaml);
-				objectPath.set(uiJson, [ "resources", "configuration", "paths", "webapp"],  "webapp");
-				objectPath.set(uiJson, [ "builder", "resources", "excludes"],  ["localService/**", "test/**"]);
+                if(objectPath.get(uiJson, "type") === "application"){
+				    objectPath.set(uiJson, [ "resources", "configuration", "paths", "webapp"],  "webapp");
+				    objectPath.set(uiJson, [ "builder", "resources", "excludes"],  ["localService/**", "test/**"]);
+                }
 
 				ui5Yaml = yaml.stringify(uiJson);
 
