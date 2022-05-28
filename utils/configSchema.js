@@ -86,12 +86,14 @@ const systemSchema = {
 							additionalProperties: false
 						}
 					},
+					minProperties: 1,
 					additionalProperties: false
 				}
 			},
 			required: ["host", "port", "user"]
 		}
 	},
+	minProperties: 1,
 	additionalProperties: false
 };
 

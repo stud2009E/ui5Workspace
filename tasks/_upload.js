@@ -1,10 +1,8 @@
 const path = require("path");
-const Ajv = require("ajv");
 const objectPath = require("object-path");
 const {systemSchema, deploySchema} = require("../utils/configSchema.js");
 
 module.exports = function(grunt){
-
 	grunt.registerTask("_upload", "private: upload application to server", function(){
 		grunt.task.requires("preload");
 		grunt.loadNpmTasks("grunt-nwabap-ui5uploader");
@@ -33,7 +31,7 @@ module.exports = function(grunt){
 			grunt.fail.fatal("can't define app or system or user");
 		}
 
-		const ajv = new Ajv({useDefaults: true});
+		const ajv = grunt.config.get("ajv");
 		const validateSystem = ajv.compile(systemSchema);
 		if(!validateSystem(system)){
 			grunt.config.get("showErrorsAndFail")(validateSystem);
@@ -75,5 +73,4 @@ module.exports = function(grunt){
 
 		grunt.task.run(["nwabap_ui5uploader"]);
 	});
-
 };

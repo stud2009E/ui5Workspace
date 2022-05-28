@@ -29,7 +29,7 @@ module.exports = function(grunt){
 		// 	const {name} = app;
 		// 	return {
 		// 		name,
-		// 		rootUri: appInfo[name].rootUri
+		// 		serviceUrl: appInfo[name].serviceUrl
 		// 	};
 		// });
 		

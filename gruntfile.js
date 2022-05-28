@@ -1,3 +1,5 @@
+const Ajv = require("ajv");
+
 module.exports = function (grunt) {
 	grunt.loadTasks("tasks");
 
@@ -11,6 +13,13 @@ module.exports = function (grunt) {
 			grunt.fail.fatal("check config.json!!!");
 		}
 	});
+
+	const ajv = new Ajv({
+		useDefaults: true, 
+		allErrors: true,
+		verbose: true
+	});
+	grunt.config.set("ajv", ajv)
 
 	grunt.registerTask("preload", "public: preload application", [
 		"configCollect",
