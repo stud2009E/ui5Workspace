@@ -6,7 +6,7 @@ const {systemSchema} = require("../utils/configSchema.js");
 const Manifest = require("../utils/Manifest.js");
 
 module.exports = function(grunt){
-    grunt.registerTask("_getMetadata", "private: load metadata.xml", function(){
+    grunt.registerTask("_getMetadata", "private: load metadata.xml", function(appNameArg){
         grunt.task.requires("configCollect");
         
         const done = this.async();
@@ -14,7 +14,7 @@ module.exports = function(grunt){
         const config = grunt.config.get("config");
         const appMap = grunt.config.get("appMap");
 
-		const appName = grunt.option("app");
+		const appName = grunt.option("app") || appNameArg;
 		const userKey = grunt.option("user") || objectPath.get(config, "userCDKey") || objectPath.get(config, "userDefaultKey");
 		const systemKey = grunt.option("sys") || objectPath.get(config, "systemCDKey") || objectPath.get(config, "systemDefaultKey");
 		

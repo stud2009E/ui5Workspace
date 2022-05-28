@@ -37,8 +37,15 @@ module.exports = function (grunt) {
 		"_serve"
 	]);
 
-	grunt.registerTask("getMetadata", "public: get metadata for app", [
-		"configCollect",
-		"_getMetadata"
-	]);
+	grunt.registerTask("getMetadata", "public: get metadata for app", function(appName){
+		let task = "_getMetadata";
+		if(appName){
+			task = "_getMetadata:" + appName;
+		} 
+
+		grunt.task.run([
+			"configCollect",
+			task
+		])
+	});
 };
