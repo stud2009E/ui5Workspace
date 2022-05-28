@@ -7,7 +7,7 @@ const i18nmiddleware = require("../utils/i18nmiddleware.js");
 const {systemSchema} = require("../utils/configSchema.js");
 
 module.exports = function(grunt){
-	grunt.registerTask("serve", "private: setup proxy server", function(){
+	grunt.registerTask("_serve", "private: setup proxy server", function(){
 		grunt.task.requires("configCollect");
 
 		const config = grunt.config.get("config");
@@ -34,13 +34,13 @@ module.exports = function(grunt){
 		const systemProxies = [];
 		if(systemKey !== "local"){
 			const systemConfig = objectPath.get(config, "system");
-			const ajv = new Ajv({useDefaults: true});
+			const ajv = new Ajv({useDefaults: true, 
+				allErrors: true,
+				verbose: true
+			});
 			const validate = ajv.compile(systemSchema);
 			if(!validate(systemConfig)){
-				validate.errors.forEach( err => {
-					grunt.log.error(`${err.message}:\n${err.schemaPath}`);
-				});
-				grunt.fail.fatal(validate.errors[0].message);
+				grunt.config.get("showErrorsAndFail")(validate);
 			}
 			
 			const system = objectPath.get(config, ["system", systemKey]);

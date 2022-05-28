@@ -1,4 +1,3 @@
-const beatify = require("xml-beautifier");
 const path = require("path");
 const objectPath = require("object-path");
 const https = require("https");
@@ -8,41 +7,39 @@ const {systemSchema} = require("../utils/configSchema.js");
 
 
 module.exports = function(grunt){
-    grunt.registerTask("fetchMetadata", "private: synchronize metadata.xml", function(){
+    grunt.registerTask("_getMetadata", "private: load metadata.xml", function(){
         grunt.task.requires("configCollect");
         
         const done = this.async();
 
-        const appName = grunt.option("app");
-        const configJSON = grunt.config.get("config");
+        const config = grunt.config.get("config");
+        const appMap = grunt.config.get("appMap");
 
-        if(!appName){
-            grunt.fail.fatal("error: require app name, use --app=<app name>");
-        }
-
-		const userKey = grunt.option("user") || objectPath.get(configJSON, "userDefaultKey");
-		const systemKey = grunt.option("sys") || objectPath.get(configJSON, "systemDefaultKey");
-        if(!systemKey || !userKey){
+		const appName = grunt.option("app");
+		const userKey = grunt.option("user") || objectPath.get(config, "userCDKey") || objectPath.get(config, "userDefaultKey");
+		const systemKey = grunt.option("sys") || objectPath.get(config, "systemCDKey") || objectPath.get(config, "systemDefaultKey");
+		
+		if(!userKey || !systemKey){
 			grunt.fail.fatal("can't find user or system");
 		}
+		if(!appName){
+			grunt.fail.fatal("can't find application name");
+		}
 
-        const systemConfig = objectPath.get(config, "system");
+		const app = appMap[appName];
+		const system = objectPath.get(config, ["system", systemKey]);
+		const user = objectPath.get(config, ["system", systemKey, "user", userKey]);
+
+		if(!app || !system || !user ){
+			grunt.fail.fatal("can't define app or system or user");
+		}
+
         const ajv = new Ajv({useDefaults: true});
-        const validate = ajv.compile(systemSchema);
-        if(!validate(systemConfig)){
-            validate.errors.forEach( err => {
-                grunt.log.error(`${err.message}:\n${err.schemaPath}`);
-            });
-            grunt.fail.fatal(validate.errors[0].message);
-        }
+		const validateSystem = ajv.compile(systemSchema);
+		if(!validateSystem(system)){
+			grunt.config.get("showErrorsAndFail")(validateSystem);
+		}
 
-        const system = objectPath.get(config, ["system", systemKey]);
-        const user = objectPath.get(config, ["system", systemKey, "user", userKey]);
-
-        if(!system || !user){
-			grunt.fail.fatal("can't find user or system");
-        }
-        
         const metadataPath = path.join(appInfo.path, "webapp", "localService", "metadata.xml");
 
         appInfo.rootUri = appInfo.rootUri.endsWith("/") ? appInfo.rootUri : `${appInfo.rootUri}/`;
@@ -54,7 +51,7 @@ module.exports = function(grunt){
             path: `${appInfo.rootUri}$metadata?sap-client=${mandt}`
         }, res => {
             const { statusCode } = res;
-              const contentType = res.headers['content-type'];
+            const contentType = res.headers['content-type'];
         
             let error;
             if(statusCode >= 400 && statusCode < 600){

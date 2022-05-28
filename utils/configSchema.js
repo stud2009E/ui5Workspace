@@ -57,13 +57,14 @@ const baseSchema = {
         useUtf8: { type: "boolean", default: false },
 		system: { type: "object" }
 	},
-	required: ["sdk", "apps"]
+	required: ["sdk", "apps"],
+	additionalProperties: false
 }
 
 const systemSchema = {
 	type: "object",
 	patternProperties: {
-		"\w+": {
+		"^\\w+$": {
 			type: "object",
 			properties: {
 				host: { type: "string" },
@@ -74,21 +75,24 @@ const systemSchema = {
 				user: {
 					type: "object",
 					patternProperties: {
-						"\w+": {
+						"\\w+": {
 							type: "object",
 							properties: {
-								mandt: { type: "number" },
-								login: { type: "string" },
-								pwd: { type: "string" }
+								mandt: { type: "number"},
+								login: { type: "string"},
+								pwd: { type: "string"}
 							},
-							required: ["login", "pwd", "mandt"]
+							required: ["login", "pwd", "mandt"],
+							additionalProperties: false
 						}
-					}
+					},
+					additionalProperties: false
 				}
 			},
 			required: ["host", "port", "user"]
 		}
-	}
+	},
+	additionalProperties: false
 };
 
 const deploySchema = {

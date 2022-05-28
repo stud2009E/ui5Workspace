@@ -3,31 +3,33 @@ module.exports = function (grunt) {
 
 	grunt.config.set("showErrorsAndFail", validate => {
 		if (validate.errors) {
+			grunt.log.error("Errors:")
 			validate.errors.forEach(err => {
-				grunt.log.error(`${err.message}:\n${err.schemaPath}`);
+				grunt.log.error(`${err.message}:\n${err.instancePath}\n${err.schemaPath}`);
+				grunt.log.error("")
 			});
-			grunt.fail.fatal(validate.errors[0].message);
+			grunt.fail.fatal("check config.json!!!");
 		}
 	});
 
 	grunt.registerTask("preload", "public: preload application", [
 		"configCollect",
-		"preload_build"
+		"_preload"
 	]);
 
 	grunt.registerTask("upload", "public: deploy application", [
 		"preload",
-		"uploadProd"
+		"_upload"
 	]);
 
 	grunt.registerTask("dev", "public: start dev server", [
 		"configCollect",
-		"flpIndexBuild",
-		"serve"
+		"_flpdIndex",
+		"_serve"
 	]);
 
-	grunt.registerTask("syncMetadata", "public: sync metadata for app", [
+	grunt.registerTask("getMetadata", "public: get metadata for app", [
 		"configCollect",
-		"fetchMetadata"
+		"_getMetadata"
 	]);
 };

@@ -5,18 +5,18 @@ const {systemSchema, deploySchema} = require("../utils/configSchema.js");
 
 module.exports = function(grunt){
 
-	grunt.registerTask("uploadProd", "private: upload application to server", function(){
+	grunt.registerTask("_upload", "private: upload application to server", function(){
 		grunt.task.requires("preload");
 		grunt.loadNpmTasks("grunt-nwabap-ui5uploader");
 
 		const appMap = grunt.config.get("appMap");
 		const pluginMap = grunt.config.get("pluginMap");
 		const libMap = grunt.config.get("libMap");
-		const configJSON = grunt.config.get("config");
+		const config = grunt.config.get("config");
 
 		const appName = grunt.option("app");
-		const userKey = grunt.option("user") || objectPath.get(configJSON, "userCDKey") || objectPath.get(configJSON, "userDefaultKey");
-		const systemKey = grunt.option("sys") || objectPath.get(configJSON, "systemCDKey") || objectPath.get(configJSON, "systemDefaultKey");
+		const userKey = grunt.option("user") || objectPath.get(config, "userCDKey") || objectPath.get(config, "userDefaultKey");
+		const systemKey = grunt.option("sys") || objectPath.get(config, "systemCDKey") || objectPath.get(config, "systemDefaultKey");
 		
 		if(!userKey || !systemKey){
 			grunt.fail.fatal("can't find user or system");
@@ -26,8 +26,8 @@ module.exports = function(grunt){
 		}
 
 		const app = appMap[appName] || pluginMap[appName] || libMap[appName];
-		const system = objectPath.get(configJSON, ["system", systemKey]);
-		const user = objectPath.get(configJSON, ["system", systemKey, "user", userKey]);
+		const system = objectPath.get(config, ["system", systemKey]);
+		const user = objectPath.get(config, ["system", systemKey, "user", userKey]);
 
 		if(!app || !system || !user ){
 			grunt.fail.fatal("can't define app or system or user");

@@ -6,7 +6,7 @@ const objectPath = require("object-path");
 const exec = util.promisify(require("child_process").exec);
 
 module.exports = function(grunt){
-	grunt.registerTask("preload_build", "private: build app Component-preload.js", function(){
+	grunt.registerTask("_preload", "private: build app Component-preload.js", function(){
 		grunt.task.requires("configCollect");
 		
 		const appName = grunt.option("app"); 
