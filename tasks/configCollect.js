@@ -12,14 +12,13 @@ module.exports = function (grunt) {
 		const flpPath = path.join(cwd, "workspace/fiori");
 
 		const resourceroots = { "flp.root": "/" };
-
 		//remove apps symlinks
 		fs.emptyDirSync(appsDir);
 
 		const configJSON = fs.readJSONSync(path.join(cwd, "config.json"), {
 			encoding: "utf8"
 		});
-		const ajv = grunt.config.get("ajv");
+		const ajv = grunt.config.getRaw("ajv");
 		const validate = ajv.compile(baseSchema);
 		if (!validate(configJSON)) {
 			grunt.config.get("showErrorsAndFail")(validate);

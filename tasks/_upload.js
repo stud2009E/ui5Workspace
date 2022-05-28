@@ -23,6 +23,12 @@ module.exports = function(grunt){
 			grunt.fail.fatal("can't find application name");
 		}
 
+		const ajv = grunt.config.getRaw("ajv");
+		const validateSystem = ajv.compile(systemSchema);
+		if(!validateSystem(objectPath.get(config,"system"))){
+			grunt.config.get("showErrorsAndFail")(validateSystem);
+		}
+		
 		const app = appMap[appName] || pluginMap[appName] || libMap[appName];
 		const system = objectPath.get(config, ["system", systemKey]);
 		const user = objectPath.get(config, ["system", systemKey, "user", userKey]);
@@ -31,11 +37,6 @@ module.exports = function(grunt){
 			grunt.fail.fatal("can't define app or system or user");
 		}
 
-		const ajv = grunt.config.get("ajv");
-		const validateSystem = ajv.compile(systemSchema);
-		if(!validateSystem(system)){
-			grunt.config.get("showErrorsAndFail")(validateSystem);
-		}
 		const validateDeploy = ajv.compile(deploySchema) ;
 		if(!validateDeploy(app)){
 			grunt.config.get("showErrorsAndFail")(validateDeploy);

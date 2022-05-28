@@ -8,9 +8,10 @@ const {systemSchema} = require("../utils/configSchema.js");
 module.exports = function(grunt){
 	grunt.registerTask("_serve", "private: setup proxy server", function(){
 		grunt.task.requires("configCollect");
-
 		grunt.loadNpmTasks("grunt-contrib-connect");
 		grunt.loadNpmTasks("grunt-openui5");
+
+		const config = grunt.config.get("config");
 		if(config.proxyModule === "git"){
 			grunt.loadNpmTasks("grunt-connect-proxy-git");
 			utils = utilsGit;
@@ -20,7 +21,6 @@ module.exports = function(grunt){
 			utils = utilsNpm;
 		}
 
-		const config = grunt.config.get("config");
 		const systemKey = grunt.option("sys") || objectPath.get(config, "systemDefaultKey");
 		const userKey = grunt.option("user") || objectPath.get(config, "userDefaultKey");
 		const useUtf8 = grunt.option("useUtf8") || objectPath.get(config, "useUtf8");
@@ -32,7 +32,7 @@ module.exports = function(grunt){
 		const systemProxies = [];
 		if(systemKey !== "local"){
 			const systemConfig = objectPath.get(config, "system");
-			const ajv = grunt.config.get("ajv");
+			const ajv = grunt.config.getRaw("ajv");
 			const validate = ajv.compile(systemSchema);
 			if(!validate(systemConfig)){
 				grunt.config.get("showErrorsAndFail")(validate);
