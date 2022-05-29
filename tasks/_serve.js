@@ -56,11 +56,20 @@ module.exports = function(grunt){
 			});
 		}
 		
+		const localhost = "localhost";
+		const localport = 8000;
+		let openUrl = `http://${localhost}:${localport}`;
+		if(systemKey !== "local"){
+			openUrl += "/fiori-remote/";
+		}else{
+			openUrl += "/fiori/";
+		}
+
 		const libProxies = grunt.config.get("libraries").map(({path, context}) => {
 			return {
 				context: context,
-				host: "localhost",
-				port: 8000,
+				host: localhost,
+				port: localport,
 				https: false,
 				rewrite: {
 					[`^${context}`]: path
@@ -71,10 +80,13 @@ module.exports = function(grunt){
 		grunt.config.merge({
 			connect:{
 				server:{
-					options:{	
-						port: 8000,
+					options:{
+						hostname: localhost,
+						port: localport,
 						keepalive: true,
 						livereload: false,
+						open: openUrl,
+						base: "workspace",
 						middleware: function(connect, options, middlewares){
 							middlewares.unshift(utils.proxyRequest);
 
