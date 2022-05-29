@@ -68,7 +68,7 @@ const systemSchema = {
 			type: "object",
 			properties: {
 				host: { type: "string" },
-				port: { type: "number" },
+				port: { type: "integer" },
 				context: { type: "string", default: "/sap" },
 				secure: { type: "boolean", default: false },
 				https: { type: "boolean", default: true },
@@ -78,7 +78,7 @@ const systemSchema = {
 						"\\w+": {
 							type: "object",
 							properties: {
-								mandt: { type: "number"},
+								mandt: { type: "integer"},
 								login: { type: "string"},
 								pwd: { type: "string"}
 							},
@@ -100,9 +100,9 @@ const systemSchema = {
 const deploySchema = {
 	type: "object",
 	properties: {
-		transport: { type: "string" },
-		package: { type: "string" },
-		bsp: { type: "string" }
+		transport: { type: "string", minLength: 3},
+		package: { type: "string", minLength: 3},
+		bsp: { type: "string", minLength: 3 }
 	},
 	required: ["transport", "package", "bsp"]
 };
