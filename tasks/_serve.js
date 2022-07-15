@@ -47,7 +47,7 @@ module.exports = function(grunt){
 			const ident = Buffer.from(`${user.login}:${user.pwd}`).toString("base64");
 			const { host, port, services} = system;
 			
-            services.array.forEach( service => {
+            services.forEach( service => {
 			    const {context, ws, https} = service;
 
                 systemProxies.push({
