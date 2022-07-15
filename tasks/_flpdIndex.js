@@ -15,52 +15,34 @@ module.exports = function(grunt){
 		const cwd = process.cwd();
 		const fioriPath = {
 			template: path.join(cwd, "workspace/fiori/template.html"),
-			templateRemote: path.join(cwd, "workspace/fiori-remote/template.html"),
-			index: path.join(cwd, "workspace/fiori/index.html"),
-			indexRemote: path.join(cwd, "workspace/fiori-remote/index.html"),
+			index: path.join(cwd, "workspace/fiori/index.html")
 		};
 		const config = grunt.config.get("config");
 		const applications = grunt.config.get("applications");
+		const appMap = grunt.config.get("appMap");
 		const plugins = grunt.config.get("plugins");
 		const resourceroots = grunt.config.get("resourceroots");
 
-		const mockSettings = []
-		// const mockSettings = applications.map(app => {
-		// 	const {name} = app;
-		// 	return {
-		// 		name,
-		// 		serviceUrl: appInfo[name].serviceUrl
-		// 	};
-		// });
+		const mockApplications = []; 
+        for(let key in applications){
+            const {name, serviceUrl} = applications[key]; 
+            
+            if(appMap[name] && appMap[name].useMockServer === true){
+                mockApplications.push({
+                    name, serviceUrl
+                });
+            } 
+        }
 		
 		grunt.config.merge({
 			clean: {
 				flpIndex:{
 					src: [
-						fioriPath.index,
-						fioriPath.indexRemote
+						fioriPath.index
 					]
 				}
 			},
 			replace:{
-				flpRemote: {
-					src: fioriPath.templateRemote,
-					dest: fioriPath.indexRemote,
-					replacements:[{
-						from:__USHELL__CONFIG__,
-						to: getShellConfigStr({
-							apps: applications,
-							plugins: plugins,
-							themeRoots: config.themeRoots
-						})
-					},{
-						from: __RESOURCE__ROOTS__CONFIG__,
-						to: resourceroots
-					},{
-						from: __THEME__,
-						to: config.theme
-					}]
-				},
 				flp: {
 					src: fioriPath.template,
 					dest: fioriPath.index,
@@ -76,7 +58,7 @@ module.exports = function(grunt){
 						to: resourceroots
 					},{
 						from: __MOCK__SETTINGS__,
-						to: JSON.stringify(mockSettings)
+						to: JSON.stringify(mockApplications)
 					},{
 						from: __THEME__,
 						to: config.theme
@@ -87,7 +69,6 @@ module.exports = function(grunt){
 
 		grunt.task.run([
 			"clean:flpIndex",
-			"replace:flpRemote",
 			"replace:flp"
 		]);
 

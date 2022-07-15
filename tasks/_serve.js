@@ -44,26 +44,23 @@ module.exports = function(grunt){
 				grunt.fail.fatal("can't define system or user");
 			}
 
-
 			const ident = Buffer.from(`${user.login}:${user.pwd}`).toString("base64");
-			const { host, port, context = "/sap", secure = false, https = true} = system;
+			const { host, port, services} = system;
 			
-			systemProxies.push({
-				context, host, port, secure, https,
-				headers: {
-					Authorization: `Basic ${ident}`
-				}
-			});
+            services.forEach( service => {
+			    const {context, ws, https} = service;
+
+                systemProxies.push({
+                    host, port, context, ws, https,
+                    headers: {
+                        Authorization: `Basic ${ident}`
+                    }
+                });
+            });
 		}
 		
 		const localhost = "localhost";
 		const localport = 8000;
-		let openUrl = `http://${localhost}:${localport}`;
-		if(systemKey !== "local"){
-			openUrl += "/fiori-remote/";
-		}else{
-			openUrl += "/fiori/";
-		}
 
 		const libProxies = grunt.config.get("libraries").map(({path, context}) => {
 			return {
@@ -85,12 +82,12 @@ module.exports = function(grunt){
 						port: localport,
 						keepalive: true,
 						livereload: false,
-						open: openUrl,
+						open: `http://${localhost}:${localport}/fiori/`,
 						base: "workspace",
 						middleware: function(connect, options, middlewares){
 							middlewares.unshift(utils.proxyRequest);
 
-                            if(!!useUtf8){
+                            if(useUtf8 === true){
                                 middlewares.unshift(i18nmiddleware(grunt));
                             }
 

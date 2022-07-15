@@ -46,6 +46,7 @@ module.exports = function (grunt) {
 				applications[appKey].applicationType = "URL";
 				applications[appKey].description = appKey;
 				applications[appKey].title = name;
+				applications[appKey].name = name;
 				applications[appKey].url = path.relative(flpPath, symlinkPath);
 			} else {
 				grunt.fail.fatal(`${name}: app type must be 'application'`);

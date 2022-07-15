@@ -13,7 +13,8 @@ const baseSchema = {
 					modelName: { type: "string", default: "" },
 					transport: { type: "string" },
 					package: { type: "string" },
-					bsp: { type: "string" }
+					bsp: { type: "string" },
+                    useMockServer: {type: "boolean", default: false}
 				},
 				required: ["name", "path"]
 			}
@@ -59,7 +60,7 @@ const baseSchema = {
 	},
 	required: ["sdk", "apps"],
 	additionalProperties: false
-}
+};
 
 const systemSchema = {
 	type: "object",
@@ -68,17 +69,28 @@ const systemSchema = {
 			type: "object",
 			properties: {
 				host: { type: "string" },
-				port: { type: "number" },
-				context: { type: "string", default: "/sap" },
-				secure: { type: "boolean", default: false },
-				https: { type: "boolean", default: true },
+                services: {
+                    type: "array",
+                    minItems: 1,
+                    items: {
+                        type: "object",
+                        properties:{
+                            port: { type: "integer" },
+                            context: { type: "string", default: "/sap" },
+                            ws: { type: "boolean", default: false },
+                            https: { type: "boolean", default: true },
+                        },
+                        required: ["port", "context"],
+                        additionalProperties: true
+                    }
+                },
 				user: {
 					type: "object",
 					patternProperties: {
 						"\\w+": {
 							type: "object",
 							properties: {
-								mandt: { type: "number"},
+								mandt: { type: "integer"},
 								login: { type: "string"},
 								pwd: { type: "string"}
 							},
@@ -90,7 +102,7 @@ const systemSchema = {
 					additionalProperties: false
 				}
 			},
-			required: ["host", "port", "user"]
+			required: ["host", "services", "user"]
 		}
 	},
 	minProperties: 1,
@@ -100,9 +112,9 @@ const systemSchema = {
 const deploySchema = {
 	type: "object",
 	properties: {
-		transport: { type: "string" },
-		package: { type: "string" },
-		bsp: { type: "string" }
+		transport: { type: "string", minLength: 3},
+		package: { type: "string", minLength: 3},
+		bsp: { type: "string", minLength: 3 }
 	},
 	required: ["transport", "package", "bsp"]
 };

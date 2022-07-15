@@ -54,21 +54,30 @@ module.exports = function(grunt){
 					grunt.fail.fatal(stderr);
 				}
 				grunt.log.writeln(stdout);
+			}
 
-				let ui5Yaml = fs.readFileSync(path.join(appPath, "ui5.yaml"), {
-					encoding : "utf8"
-				});
-				const uiJson = yaml.parse(ui5Yaml);
-                if(objectPath.get(uiJson, "type") === "application"){
-				    objectPath.set(uiJson, [ "resources", "configuration", "paths", "webapp"],  "webapp");
-				    objectPath.set(uiJson, [ "builder", "resources", "excludes"],  ["localService/**", "test/**"]);
-                }
+			let ui5Yaml = fs.readFileSync(path.join(appPath, "ui5.yaml"), {
+				encoding : "utf8"
+			});
+			const uiJson = yaml.parse(ui5Yaml);
+			if(objectPath.get(uiJson, "type") === "application"){
+				let needChange = false;
+				if(!objectPath.get(uiJson, [ "resources", "configuration", "paths", "webapp"])){
+					objectPath.set(uiJson, [ "resources", "configuration", "paths", "webapp"],  "webapp");
+					needChange = true;
+				}
 
-				ui5Yaml = yaml.stringify(uiJson);
-
-				fs.outputFileSync(path.join(appPath, "ui5.yaml"), ui5Yaml, {
-					encoding : "utf8"
-				});
+				if(!objectPath.get(uiJson, [ "builder", "resources", "excludes"])){
+					objectPath.set(uiJson, [ "builder", "resources", "excludes"],  ["localService/**", "test/**"]);
+					needChange = true;
+				}
+				
+				if(needChange){
+					ui5Yaml = yaml.stringify(uiJson);
+					fs.outputFileSync(path.join(appPath, "ui5.yaml"), ui5Yaml, {
+						encoding : "utf8"
+					});
+				}
 			}
 
 			const {stdout, stderr} = await exec("ui5 build preload --clean-dest=true --dest='./dist'", {
