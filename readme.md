@@ -34,7 +34,7 @@
 - cd directory
 - npm install (install [docs](https://gruntjs.com) and [docs](https://sap.github.io/ui5-tooling/))
 - create config.json (see [baseSchema](./utils/configSchema.js))
-- add PATH %AppData%\npm (для windows) for grunt grunt
+- add PATH %AppData%\npm (для windows) for grunt
 - grunt dev
 
 To display grunt tasks, enter the command:
