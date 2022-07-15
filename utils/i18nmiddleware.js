@@ -17,7 +17,7 @@ module.exports = function(grunt){
             const app = appMap[appName] || libMap[appName] || pluginMap[appName];
 
             if(!app){
-                next();
+                return next();
             }
 
             const i18nPath =  path.join(app.path, "webapp", "i18n", "i18n.properties");
@@ -31,7 +31,7 @@ module.exports = function(grunt){
                 'Content-Type': 'text/plain; charset=UTF-8'
             }).end(file);
         }else{
-            next()
+            return next();
         }
     }
 };

@@ -44,16 +44,19 @@ module.exports = function(grunt){
 				grunt.fail.fatal("can't define system or user");
 			}
 
-
 			const ident = Buffer.from(`${user.login}:${user.pwd}`).toString("base64");
-			const { host, port, context = "/sap", secure = false, https = true} = system;
+			const { host, port, services} = system;
 			
-			systemProxies.push({
-				context, host, port, secure, https,
-				headers: {
-					Authorization: `Basic ${ident}`
-				}
-			});
+            services.array.forEach( service => {
+			    const {context, ws, https} = service;
+
+                systemProxies.push({
+                    host, port, context, ws, https,
+                    headers: {
+                        Authorization: `Basic ${ident}`
+                    }
+                });
+            });
 		}
 		
 		const localhost = "localhost";
@@ -90,7 +93,7 @@ module.exports = function(grunt){
 						middleware: function(connect, options, middlewares){
 							middlewares.unshift(utils.proxyRequest);
 
-                            if(!!useUtf8){
+                            if(useUtf8 === true){
                                 middlewares.unshift(i18nmiddleware(grunt));
                             }
 

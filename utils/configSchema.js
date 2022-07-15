@@ -59,7 +59,7 @@ const baseSchema = {
 	},
 	required: ["sdk", "apps"],
 	additionalProperties: false
-}
+};
 
 const systemSchema = {
 	type: "object",
@@ -68,10 +68,21 @@ const systemSchema = {
 			type: "object",
 			properties: {
 				host: { type: "string" },
-				port: { type: "integer" },
-				context: { type: "string", default: "/sap" },
-				secure: { type: "boolean", default: false },
-				https: { type: "boolean", default: true },
+                services: {
+                    type: "array",
+                    minItems: 1,
+                    items: {
+                        type: "object",
+                        properties:{
+                            port: { type: "integer" },
+                            context: { type: "string", default: "/sap" },
+                            ws: { type: "boolean", default: false },
+                            https: { type: "boolean", default: true },
+                        },
+                        required: ["port", "context"],
+                        additionalProperties: true
+                    }
+                },
 				user: {
 					type: "object",
 					patternProperties: {
@@ -90,7 +101,7 @@ const systemSchema = {
 					additionalProperties: false
 				}
 			},
-			required: ["host", "port", "user"]
+			required: ["host", "services", "user"]
 		}
 	},
 	minProperties: 1,
