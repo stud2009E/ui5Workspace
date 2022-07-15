@@ -32,7 +32,7 @@
 - download software development kit ui5 [src](https://tools.hana.ondemand.com/#sapui5)
 - git clone repository
 - cd directory
-- npm install (install [docs](https://gruntjs.com) and [docs](https://sap.github.io/ui5-tooling/))
+- npm install (will preinstall [grunt](https://gruntjs.com) and [ui5](https://sap.github.io/ui5-tooling/))
 - create config.json (see [baseSchema](./utils/configSchema.js))
 - add PATH %AppData%\npm (для windows) for grunt
 - grunt dev
