@@ -24,22 +24,21 @@ sap.ui.define([
 				.finally(() => MockServer.startAll());
 		},
 
-
 		/**
 		 * setup server 
 		 *
 		 * @param      {object}   setting
 		 * @param      {string}   setting.name application name
-		 * @param      {string}   setting.rootUri odata service url
+		 * @param      {string}   setting.serviceUrl odata service url
 		 * @return     {Promise}  mock server setup promise 
 		 */
 		setupServer(setting){
-			const {name, rootUri} = setting;
+			const {name, serviceUrl} = setting;
 			const metadataPath = `../apps/${name}/webapp/localService/metadata.xml`;
 			const mockdataPath = `../apps/${name}/webapp/localService/mockdata`;
 
 			const mockserver = new MockServer({
-				rootUri: rootUri
+				rootUri: serviceUrl
 			});
 
 			mockserver.simulate(metadataPath, {
@@ -47,7 +46,7 @@ sap.ui.define([
 			});
 
 			if(this.isLogMode()){
-				this.attachLog(mockserver, rootUri, name);
+				this.attachLog(mockserver, serviceUrl, name);
 			}
 
 			return new Promise(resolve => {
@@ -71,25 +70,26 @@ sap.ui.define([
 		 * @return     {boolean}  True if log mode, False otherwise.
 		 */
 		isLogMode(){
-			return true;
-			// return /\WmockLogMode=true(\W|$)/.test(location.href);
+			const bLogMode = /\WmockLogMode=false(\W|$)/.test(location.href);
+
+            return !bLogMode;
 		},
 
 		/**
 		 * Attaches the log.
 		 *
 		 * @param      {sap.ui.core.util.MockServer}  mockserver  The mockserver
-		 * @param      {string}                       rootUri     The root uri
+		 * @param      {string}                       serviceUrl     The root uri
 		 * @param      {string}                       name        application name
 		 */
-		attachLog(mockserver, rootUri, name) {
+		attachLog(mockserver, serviceUrl, name) {
 
             function logGetRequest(oEvent) {
             	const oXhr = oEvent.getParameter("oXhr");
 				const oEntry = oEvent.getParameter("oEntry");
             	const oFilteredData = oEvent.getParameter("oFilteredData")
             	const aResults = oFilteredData && oFilteredData.results || oEntry;
-                const sUrl = decodeURIComponent(oXhr.url).replace(rootUri, "");
+                const sUrl = decodeURIComponent(oXhr.url).replace(serviceUrl, "");
                 
 				let [entitySet, params] = sUrl.split("?");
 				params = params && params.split("&").join('\n\t') || "";
@@ -104,12 +104,11 @@ sap.ui.define([
 
 			function logChangeRequest(oEvent) {
             	const oXhr = oEvent.getParameter("oXhr");
-                const sUrl = decodeURIComponent(oXhr.url).replace(rootUri, "");
+                const sUrl = decodeURIComponent(oXhr.url).replace(serviceUrl, "");
                 let [entitySet] = sUrl.split("?");
 
 				let requestBody = JSON.parse(oXhr.requestBody);
 				let sMessage = `\nMockServer::${oEvent.getId()} /${entitySet}\n`;
-
 
                 if (oXhr.status >= 400) {
                     console.error(sMessage,requestBody, name);
@@ -122,7 +121,6 @@ sap.ui.define([
 			mockserver.attachBefore(MockServer.HTTPMETHOD.POST, logChangeRequest);
 			mockserver.attachBefore(MockServer.HTTPMETHOD.MERGE, logChangeRequest);
 			mockserver.attachBefore(MockServer.HTTPMETHOD.DELETE, logChangeRequest);
-
         }
 
 	};

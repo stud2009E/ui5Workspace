@@ -13,7 +13,8 @@ const baseSchema = {
 					modelName: { type: "string", default: "" },
 					transport: { type: "string" },
 					package: { type: "string" },
-					bsp: { type: "string" }
+					bsp: { type: "string" },
+                    useMockServer: {type: "boolean", default: false}
 				},
 				required: ["name", "path"]
 			}

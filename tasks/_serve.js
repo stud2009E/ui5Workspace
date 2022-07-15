@@ -61,12 +61,6 @@ module.exports = function(grunt){
 		
 		const localhost = "localhost";
 		const localport = 8000;
-		let openUrl = `http://${localhost}:${localport}`;
-		if(systemKey !== "local"){
-			openUrl += "/fiori-remote/";
-		}else{
-			openUrl += "/fiori/";
-		}
 
 		const libProxies = grunt.config.get("libraries").map(({path, context}) => {
 			return {
@@ -88,7 +82,7 @@ module.exports = function(grunt){
 						port: localport,
 						keepalive: true,
 						livereload: false,
-						open: openUrl,
+						open: `http://${localhost}:${localport}/fiori/`,
 						base: "workspace",
 						middleware: function(connect, options, middlewares){
 							middlewares.unshift(utils.proxyRequest);
