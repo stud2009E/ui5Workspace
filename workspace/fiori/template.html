@@ -12,12 +12,18 @@
 
 	<script id="sap-ui-bootstrap"
 		src="/resources/sap-ui-core.js"
-		data-sap-ui-libs="sap.m, sap.ushell, sap.collaboration"
+		data-sap-ui-libs="sap.m,sap.ushell,sap.uxap,sap.f,sap.ui.table,sap.ui.comp,sap.ui.fl"
 		data-sap-ui-async="true"
 		data-sap-ui-theme="__THEME__"
 		data-sap-ui-compatVersion="edge"
 		data-sap-ui-bindingSynax="complex"
-		data-sap-ui-resourceroots='__RESOURCE__ROOTS__CONFIG__'>
+		data-sap-ui-resourceroots='__RESOURCE__ROOTS__CONFIG__'
+        data-sap-ui-flexibilityservices='[{
+            "applyConnector":"PreviewConnector",
+            "writeConnector":"sap/ui/fl/write/connectors/BaseConnector",
+            "custom":true,
+            "layers":["VENDOR"]
+        }]'>
 	</script>
 
 	<script id="sap-ushell-bootstrap"
@@ -25,19 +31,35 @@
 	</script>
 
 	<script type="text/javascript">
-		sap.ui.getCore().attachInit(function(){
+        const mCache = {};
+        
+        function fnHandleHashChange(FakeLrepConnector){
+            const oService = sap.ushell.Container.getService("URLParsing");
+            const {action, semanticObject} = oService.parseShellHash(window.location.hash);
 
+        }
+
+		sap.ui.getCore().attachInit(function(){
 			sap.ui.require([
-				"flp/root/mockservers/mockserver"
-			], function(mockserver){
+				"flp/root/mockservers/mockserver",
+                "sap/ui/fl/FakeLrepConnector"
+			], function(mockserver, FakeLrepConnector){
+                
+                FakeLrepConnector.prototype.loadChanges = function(){
+
+                };
+
+                fnHandleHashChange = fnHandleHashChange.bind(null, FakeLrepConnector);
 
 				mockserver.init(__MOCK__SETTINGS__)
 					.finally(() => {
 						sap.ushell.__sandbox__._bootstrap(function () {
 							sap.ushell.Container.createRenderer().placeAt("content");
+
+                            fnHandleHashChange();
+                            window.addEventListener("hashchange", fnHandleHashChange);
 						});
 					});
-
 			});
 
 		});
