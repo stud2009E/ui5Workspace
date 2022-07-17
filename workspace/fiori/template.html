@@ -17,14 +17,7 @@
 		data-sap-ui-theme="__THEME__"
 		data-sap-ui-compatVersion="edge"
 		data-sap-ui-bindingSynax="complex"
-		data-sap-ui-resourceroots='__RESOURCE__ROOTS__CONFIG__'
-        >
-        // data-sap-ui-flexibilityservices='[{
-        //     "applyConnector":"PreviewConnector",
-        //     "writeConnector":"sap/ui/fl/write/connectors/BaseConnector",
-        //     "custom":true,
-        //     "layers":["VENDOR"]
-        // }]'
+		data-sap-ui-resourceroots='__RESOURCE__ROOTS__CONFIG__'>
 	</script>
 
 	<script id="sap-ushell-bootstrap"
@@ -33,11 +26,21 @@
 
 	<script type="text/javascript">
         
-        function fnHandleHashChange(FakeLrepConnector){
+        const prevFakeConnector = {};
+
+        function fnHandleHashChange(FakeLrepConnector, oEvent){
             const parser = sap.ushell.Container.getService("URLParsing");
             const appConfig = window["z-workspace-config"].applications;
-            const hash = parser.parseShellHash(window.location.hash) || {};
-            const {semanticObject, action} = hash;
+            
+            let sUrl = window.location.href;
+            if(oEvent){
+                sUrl = oEvent.newURL
+            }
+
+            const shellHash = parser.getShellHash(sUrl);
+            const hashData = parser.parseShellHash(shellHash);
+            const semanticObject = hashData && hashData.semanticObject;
+            const action = hashData && hashData.action;
 
             if(!semanticObject || !action || semanticObject === "Shell" ){
                 return;
@@ -45,7 +48,14 @@
 
             if(appConfig && appConfig[`${semanticObject}-${action}`]){
                 const id = appConfig[`${semanticObject}-${action}`]["id"];
-                const _version = appConfig[`${semanticObject}-${action}`]["_version"];
+                const _version = appConfig[`${semanticObject}-${action}`]["_version"] || "1.0.0";
+
+                if(prevFakeConnector["id"]){
+                    FakeLrepConnector.disableFakeConnector(
+                        prevFakeConnector["id"],
+                        prevFakeConnector["_version"]
+                    );
+                }
 
                 if(id){
                     FakeLrepConnector.enableFakeConnector(
@@ -53,6 +63,9 @@
                         id,
                         _version
                     );
+
+                    prevFakeConnector["id"] = id;
+                    prevFakeConnector["_version"] = _version;
                 }
             }
         }

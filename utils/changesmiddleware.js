@@ -1,5 +1,5 @@
 const path = require("path");
-const fs = require("fs");
+const fs = require("fs-extra");
 const { Buffer } = require("buffer");
 
 module.exports = function(grunt){
@@ -14,31 +14,35 @@ module.exports = function(grunt){
             const urlExec = regexp.exec(url);
             const semanticObject = urlExec[1];
             const action = urlExec[2];
-            let dirChanges = null;
+            let changesDir = null;
 
             for(let name in appMap){
                 if( appMap.hasOwnProperty( name ) ) {
                     const app = appMap[name];
                     if(app.name === semanticObject && app.action === action){
-                        dirChanges = path.join(app.path,  "/webapp/changes");
+                        changesDir = path.join(app.path,  "/webapp/changes");
                         break; 
                     }
                 }
             }
 
-            if(!dirChanges){
+            if(!changesDir || !fs.pathExistsSync(changesDir)){
                 return next();
             }
 
-            const changefiles = fs.readdirSync(dirChanges) || [];
-            changefiles.forEach(path => {
-                const changeJson = fs.readJSONSync(path, {
+            const changefiles = fs.readdirSync(changesDir) || [];
+            if(changefiles.length === 0){
+                return next();
+            }
+            
+            changefiles.forEach(filename => {
+                const changeJson = fs.readJSONSync(path.join(changesDir, filename), {
                     encoding: "utf8"
                 });
                 changes.push(changeJson);
             });
 
-            const result = {
+            const data = {
                 changes: changes,
                 settings: {
                     isKeyUser: true,
@@ -46,9 +50,9 @@ module.exports = function(grunt){
                     isProductiveSystem: false
                 }
             };
-
+            const result = JSON.stringify(data);
             res.writeHead(200, {
-                'Content-Length': Buffer.byteLength(file),
+                'Content-Length': Buffer.byteLength(result),
                 'Content-Type': 'application/json; charset=UTF-8'
             }).end(result);
         }else{
