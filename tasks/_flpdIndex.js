@@ -93,6 +93,10 @@ function getShellConfigStr({apps, plugins, themeRoots}){
 		window["sap-ui-config"] = {
 			themeRoots: ${themeStr}
 		};
+        
+        window["z-workpace-config"] = {
+			applications: ${appsStr}
+		};
 
 		window["sap-ushell-config"] = {
 			defaultRenderer: "fiori2",

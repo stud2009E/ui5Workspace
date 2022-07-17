@@ -40,6 +40,7 @@ module.exports = function (grunt) {
 
 				applications[appKey] = {};
 				applications[appKey].id = manifest.id();
+				applications[appKey]._version = manifest.get("_version");
 				applications[appKey].type = manifest.type();
 				applications[appKey].serviceUrl = manifest.serviceUrl(app.modelName);
 				applications[appKey].additionalInformation = `SAPUI5.Component=${manifest.id()}`;

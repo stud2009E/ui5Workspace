@@ -18,12 +18,13 @@
 		data-sap-ui-compatVersion="edge"
 		data-sap-ui-bindingSynax="complex"
 		data-sap-ui-resourceroots='__RESOURCE__ROOTS__CONFIG__'
-        data-sap-ui-flexibilityservices='[{
-            "applyConnector":"PreviewConnector",
-            "writeConnector":"sap/ui/fl/write/connectors/BaseConnector",
-            "custom":true,
-            "layers":["VENDOR"]
-        }]'>
+        >
+        // data-sap-ui-flexibilityservices='[{
+        //     "applyConnector":"PreviewConnector",
+        //     "writeConnector":"sap/ui/fl/write/connectors/BaseConnector",
+        //     "custom":true,
+        //     "layers":["VENDOR"]
+        // }]'
 	</script>
 
 	<script id="sap-ushell-bootstrap"
@@ -31,12 +32,29 @@
 	</script>
 
 	<script type="text/javascript">
-        const mCache = {};
         
         function fnHandleHashChange(FakeLrepConnector){
-            const oService = sap.ushell.Container.getService("URLParsing");
-            const {action, semanticObject} = oService.parseShellHash(window.location.hash);
+            const parser = sap.ushell.Container.getService("URLParsing");
+            const appConfig = window["z-workpace-config"].applications;
+            const hash = parser.parseShellHash(window.location.hash) || {};
+            const {semanticObject, action} = hash;
 
+            if(!semanticObject || !action || semanticObject === "Shell" ){
+                return;
+            }
+
+            if(appConfig && appConfig[`${semanticObject}-${action}`]){
+                const id = appConfig[`${semanticObject}-${action}`]["id"];
+                const _version = appConfig[`${semanticObject}-${action}`]["_version"];
+
+                if(id){
+                    FakeLrepConnector.enableFakeConnector(
+                        `/appChanges?semanticObject=${semanticObject}&action=${action}`,
+                        id,
+                        _version
+                    );
+                }
+            }
         }
 
 		sap.ui.getCore().attachInit(function(){
@@ -44,10 +62,6 @@
 				"flp/root/mockservers/mockserver",
                 "sap/ui/fl/FakeLrepConnector"
 			], function(mockserver, FakeLrepConnector){
-                
-                FakeLrepConnector.prototype.loadChanges = function(){
-
-                };
 
                 fnHandleHashChange = fnHandleHashChange.bind(null, FakeLrepConnector);
 
