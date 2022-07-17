@@ -3,6 +3,7 @@ const utilsGit = require("grunt-connect-proxy-git/lib/utils");
 const path = require("path");
 const objectPath = require("object-path");
 const i18nmiddleware = require("../utils/i18nmiddleware.js");
+const changesmiddleware = require("../utils/changesmiddleware");
 const {systemSchema} = require("../utils/configSchema.js");
 
 module.exports = function(grunt){
@@ -86,6 +87,7 @@ module.exports = function(grunt){
 						base: "workspace",
 						middleware: function(connect, options, middlewares){
 							middlewares.unshift(utils.proxyRequest);
+                            middlewares.unshift(changesmiddleware(grunt));
 
                             if(useUtf8 === true){
                                 middlewares.unshift(i18nmiddleware(grunt));
