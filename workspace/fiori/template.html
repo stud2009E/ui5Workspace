@@ -35,7 +35,7 @@
         
         function fnHandleHashChange(FakeLrepConnector){
             const parser = sap.ushell.Container.getService("URLParsing");
-            const appConfig = window["z-workpace-config"].applications;
+            const appConfig = window["z-workspace-config"].applications;
             const hash = parser.parseShellHash(window.location.hash) || {};
             const {semanticObject, action} = hash;
 

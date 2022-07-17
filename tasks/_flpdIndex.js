@@ -94,7 +94,7 @@ function getShellConfigStr({apps, plugins, themeRoots}){
 			themeRoots: ${themeStr}
 		};
         
-        window["z-workpace-config"] = {
+        window["z-workspace-config"] = {
 			applications: ${appsStr}
 		};
 
