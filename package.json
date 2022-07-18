@@ -5,7 +5,8 @@
   "scripts": {
     "start": "grunt dev",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "preinstall": "npm i -g grunt-cli @ui5/cli@2.14.4"
+    "preinstall": "npm i -g grunt-cli @ui5/cli@2.14.4",
+    "lint:check": "eslint ."
   },
   "author": "",
   "license": "ISC",
@@ -25,5 +26,8 @@
     "yaml": "^2.0.0",
     "yeoman-environment": "^2.10.3",
     "yeoman-generator": "^4.13.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.20.0"
   }
 }

@@ -82,38 +82,38 @@ sap.ui.define([
 		 * @param      {string}                       serviceUrl     The root uri
 		 * @param      {string}                       name        application name
 		 */
-		attachLog(mockserver, serviceUrl, name) {
+		attachLog(mockserver, serviceUrl, name){
 
-            function logGetRequest(oEvent) {
-            	const oXhr = oEvent.getParameter("oXhr");
+            function logGetRequest(oEvent){
+                const oXhr = oEvent.getParameter("oXhr");
 				const oEntry = oEvent.getParameter("oEntry");
-            	const oFilteredData = oEvent.getParameter("oFilteredData")
-            	const aResults = oFilteredData && oFilteredData.results || oEntry;
+                const oFilteredData = oEvent.getParameter("oFilteredData")
+                const aResults = oFilteredData && oFilteredData.results || oEntry;
                 const sUrl = decodeURIComponent(oXhr.url).replace(serviceUrl, "");
-                
+
 				let [entitySet, params] = sUrl.split("?");
-				params = params && params.split("&").join('\n\t') || "";
+				params = params && params.split("&").join("\n\t") || "";
 				let sMessage = `\nMockServer::${oEvent.getId()} /${entitySet}\nparams:${params}\n`;
 
-                if (oXhr.status >= 400) {
+                if (oXhr.status >= 400){
                     console.error(sMessage, aResults, name);
                 } else {
                     console.info(sMessage, aResults, name);
                 }
             }
 
-			function logChangeRequest(oEvent) {
-            	const oXhr = oEvent.getParameter("oXhr");
+			function logChangeRequest(oEvent){
+                const oXhr = oEvent.getParameter("oXhr");
                 const sUrl = decodeURIComponent(oXhr.url).replace(serviceUrl, "");
                 let [entitySet] = sUrl.split("?");
 
 				let requestBody = JSON.parse(oXhr.requestBody);
 				let sMessage = `\nMockServer::${oEvent.getId()} /${entitySet}\n`;
 
-                if (oXhr.status >= 400) {
-                    console.error(sMessage,requestBody, name);
+                if (oXhr.status >= 400){
+                    console.error(sMessage, requestBody, name);
                 } else {
-                    console.info(sMessage,requestBody, name);
+                    console.info(sMessage, requestBody, name);
                 }
             }
 

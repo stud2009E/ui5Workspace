@@ -14,7 +14,7 @@ const AppType = {
 
 module.exports = class extends Generator{
 
-	_validateEmpty = input => !!input ? true : "required field!"
+	_validateEmpty = input => input ? true : "required field!"
 	
 	/**
 	 * validate sap bsp application id
@@ -22,7 +22,7 @@ module.exports = class extends Generator{
 	 * @returns {true|string} if true success, else error text
 	 */
 	_validateAppId(input){
-		return /^[a-z]+(\.[a-z]+)+$/.test(input) ? true : "application id must be like 'my.custom.app.id': /^[a-z]+(\.[a-z]+)+$/";
+		return /^[a-z]+(\.[a-z]+)+$/.test(input) ? true : "application id must be like 'my.custom.app.id': /^[a-z]+(\\.[a-z]+)+$/";
 	}
 
 	/**
@@ -31,7 +31,7 @@ module.exports = class extends Generator{
 	 * @returns {true|string} if true success, else error text
 	 */
 	_validateAppName(input){
-		return /^[zZ]\w{3,}$/.test(input) ? true : "application name must be like 'z_bsp_name': /^[zZ]\w{3,}$/";
+		return /^[zZ]\w{3,}$/.test(input) ? true : "application name must be like 'z_bsp_name': /^[zZ]\\w{3,}$/";
 	}
 
 	/**
@@ -40,7 +40,7 @@ module.exports = class extends Generator{
 	 * @returns {true|string} if true success, else error text
 	 */
 	_validateSourceUri(input){
-		return /^(\/\w+)+\/$/.test(input) ? true: "source uri must be like '/my/odata/service/uri/': /^(\/\w+)+\/$/";
+		return /^(\/\w+)+\/$/.test(input) ? true: "source uri must be like '/my/odata/service/uri/': /^(\\/\\w+)+\\/$/";
 	}
 
 	
@@ -63,7 +63,7 @@ module.exports = class extends Generator{
 			"\t\t\t..." 	
 		];
 
-		this.log(info.join('\n'));
+		this.log(info.join("\n"));
 	}
 
 	async prompting(){
@@ -74,44 +74,44 @@ module.exports = class extends Generator{
 			choices: [{
 				name: "custom application",
 				value: AppType.z
-			},{
+			}, {
 				name: "overview page",
 				value: AppType.ovp
-			},{
+			}, {
 				name: "object page",
 				value: AppType.op
-			},{
+			}, {
 				name: "list report",
 				value: AppType.lr
-			},{
+			}, {
 				name: "list report - object page",
 				value: AppType.lrop
-			},{
+			}, {
 				name: "library",
 				value: AppType.lib
-			},{
+			}, {
 				name: "plugin",
 				value: AppType.plugin
 			}]
-		},{
+		}, {
 			name: "dir",
 			message: "path to application dir",
 			validate: this._validateEmpty
-		},{
+		}, {
 			name: "appName",
 			message: "application name: gateway bsp",
 			validate: this._validateAppName
-		},{
+		}, {
 			name: "nmsp",
 			message: "application namespace like my.new.custom.app",
 			validate: this._validateAppId
-		},{
+		}, {
 			name: "sourceUri",
 			message: "manifest data source uri",
 			default: "/sap/opu/odata/sap/CUSTOM_DATA_SRV/",
 			when: answers => answers.appType !== AppType.lib,
 			validate: this._validateSourceUri
-		},{
+		}, {
 			name: "entitySet",
 			message: "entity set for fiori application",
 			when: answers => [AppType.lr, AppType.lrop, AppType.op, AppType.ovp].includes(answers.appType),

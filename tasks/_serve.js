@@ -13,6 +13,8 @@ module.exports = function(grunt){
 		grunt.loadNpmTasks("grunt-openui5");
 
 		const config = grunt.config.get("config");
+
+        let utils = null;
 		if(config.proxyModule === "git"){
 			grunt.loadNpmTasks("grunt-connect-proxy-git");
 			utils = utilsGit;

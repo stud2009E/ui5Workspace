@@ -1,0 +1,7 @@
+node_modules
+
+workspace/apps
+workspace/fiori
+workspace/tests
+
+generator-config

@@ -3,7 +3,7 @@ const yeoman = require("yeoman-environment");
 
 module.exports = function(grunt){
     
-    const genPath = path.join(process.cwd(), "generator-config",  "generators");
+    const genPath = path.join(process.cwd(), "generator-config", "generators");
     const env = yeoman.createEnv();
 
     grunt.registerTask("newapp", "public: create new custom application from template", function(){

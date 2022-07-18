@@ -39,7 +39,7 @@ module.exports = class extends Generator{
         }
         
         return this._parser.entityTypes.map(entityType => ({
-            name: `${entityType.name} - ${entityType.label}` ,
+            name: `${entityType.name} - ${entityType.label}`,
             value: entityType.name
         }));
     }
@@ -62,14 +62,14 @@ module.exports = class extends Generator{
                 choices: [{
                     name: "property change",
                     value: ChangeType.property
-                },{
+                }, {
                     name: "property binding change",
                     value: ChangeType.binding
-                },{
+                }, {
                     name: "move change",
                     value: ChangeType.move
-                },{
-                    name: "changes for table columns" ,
+                }, {
+                    name: "changes for table columns",
                     value: ChangeType.column
                 }]
             },

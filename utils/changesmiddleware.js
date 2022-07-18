@@ -17,10 +17,10 @@ module.exports = function(grunt){
             let changesDir = null;
 
             for(let name in appMap){
-                if( appMap.hasOwnProperty( name ) ) {
+                if( Object.prototype.hasOwnProperty.call(appMap, name) ){
                     const app = appMap[name];
                     if(app.name === semanticObject && app.action === action){
-                        changesDir = path.join(app.path,  "/webapp/changes");
+                        changesDir = path.join(app.path, "/webapp/changes");
                         break; 
                     }
                 }
@@ -52,8 +52,8 @@ module.exports = function(grunt){
             };
             const result = JSON.stringify(data);
             res.writeHead(200, {
-                'Content-Length': Buffer.byteLength(result),
-                'Content-Type': 'application/json; charset=UTF-8'
+                "Content-Length": Buffer.byteLength(result),
+                "Content-Type": "application/json; charset=UTF-8"
             }).end(result);
         }else{
             return next();
