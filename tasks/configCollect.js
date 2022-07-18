@@ -4,9 +4,9 @@ const objectPath = require("object-path");
 const Manifest = require("../utils/Manifest.js");
 const { baseSchema } = require("../utils/configSchema.js");
 
-module.exports = function (grunt) {
+module.exports = function (grunt){
 
-	grunt.registerTask("configCollect", "public: collect settings for plugins, apps, libs", function () {
+	grunt.registerTask("configCollect", "public: collect settings for plugins, apps, libs", function (){
 		const cwd = process.cwd();
 		const appsDir = path.join(cwd, "workspace/apps");
 		const flpPath = path.join(cwd, "workspace/fiori");
@@ -20,7 +20,7 @@ module.exports = function (grunt) {
 		});
 		const ajv = grunt.config.getRaw("ajv");
 		const validate = ajv.compile(baseSchema);
-		if (!validate(configJSON)) {
+		if (!validate(configJSON)){
 			grunt.config.get("showErrorsAndFail")(validate);
 		}
 
@@ -35,7 +35,7 @@ module.exports = function (grunt) {
 
 			fs.symlinkSync(app.path, path.join(appsDir, name), "dir");
 
-			if (manifest.type() === "application") {
+			if (manifest.type() === "application"){
 				const appKey = `${name}-${action}`;
 
 				applications[appKey] = {};
@@ -69,7 +69,7 @@ module.exports = function (grunt) {
 
 			fs.symlinkSync(app.path, path.join(appsDir, name), "dir");
 
-			if (appType === "component") {
+			if (manifest.type() === "component"){
 				plugins[name] = {};
 				plugins[name].component = manifest.id();
 				plugins[name].config = app.config || {};
@@ -96,7 +96,7 @@ module.exports = function (grunt) {
 
 			item.context = path.join(lib.context, name);
 			grunt.file.recurse(lib.path, (absPath, rootdir, subdir, filename) => {
-				if (filename.endsWith("library.js")) {
+				if (filename.endsWith("library.js")){
 					item.path = path.join("/apps", name, subdir);
 					return false;
 				}

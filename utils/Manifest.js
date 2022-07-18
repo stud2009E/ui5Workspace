@@ -27,7 +27,7 @@ module.exports = class Manifest{
 	serviceUrl(modelName = ""){
 		const source = this.dataSource(modelName);
 		
-		return this.get(["sap.app", "dataSources", source ,"uri"]) ;
+		return this.get(["sap.app", "dataSources", source, "uri"]) ;
 	}
 
 	get(){

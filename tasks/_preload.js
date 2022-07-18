@@ -63,12 +63,12 @@ module.exports = function(grunt){
 			if(objectPath.get(uiJson, "type") === "application"){
 				let needChange = false;
 				if(!objectPath.get(uiJson, [ "resources", "configuration", "paths", "webapp"])){
-					objectPath.set(uiJson, [ "resources", "configuration", "paths", "webapp"],  "webapp");
+					objectPath.set(uiJson, [ "resources", "configuration", "paths", "webapp"], "webapp");
 					needChange = true;
 				}
 
 				if(!objectPath.get(uiJson, [ "builder", "resources", "excludes"])){
-					objectPath.set(uiJson, [ "builder", "resources", "excludes"],  ["localService/**", "test/**"]);
+					objectPath.set(uiJson, [ "builder", "resources", "excludes"], ["localService/**", "test/**"]);
 					needChange = true;
 				}
 				

@@ -53,13 +53,13 @@ module.exports = function(grunt){
 							plugins: plugins,
 							themeRoots: config.themeRoots
 						})
-					},{
+					}, {
 						from: __RESOURCE__ROOTS__CONFIG__,
 						to: resourceroots
-					},{
+					}, {
 						from: __MOCK__SETTINGS__,
 						to: JSON.stringify(mockApplications)
-					},{
+					}, {
 						from: __THEME__,
 						to: config.theme
 					}]

@@ -52,7 +52,7 @@ module.exports = function(grunt){
             path: `${serviceUrl}$metadata?sap-client=${user.mandt}`
         }, res => {
             const { statusCode } = res;
-            const contentType = res.headers['content-type'];
+            const contentType = res.headers["content-type"];
         
             let error;
             if(statusCode >= 400 && statusCode < 600){
@@ -75,8 +75,8 @@ module.exports = function(grunt){
             const fws = fs.createWriteStream(metadataPath);
             res.pipe(fws);
         
-            fws.on('finish',() => {
-                console.log('Download Completed'); 
+            fws.on("finish", () => {
+                console.log("Download Completed"); 
                 fws.close();
                 done();
             });

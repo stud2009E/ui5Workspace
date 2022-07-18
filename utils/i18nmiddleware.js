@@ -20,17 +20,17 @@ module.exports = function(grunt){
                 return next();
             }
 
-            const i18nPath =  path.join(app.path, "webapp", "i18n", "i18n.properties");
+            const i18nPath = path.join(app.path, "webapp", "i18n", "i18n.properties");
 
             const file = fs.readFileSync(i18nPath, {
                 encoding: "utf8"
             });
 
             res.writeHead(200, {
-                'Content-Length': Buffer.byteLength(file),
-                'Content-Type': 'text/plain; charset=UTF-8'
+                "Content-Length": Buffer.byteLength(file),
+                "Content-Type": "text/plain; charset=UTF-8"
             }).end(file);
-        }else{
+        } else {
             return next();
         }
     }

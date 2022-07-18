@@ -25,7 +25,7 @@ module.exports = function(grunt){
 
 		const ajv = grunt.config.getRaw("ajv");
 		const validateSystem = ajv.compile(systemSchema);
-		if(!validateSystem(objectPath.get(config,"system"))){
+		if(!validateSystem(objectPath.get(config, "system"))){
 			grunt.config.get("showErrorsAndFail")(validateSystem);
 		}
 		
@@ -45,30 +45,30 @@ module.exports = function(grunt){
 		grunt.config.merge({
 			nwabap_ui5uploader:{
 				options: {
-	                conn: {
-	                    useStrictSSL: false,
-	                    server:`https://${system.host}:${system.port}`
-	                },
-	                auth: {
-	                    user: user.login,
-	                    pwd: user.pwd
-	                }
-	            },
-	            upload_build: {
-	                options: {
-	                    ui5: {
-	                        package: app.package,
-	                        transportno: app.transport,
-	                        bspcontainer: app.bsp,
+                    conn: {
+                        useStrictSSL: false,
+                        server:`https://${system.host}:${system.port}`
+                    },
+                    auth: {
+                        user: user.login,
+                        pwd: user.pwd
+                    }
+                },
+                upload_build: {
+                    options: {
+                        ui5: {
+                            package: app.package,
+                            transportno: app.transport,
+                            bspcontainer: app.bsp,
 							calc_appindex: true,
 							create_transport: false
-	                    },
-	                    resources: {
-	                        cwd: path.join(app.path, "dist"),
-	                        src: "**/*.*"
-	                    }
-	                }
-	            },
+                        },
+                        resources: {
+                            cwd: path.join(app.path, "dist"),
+                            src: "**/*.*"
+                        }
+                    }
+                },
 			}
 		});
 

@@ -1,10 +1,10 @@
 const Ajv = require("ajv");
 
-module.exports = function (grunt) {
+module.exports = function (grunt){
 	grunt.loadTasks("tasks");
 
 	grunt.config.set("showErrorsAndFail", validate => {
-		if (validate.errors) {
+		if (validate.errors){
 			grunt.log.error("Errors:")
 			validate.errors.forEach(err => {
 				grunt.log.error(`${err.message}:\n${err.instancePath}\n${err.schemaPath}`);

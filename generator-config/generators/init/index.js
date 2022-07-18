@@ -1,7 +1,7 @@
-const Generator = require('yeoman-generator');
+const Generator = require("yeoman-generator");
 const {prompts, whenInit} = require("./prompts");  
 
-module.exports = class extends Generator {
+module.exports = class extends Generator{
     
     constructor(args, opts){
         super(args, opts);
@@ -91,7 +91,7 @@ module.exports = class extends Generator {
     }
 
     writing(){
-        if(!whenInit(this._answers)) {
+        if(!whenInit(this._answers)){
             return;
         }
         this.writeDestinationJSON("config.json", this._config, "\t");
