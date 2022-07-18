@@ -3,6 +3,7 @@ const utilsGit = require("grunt-connect-proxy-git/lib/utils");
 const path = require("path");
 const objectPath = require("object-path");
 const i18nmiddleware = require("../utils/i18nmiddleware.js");
+const changesmiddleware = require("../utils/changesmiddleware");
 const {systemSchema} = require("../utils/configSchema.js");
 
 module.exports = function(grunt){
@@ -30,34 +31,32 @@ module.exports = function(grunt){
 		}
 
 		const systemProxies = [];
-		if(systemKey !== "local"){
-			const systemConfig = objectPath.get(config, "system");
-			const ajv = grunt.config.getRaw("ajv");
-			const validate = ajv.compile(systemSchema);
-			if(!validate(systemConfig)){
-				grunt.config.get("showErrorsAndFail")(validate);
-			}
-			
-			const system = objectPath.get(config, ["system", systemKey]);
-			const user = objectPath.get(config, ["system", systemKey, "user", userKey]);
-			if(!system || !user ){
-				grunt.fail.fatal("can't define system or user");
-			}
+        const systemConfig = objectPath.get(config, "system");
+        const ajv = grunt.config.getRaw("ajv");
+        const validate = ajv.compile(systemSchema);
+        if(!validate(systemConfig)){
+            grunt.config.get("showErrorsAndFail")(validate);
+        }
+        
+        const system = objectPath.get(config, ["system", systemKey]);
+        const user = objectPath.get(config, ["system", systemKey, "user", userKey]);
+        if(!system || !user ){
+            grunt.fail.fatal("can't define system or user");
+        }
 
-			const ident = Buffer.from(`${user.login}:${user.pwd}`).toString("base64");
-			const { host, port, services} = system;
-			
-            services.forEach( service => {
-			    const {context, ws, https} = service;
+        const ident = Buffer.from(`${user.login}:${user.pwd}`).toString("base64");
+        const {host, services} = system;
+        
+        services.forEach( service => {
+            const {context, port, ws, https, secure} = service;
 
-                systemProxies.push({
-                    host, port, context, ws, https,
-                    headers: {
-                        Authorization: `Basic ${ident}`
-                    }
-                });
+            systemProxies.push({
+                host, port, context, ws, https, secure,
+                headers: {
+                    Authorization: `Basic ${ident}`
+                }
             });
-		}
+        });
 		
 		const localhost = "localhost";
 		const localport = 8000;
@@ -82,10 +81,11 @@ module.exports = function(grunt){
 						port: localport,
 						keepalive: true,
 						livereload: false,
-						open: `http://${localhost}:${localport}/fiori/`,
+						open: `http://${localhost}:${localport}/fiori/?sap-client=${user.mandt}&sap-language=${user.language}`,
 						base: "workspace",
 						middleware: function(connect, options, middlewares){
 							middlewares.unshift(utils.proxyRequest);
+                            middlewares.unshift(changesmiddleware(grunt));
 
                             if(useUtf8 === true){
                                 middlewares.unshift(i18nmiddleware(grunt));

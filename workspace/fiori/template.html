@@ -12,7 +12,7 @@
 
 	<script id="sap-ui-bootstrap"
 		src="/resources/sap-ui-core.js"
-		data-sap-ui-libs="sap.m, sap.ushell, sap.collaboration"
+		data-sap-ui-libs="sap.m,sap.ushell,sap.uxap,sap.f,sap.ui.table,sap.ui.comp,sap.ui.fl"
 		data-sap-ui-async="true"
 		data-sap-ui-theme="__THEME__"
 		data-sap-ui-compatVersion="edge"
@@ -25,19 +25,68 @@
 	</script>
 
 	<script type="text/javascript">
-		sap.ui.getCore().attachInit(function(){
+        
+        const prevFakeConnector = {};
 
+        function fnHandleHashChange(FakeLrepConnector, oEvent){
+            const parser = sap.ushell.Container.getService("URLParsing");
+            const appConfig = window["z-workspace-config"].applications;
+            
+            let sUrl = window.location.href;
+            if(oEvent){
+                sUrl = oEvent.newURL
+            }
+
+            const shellHash = parser.getShellHash(sUrl);
+            const hashData = parser.parseShellHash(shellHash);
+            const semanticObject = hashData && hashData.semanticObject;
+            const action = hashData && hashData.action;
+
+            if(!semanticObject || !action || semanticObject === "Shell" ){
+                return;
+            }
+
+            if(appConfig && appConfig[`${semanticObject}-${action}`]){
+                const id = appConfig[`${semanticObject}-${action}`]["id"];
+                const _version = appConfig[`${semanticObject}-${action}`]["_version"] || "1.0.0";
+
+                if(prevFakeConnector["id"]){
+                    FakeLrepConnector.disableFakeConnector(
+                        prevFakeConnector["id"],
+                        prevFakeConnector["_version"]
+                    );
+                }
+
+                if(id){
+                    FakeLrepConnector.enableFakeConnector(
+                        `/appChanges?semanticObject=${semanticObject}&action=${action}`,
+                        id,
+                        _version
+                    );
+
+                    prevFakeConnector["id"] = id;
+                    prevFakeConnector["_version"] = _version;
+                }
+            }
+        }
+
+		sap.ui.getCore().attachInit(function(){
 			sap.ui.require([
-				"flp/root/mockservers/mockserver"
-			], function(mockserver){
+				"flp/root/mockservers/mockserver",
+                "sap/ui/fl/FakeLrepConnector"
+			], function(mockserver, FakeLrepConnector){
+
+                fnHandleHashChange = fnHandleHashChange.bind(null, FakeLrepConnector);
 
 				mockserver.init(__MOCK__SETTINGS__)
 					.finally(() => {
 						sap.ushell.__sandbox__._bootstrap(function () {
 							sap.ushell.Container.createRenderer().placeAt("content");
+
+                            fnHandleHashChange();
+                            window.addEventListener("hashchange", fnHandleHashChange);
 						});
 					});
-
 			});
 
 		});
