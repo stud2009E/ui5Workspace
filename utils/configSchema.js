@@ -79,6 +79,7 @@ const systemSchema = {
                             context: { type: "string", default: "/sap" },
                             ws: { type: "boolean", default: false },
                             https: { type: "boolean", default: true },
+                            secure: { type: "boolean", default: false } 
                         },
                         required: ["port", "context"],
                         additionalProperties: true
@@ -90,11 +91,12 @@ const systemSchema = {
 						"\\w+": {
 							type: "object",
 							properties: {
+                                language: {type: "string", default: "ru"},
 								mandt: { type: "integer"},
 								login: { type: "string"},
 								pwd: { type: "string"}
 							},
-							required: ["login", "pwd", "mandt"],
+							required: ["login", "pwd", "mandt", "language"],
 							additionalProperties: false
 						}
 					},
