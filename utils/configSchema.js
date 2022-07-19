@@ -11,6 +11,7 @@ const baseSchema = {
 					name: { type: "string" },
 					action: { type: "string", default: "display" },
 					modelName: { type: "string", default: "" },
+					annoDataSource: { type: "string", default: "remote" },
 					transport: { type: "string" },
 					package: { type: "string" },
 					bsp: { type: "string" },
@@ -69,20 +70,20 @@ const systemSchema = {
 			type: "object",
 			properties: {
 				host: { type: "string" },
+                port: { type: "integer" },
+                https: { type: "boolean", default: true },
+                secure: { type: "boolean", default: false },
                 services: {
                     type: "array",
                     minItems: 1,
                     items: {
                         type: "object",
                         properties:{
-                            port: { type: "integer" },
                             context: { type: "string", default: "/sap" },
-                            ws: { type: "boolean", default: false },
-                            https: { type: "boolean", default: true },
-                            secure: { type: "boolean", default: false } 
+                            ws: { type: "boolean", default: false }
                         },
-                        required: ["port", "context"],
-                        additionalProperties: true
+                        required: ["context"],
+                        additionalProperties: false
                     }
                 },
 				user: {
@@ -104,7 +105,7 @@ const systemSchema = {
 					additionalProperties: false
 				}
 			},
-			required: ["host", "services", "user"]
+			required: ["host", "port", "https", "secure", "services", "user"]
 		}
 	},
 	minProperties: 1,
