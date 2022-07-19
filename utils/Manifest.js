@@ -25,9 +25,13 @@ module.exports = class Manifest{
 	}
 	
 	serviceUrl(modelName = ""){
-		const source = this.dataSource(modelName);
+		const name = this.dataSource(modelName);
 		
-		return this.get(["sap.app", "dataSources", source, "uri"]) ;
+		return this.dataSourceUri(name);
+	}
+
+    dataSourceUri(name = "remote"){
+		return this.get(["sap.app", "dataSources", name, "uri"]);
 	}
 
 	get(){
