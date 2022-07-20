@@ -2,30 +2,30 @@
 ```
 .
 └──webapp
-	├──controller
-	├──view
-	├──fragments
-	├──i18n
-	├──css
+    ├──controller
+    ├──view
+    ├──fragments
+    ├──i18n
+    ├──css
     ├──annotations
     |  └──annotation.xml
-	├──test
-	|  ├──unit
-	|  |	├──allTest.js
-	|  |	├──allTest.html
-	|  |	└──...
-	|  └──integration
-	|  		├──allTest.js
-	|  		├──allTest.html
-	|		└──...
-	├──localService
-	|  ├──mockdata
-	|  ├──ext
-	|  |  └──mockExtension.js
-	|  └──metadata.xml
-	|  
-	├──Component.js
-	└──manifest.json
+    ├──test
+    |  ├──unit
+    |  |    ├──allTest.js
+    |  |    ├──allTest.html
+    |  |    └──...
+    |  └──integration
+    |       ├──allTest.js
+    |       ├──allTest.html
+    |       └──...
+    ├──localService
+    |  ├──mockdata
+    |  ├──ext
+    |  |  └──mockExtension.js
+    |  └──metadata.xml
+    |  
+    ├──Component.js
+    └──manifest.json
 ```
 
 ### prerequests:

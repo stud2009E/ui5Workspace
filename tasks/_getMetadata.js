@@ -1,6 +1,6 @@
 const path = require("path");
 const objectPath = require("object-path");
-const https = require("https");
+const http = require("http");
 const fs = require("fs-extra");
 const {systemSchema} = require("../utils/configSchema.js");
 const Manifest = require("../utils/Manifest.js");
@@ -83,9 +83,9 @@ module.exports = function(grunt){
 
         let p1 = new Promise((resolve, reject) => {
             if(serviceUrl){ 
-                https.get({
-                    host: system.host,
-                    port: system.port,
+                http.get({
+                    host: "localhost",
+                    port: 8000,
                     auth: `${user.login}:${user.pwd}`,
                     path: `${serviceUrl}$metadata?sap-client=${user.mandt}&sap-language=${user.language}`
                 }, save(`${serviceUrl}$metadata`, metadataPath, resolve, reject));
@@ -96,9 +96,9 @@ module.exports = function(grunt){
 
         let p2 = new Promise((resolve, reject) => {
             if(annotationUrl){
-                https.get({
-                    host: system.host,
-                    port: system.port,
+                http.get({
+                    host: "localhost",
+                    port: 8000,
                     auth: `${user.login}:${user.pwd}`,
                     path: `${annotationUrl}?sap-client=${user.mandt}&sap-language=${user.language}`
                 }, save(annotationUrl, annotationPath, resolve, reject));
