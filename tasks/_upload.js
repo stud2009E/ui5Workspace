@@ -61,7 +61,9 @@ module.exports = function(grunt){
                             transportno: app.transport,
                             bspcontainer: app.bsp,
 							calc_appindex: true,
-							create_transport: false
+							create_transport: false,
+                            transport_use_locked: true,
+                            bspcontainer_text: `upload ${appName}`
                         },
                         resources: {
                             cwd: path.join(app.path, "dist"),
