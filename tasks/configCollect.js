@@ -64,7 +64,7 @@ module.exports = function (grunt){
 		//create plugins settings for flp index.html`
 		pluginsConfig.forEach(app => {
 			const { name } = app;
-			const manifest = new Manifest(app.path);
+			const manifest = new Manifest(path.join(app.path, "webapp"));
 			const symlinkPath = path.join(cwd, "workspace/apps", name, "webapp");
 
 			fs.symlinkSync(app.path, path.join(appsDir, name), "dir");
